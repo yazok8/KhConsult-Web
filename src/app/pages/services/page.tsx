@@ -8,7 +8,7 @@ import ForBusinesses from "./for-businesses/page";
 
 export default function Services() {
   return (
-    <div>
+    <div className="overflow-hidden">
       <AboutMyServiecs />
       <RelocationServices />
       <ImmigrationSupport/>

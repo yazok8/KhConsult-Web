@@ -5,7 +5,7 @@ export default function AboutMyServiecs() {
     <>    
     <section
       id="about-my-services"
-      className="min-h-[50vh] flex justify-center mx-auto max-w-6xl"
+      className="min-h-screen flex justify-center mx-auto max-w-6xl px-5 lg:px-5"
     >
       <div>
         <h1 className="text-6xl pt-12 pb-8">About My Services</h1>

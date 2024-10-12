@@ -31,14 +31,13 @@ export default function Header() {
 
   return (
     <header>
-      <nav className="w-full fixed h-15 shadow-xl bg-black">
+      <nav className="w-full fixed h-16 shadow-xl bg-black">
         <div className="px-10 flex items-center justify-between h-full">
           <Link href="/#">
             <Image
               src={khlogo}
               alt="kh consultation logo"
-              width={60}
-              height={50}
+              width={100}
               className="cursor-pointer"
             />
           </Link>

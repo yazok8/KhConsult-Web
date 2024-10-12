@@ -2,12 +2,12 @@ export default function FAQ() {
     return (
       <section
         id="faq"
-        className="mt-20 flex flex-col items-center text-center text-black min-h-screen lg:h-[75vh] md:h-[120vh] pt-20"
+        className="mt-20 flex flex-col text-black min-h-screen lg:h-[75vh] md:h-[120vh] pt-20 px-5 lg:px-0"
       >
         <h1 className="text-5xl md:text-6xl lg:text-7xl mb-12">FAQ</h1>
   
         {/* FAQ Items Container */}
-        <div className="w-full max-w-6xl flex flex-col md:flex-row justify-center items-stretch gap-8 px-4">
+        <div className="w-full max-w-6xl flex flex-col md:flex-row justify-center items-stretch gap-8">
           
           {/* Individual FAQ Item */}
           <article className="flex flex-col bg-slate-300 text-black rounded-lg shadow-lg w-full md:w-1/3">

@@ -1,4 +1,3 @@
-// components/RelocationServices.tsx
 import React from 'react';
 import ServiceCard from "../../../ui/ServiceCard";
 import service1 from "../../../../../public/images/service1.svg";
@@ -30,48 +29,57 @@ const businessServices = [
     title: "Corporate Relocation",
     description: "Comprehensive relocation packages tailored for businesses and their employees.",
   },
-  // Add more business services as needed
 ];
 
 export default function RelocationServices() {
   return (
     <section
       id="relocation-services"
-      className="bg-black text-white min-h-screen lg:h-[75vh] md:h-[120vh] pt-20 "
+      className="bg-black text-white min-h-screen pt-20"
     >
-      <div className="max-w-6xl justify-center mx-auto">
-      <h1 className="text-5xl md:text-6xl lg:text-7xl mb-12">Relocation Services</h1>
-      <div className="pt-16 flex flex-col lg:flex-row justify-center items-start gap-12 px-4">
-        {/* Individual Section */}
-        <div className="mb-12 lg:mb-0 text-center">
-          <h2 className="py-6 text-4xl md:text-5xl text-nowrap">For Individuals</h2>
-          <div className="flex justify-center space-x-6 flex-wrap lg:flex-nowrap space-y-6 lg:space-y-0">
-            {individualServices.map((service, index) => (
-              <ServiceCard
-                key={index}
-                imageSrc={service.imageSrc}
-                title={service.title}
-                description={service.description}
-              />
-            ))}
-          </div>
-        </div>
+      <div className="max-w-6xl mx-auto px-4 sm:px-8 lg:px-8">
+        <h1 className="text-4xl md:text-5xl lg:text-6xl text-center mb-12">
+          Relocation Services
+        </h1>
 
-        {/* Business Section */}
-        <div className="flex flex-col items-center">
-          <h2 className="py-6 text-4xl md:text-5xl text-nowrap">For Businesses</h2>
-          <div className="flex justify-center space-x-6 flex-wrap lg:flex-nowrap space-y-6 lg:space-y-0">
-            {businessServices.map((service, index) => (
-              <ServiceCard
-                key={index}
-                imageSrc={service.imageSrc}
-                title={service.title}
-                description={service.description}
-              />
-            ))}
+        {/* Responsive Flex Layout */}
+        <div className="flex flex-col lg:flex-row justify-between gap-16">
+          
+          {/* Individual Services */}
+          <div className="lg:w-full w-full">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl text-center lg:text-left py-6">
+              For Individuals
+            </h2>
+            {/* Responsive gap between services */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 lg:gap-40 justify-items-center">
+              {individualServices.map((service, index) => (
+                <ServiceCard
+                  key={index}
+                  imageSrc={service.imageSrc}
+                  title={service.title}
+                  description={service.description}
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* Business Services */}
+          <div className="w-full lg:flex flex-col items-center justify-between">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl text-center lg:text-left py-6">
+              For Businesses
+            </h2>
+            <div className="flex justify-center items-center w-full pb-8 lg:pb-0">
+              {businessServices.map((service, index) => (
+                <ServiceCard
+                  key={index}
+                  imageSrc={service.imageSrc}
+                  title={service.title}
+                  description={service.description}
+                />
+              ))}
+            </div>
           </div>
         </div>
-      </div>
       </div>
     </section>
   );

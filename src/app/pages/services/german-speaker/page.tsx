@@ -6,24 +6,34 @@ export default function GermanSpeaker() {
   return (
     <section
       id="need-a-german-speaker"
-      className="flex max-w-6xl justify-center min-h-screen flex-wrap mx-auto"
+      className="flex justify-center min-h-screen lg:max-w-6xl flex-wrap mx-auto px-5 py-12"
     >
-      <div className="flex mt-20">
-        <div className="pr-8">
-          <h1 className="text-5xl text-nowrap mb-5">Need A German Speaker</h1>
-          <li className="text-lg">
-          As a newcomer in Germany can be little overwhelming to communicate with the authorities, our team can help you with the following:        </li> 
-          
-          <li className="text-lg">
-          Accompanying you to the authorities
-          </li>
-          <li className="text-lg">Filling out paper work </li>
-          
-  
-          ........and mostly importantly give you a law-based advice
+      <div className="flex flex-col lg:flex-row items-center lg:items-start flex-grow w-full">
+        {/* Text Section */}
+        <div className="pr-0 lg:pr-16 lg:w-1/2 w-full mb-10 lg:mb-0">
+          <h1 className="text-4xl lg:text-5xl mb-6">Need A German Speaker</h1>
+          <ul className="text-lg space-y-4 leading-relaxed">
+            <li>
+              As a newcomer in Germany, communication with the authorities can be overwhelming. Our team can help with the following:
+            </li>
+            <li>Accompanying you to the authorities</li>
+            <li>Filling out paperwork</li>
+            <li>
+              And most importantly, giving you law-based advice.
+            </li>
+          </ul>
         </div>
-        <div>
-          <Image src={immigration} alt="immigration" width={2000} />
+        
+        {/* Image Section */}
+        <div className="lg:w-1/2 w-full">
+          <Image 
+            src={immigration} 
+            alt="immigration" 
+            layout="responsive" 
+            width={2000} 
+            height={1500} 
+            className="rounded-lg"
+          />
         </div>
       </div>
     </section>

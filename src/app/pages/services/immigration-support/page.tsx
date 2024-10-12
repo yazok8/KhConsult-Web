@@ -6,23 +6,35 @@ export default function ImmigrationSupport() {
   return (
     <section
       id="immigration-support"
-      className="flex max-w-6xl justify-center min-h-screen flex-wrap mx-auto"
+      className="flex justify-center min-h-screen lg:max-w-6xl flex-wrap mx-auto px-5 py-12"
     >
-      <div className="flex mt-20">
-        <div className="pr-8">
-          <h1 className="text-5xl text-nowrap mb-5">Immigration Support</h1>
-          <li className="text-lg">
-            Our team consists of experts that have a huge experience with German
-            immigration buracracy
-          </li>
-          <li className="text-lg">
-            Your hub and all-round support for your immigration issues including
-            application for your residence permits and perminant resdiency{" "}
-          </li>
-          <li className="text-lg"> Communicating with the immigration office on your behalf</li>
+      <div className="flex flex-col lg:flex-row items-center lg:items-start flex-grow w-full">
+        {/* Text Section */}
+        <div className="pr-0 lg:pr-16 lg:w-1/2 w-full mb-10 lg:mb-0">
+          <h1 className="text-4xl lg:text-5xl mb-5">Immigration Support</h1>
+          <ul className="text-lg space-y-4 leading-relaxed">
+            <li>
+              Our team consists of experts with vast experience navigating the German immigration bureaucracy.
+            </li>
+            <li>
+              Your hub and all-round support for immigration issues, including applications for residence permits and permanent residency.
+            </li>
+            <li>
+              Communicating with the immigration office on your behalf.
+            </li>
+          </ul>
         </div>
-        <div>
-          <Image src={immigration} alt="immigration" width={2000} />
+        
+        {/* Image Section */}
+        <div className="lg:w-1/2 w-full">
+          <Image 
+            src={immigration} 
+            alt="Immigration support" 
+            layout="responsive" 
+            width={1000} 
+            height={800} 
+            className="rounded-lg"
+          />
         </div>
       </div>
     </section>
