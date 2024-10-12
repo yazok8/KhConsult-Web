@@ -6,7 +6,7 @@ export default function GermanSpeaker() {
   return (
     <section
       id="need-a-german-speaker"
-      className="flex justify-center min-h-screen lg:max-w-6xl flex-wrap mx-auto px-5 py-12"
+      className="flex justify-center min-h-screen lg:max-w-6xl flex-wrap mx-auto px-5 pt-20"
     >
       <div className="flex flex-col lg:flex-row items-center lg:items-start flex-grow w-full">
         {/* Text Section */}

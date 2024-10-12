@@ -6,7 +6,7 @@ import { ImPinterest } from 'react-icons/im'
 
 export default function ContactPage() {
   return (
-    <section id="contact" className='text-start text-black min-h-screen pt-20 my-12 overflow-x-hidden px-5'>
+    <section id="contact" className='text-start text-black min-h-screen pt-20 overflow-x-hidden px-5'>
       <div className='flex flex-col justify-center mx-auto max-w-6xl'>
         <h1 className='text-4xl md:text-5xl text-center lg:text-left max-w-3xl mb-12'>
           Get a quote or set up a consultation.
