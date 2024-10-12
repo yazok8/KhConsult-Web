@@ -1,22 +1,33 @@
-"use client";
+"use client"
 
-import Image from "next/image";
-import Link from "next/link";
-import React, { useState } from "react";
-import khlogo from "../../../public/images/khlogo.png";
-import {
-  BsFacebook,
-  BsInstagram,
-  BsList,
-  BsPinterest,
-  BsX,
-  BsYoutube,
-} from "react-icons/bs";
+import React, { useEffect, useRef, useState } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import { BsList, BsX, BsYoutube, BsInstagram, BsFacebook, BsPinterest } from 'react-icons/bs';
+import khlogo from '../../../public/images/khlogo.svg'; // Adjust the path as necessary
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isServicesOpen, setIsServicesOpen] = useState(false);
 
   const toggleMenu = () => setIsOpen(!isOpen);
+
+  const desktopServicesRef = useRef(null);
+  const mobileServicesRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const path = event.composedPath();
+      if (desktopServicesRef.current && !path.includes(desktopServicesRef.current)) {
+        setIsServicesOpen(false);
+      }
+    };
+  
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [desktopServicesRef]);
 
   return (
     <header>
@@ -35,9 +46,39 @@ export default function Header() {
             <Link className="px-5" href="/#about">
               About
             </Link>
-            <Link className="px-5" href="/#services">
-              Services
-            </Link>
+
+            <div className="relative" ref={desktopServicesRef}>
+              <button
+                className="px-5 focus:outline-none"
+                onMouseOver={() => setIsServicesOpen(!isServicesOpen)}
+                onClick={() => setIsServicesOpen(!isServicesOpen)}
+              >
+                Services
+              </button>
+              {isServicesOpen && (
+                <ul className="absolute bg-white text-black mt-4 text-nowrap">
+                <li className="px-4 py-2 hover:bg-gray-200">
+                    <Link href="/#about-my-services">About my Services</Link>
+                  </li>
+                  <li className="px-4 py-2 hover:bg-gray-200">
+                    <Link href="/#relocation-services">Relocation Services</Link>
+                  </li>
+                  <li className="px-4 py-2 hover:bg-gray-200">
+                    <Link href="/#immigration-support">Immigration Support</Link>
+                  </li>
+                  <li className="px-4 py-2 hover:bg-gray-200">
+                    <Link href="/#job-coaching">Job Coaching</Link>
+                  </li>
+                  <li className="px-4 py-2 hover:bg-gray-200">
+                    <Link href="/#need-a-german-speaker">Need A German Speaker</Link>
+                  </li>
+                  <li className="px-4 py-2 hover:bg-gray-200">
+                    <Link href="/#for-businesses">For Businesses</Link>
+                  </li>
+                </ul>
+              )}
+            </div>
+
             <Link className="px-5" href="/#reviews">
               Reviews
             </Link>
@@ -60,7 +101,11 @@ export default function Header() {
           }
         >
           <div className="flex w-full items-center justify-end">
-            <div className="flex justify-end mr-auto cursor-pointer" onClick={()=>setIsOpen(false)}>
+            <div
+              className="flex justify-end mr-auto cursor-pointer"
+              onClick={() => setIsOpen(false)}
+              
+            >
               <Link href="/#">
                 <Image
                   src={khlogo}
@@ -83,11 +128,32 @@ export default function Header() {
               >
                 <Link href="/#about">About</Link>
               </li>
-              <li
-                className="py-4 hover:underline hover:decoration-[#f68519]"
-                onClick={() => setIsOpen(false)}
-              >
-                <Link href="/#services">Services</Link>
+              <li className="py-4 hover:underline hover:decoration-[#f68519]" ref={mobileServicesRef}>
+                <div onClick={() => setIsServicesOpen(!isServicesOpen)}>
+                  Services
+                </div>
+                {isServicesOpen && (
+                  <ul className="pl-4">
+                  <li className="px-4 py-2 hover:bg-gray-200">
+                    <Link href="/#about-services">About my Services</Link>
+                  </li>
+                    <li className="py-2" onClick={() => setIsOpen(false)}>
+                      <Link href="/#relocation-services">Relocation Services</Link>
+                    </li>
+                    <li className="py-2" onClick={() => setIsOpen(false)}>
+                      <Link href="/#immigration-support">Immigration Support</Link>
+                    </li>
+                    <li className="py-2" onClick={() => setIsOpen(false)}>
+                      <Link href="/#job-coaching">Job Coaching</Link>
+                    </li>
+                    <li className="py-2" onClick={() => setIsOpen(false)}>
+                      <Link href="/#need-a-german-speaker">Need A German Speaker</Link>
+                    </li>
+                    <li className="py-2" onClick={() => setIsOpen(false)}>
+                      <Link href="/#for-businesses">For Businesses</Link>
+                    </li>
+                  </ul>
+                )}
               </li>
               <li
                 className="py-4 hover:underline hover:decoration-[#f68519]"
@@ -105,25 +171,25 @@ export default function Header() {
           </div>
           {/* Social Media Links */}
           <div className="flex flex-row justify-around pt-10 items-center">
-            <Link href="https://wwww.youtube.com">
+            <Link href="https://www.youtube.com">
               <BsYoutube
                 size={30}
                 className="cursor-pointer ease-in-out duration-300"
               />
             </Link>
-            <Link href="https://wwww.instagram.com">
+            <Link href="https://www.instagram.com">
               <BsInstagram
                 size={30}
                 className="cursor-pointer ease-in-out duration-300"
               />
             </Link>
-            <Link href="https://wwww.instagram.com">
+            <Link href="https://www.facebook.com">
               <BsFacebook
                 size={30}
                 className="cursor-pointer ease-in-out duration-300"
               />
             </Link>
-            <Link href="https://wwww.instagram.com">
+            <Link href="https://www.pinterest.com">
               <BsPinterest
                 size={30}
                 className="cursor-pointer ease-in-out duration-300"
