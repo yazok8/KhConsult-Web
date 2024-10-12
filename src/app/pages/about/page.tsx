@@ -3,42 +3,33 @@ import React from 'react'
 import abphoto from "../../../../public/images/abphoto.png";
 
 export default function AboutPage() {
-  return (
-    <>
-      <section
-        id="about"
-        className="text-white bg-black flex flex-col items-center justify-center flex-wrap px-5 lg:px-0 min-h-screen"
-      >
-        <div className="max-w-6xl mx-auto w-full flex flex-col lg:flex-row lg:items-start gap-12 lg:gap-20">
-          {/* Heading */}
-          <div className="w-full text-center lg:text-left py-8">
-            <h1 className="text-5xl sm:text-6xl">About Me</h1>
+    return (
+      <>
+        <section
+          id="about"
+          className="text-white bg-black flex flex-col  items-center justify-center flex-wrap px-5 lg:px-0 min-h-screen "
+        >
+          <div className='max-w-6xl mx-auto flex-wrap lg:flex-nowrap'>
+          <div className="text-5xl py-8 w-full">
+            <h1 className='px-5 sm:px-0 text-6xl'>About Me</h1>
           </div>
-
-          {/* Content Container */}
-          <div className="flex flex-col lg:flex-row-reverse lg:justify-between items-center lg:items-start w-full">
-            
-            {/* Image Section */}
-            <div className="flex-shrink-0 mx-auto lg:ml-0">
+          <div className="md:flex flex-col sm:flex-row-reverse sm:justify-center items-start w-full sm:max-w-[90rem] mx-auto">
+            <p className="text-2xl text-left mx-auto sm:mx-0 pl-4 sm:pl-4 sm:max-w-3xl sm:flex-grow sm:flex-shrink max-w-3xl">
+            Hello, im Abdallah. I moved to Germany in 2017. I work as a social worker that help people every  day in challenging and hardful situations. I enjoy that. I have experience in immigration, job coaching, apartment hunting.
+            </p>
+            <div className="flex-shrink-0 mx-auto">
               <Image
                 src={abphoto}
-                alt="Abdallah"
-                layout="responsive"
+                alt="kh consultation logo"
                 width={500}
-                height={500}
-                className="rounded-lg"
+                height={500} // Ensuring image height is set
+                className="cursor-pointer mx-auto"
               />
             </div>
-
-            {/* Text Section */}
-            <div className="mt-6 lg:mt-0 lg:max-w-xl lg:mr-8">
-              <p className="text-2xl text-center lg:text-left leading-relaxed">
-                Hello, I’m Abdallah. I moved to Germany in 2017. I work as a social worker helping people every day in challenging and difficult situations. I enjoy my work and have experience in immigration, job coaching, and apartment hunting.
-              </p>
-            </div>
           </div>
-        </div>
-      </section>
-    </>
-  );
-}
+          </div>
+        </section>
+      </>
+    );
+  }
+   
