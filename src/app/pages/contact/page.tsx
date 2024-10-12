@@ -23,9 +23,7 @@ export default function ContactPage() {
               <h3 className='pb-4'>Email</h3>
               <p className='text-pink-400'>hello@reallygreatsite.com</p>
             </div>
-          </div>
-
-          {/* Social Media Icons */}
+                      {/* Social Media Icons */}
           <div className='mt-12 lg:mt-0'>
             <h3 className='pb-4 text-2xl'>Social</h3>
             <div className='flex justify-center lg:justify-start'>
@@ -36,6 +34,7 @@ export default function ContactPage() {
                 <CiFacebook className='text-3xl text-gray-700 hover:text-pink-400 transition' />
               </div>
             </div>
+          </div>
           </div>
         </div>
       </div>
