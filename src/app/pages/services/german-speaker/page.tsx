@@ -1,5 +1,5 @@
 import React from "react";
-import immigration from "../../../../../public/images/immigration.png";
+import germanSpeaker from "../../../../../public/images/germanSpeaker.jpg";
 import Image from "next/image";
 
 export default function GermanSpeaker() {
@@ -27,7 +27,7 @@ export default function GermanSpeaker() {
         {/* Image Section */}
         <div className="lg:w-1/2 w-full">
           <Image 
-            src={immigration} 
+            src={germanSpeaker} 
             alt="immigration" 
             layout="responsive" 
             width={2000} 

@@ -2,7 +2,7 @@ export default function FAQ() {
   return (
     <section
       id="faq"
-      className="mt-20 flex flex-col text-black text-start min-h-screen lg:h-[75vh] md:h-[120vh] pt-20 px-5"
+      className="mt-20 flex flex-col text-black text-start min-h-screen lg:h-[75vh] md:h-[120vh] pt-20 px-5 max-w-6xl mx-auto"
     >
       {/* Center the heading */}
       <h1 className="text-5xl md:text-6xl lg:text-7xl mb-12 text-start">

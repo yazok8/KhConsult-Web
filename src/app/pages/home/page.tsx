@@ -7,7 +7,7 @@ export default function Homepage() {
     <div>
       <section
         id="home"
-        className="text-black h-screen text-center flex justify-center items-center space-x-0"
+        className="text-black h-screen text-center flex justify-center items-center space-x-0 px-4"
       >
         <div className="flex max-w-6xl">       
            <div className="pr-10">
@@ -18,7 +18,7 @@ export default function Homepage() {
             className="cursor-pointer mx-auto"
           />
         </div>
-        <div className="text-center m-auto text-5xl">
+        <div className="text-center m-auto text-5xl max-w-min">
           <h1>Relocation Services</h1>
         </div>
         </div>

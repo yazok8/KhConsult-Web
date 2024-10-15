@@ -15,19 +15,19 @@ export default function Header() {
   const desktopServicesRef = useRef(null);
   const mobileServicesRef = useRef(null);
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      const path = event.composedPath();
-      if (desktopServicesRef.current && !path.includes(desktopServicesRef.current)) {
-        setIsServicesOpen(false);
-      }
-    };
+  // useEffect(() => {
+  //   const handleClickOutside = (event: MouseEvent) => {
+  //     const path = event.composedPath();
+  //     if (desktopServicesRef.current && !path.includes(desktopServicesRef.current)) {
+  //       setIsServicesOpen(false);
+  //     }
+  //   };
   
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [desktopServicesRef]);
+  //   document.addEventListener('mousedown', handleClickOutside);
+  //   return () => {
+  //     document.removeEventListener('mousedown', handleClickOutside);
+  //   };
+  // }, [desktopServicesRef]);
 
   return (
     <header>
@@ -133,24 +133,24 @@ export default function Header() {
                 </div>
                 {isServicesOpen && (
                   <ul className="pl-4">
-                  <li className="px-4 py-2 hover:bg-gray-200">
-                    <Link href="/#about-services">About my Services</Link>
+                  <li className="py-2 hover:bg-gray-200">
+                    <Link href="/#about-my-services">About my Services</Link>
                   </li>
-                    <li className="py-2" onClick={() => setIsOpen(false)}>
-                      <Link href="/#relocation-services">Relocation Services</Link>
-                    </li>
-                    <li className="py-2" onClick={() => setIsOpen(false)}>
-                      <Link href="/#immigration-support">Immigration Support</Link>
-                    </li>
-                    <li className="py-2" onClick={() => setIsOpen(false)}>
-                      <Link href="/#job-coaching">Job Coaching</Link>
-                    </li>
-                    <li className="py-2" onClick={() => setIsOpen(false)}>
-                      <Link href="/#need-a-german-speaker">Need A German Speaker</Link>
-                    </li>
-                    <li className="py-2" onClick={() => setIsOpen(false)}>
-                      <Link href="/#for-businesses">For Businesses</Link>
-                    </li>
+                  <li className="py-2 hover:bg-gray-200">
+                    <Link href="/#relocation-services">Relocation Services</Link>
+                  </li>
+                  <li className="py-2 hover:bg-gray-200">
+                    <Link href="/#immigration-support">Immigration Support</Link>
+                  </li>
+                  <li className="py-2 hover:bg-gray-200">
+                    <Link href="/#job-coaching">Job Coaching</Link>
+                  </li>
+                  <li className="py-2 hover:bg-gray-200">
+                    <Link href="/#need-a-german-speaker">Need A German Speaker</Link>
+                  </li>
+                  <li className="py-2 hover:bg-gray-200">
+                    <Link href="/#for-businesses">For Businesses</Link>
+                  </li>
                   </ul>
                 )}
               </li>

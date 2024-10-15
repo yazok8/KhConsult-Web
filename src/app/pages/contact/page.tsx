@@ -1,8 +1,8 @@
+import FooterList from '@/app/components/footer/FooterList'
+import Link from 'next/link'
 import React from 'react'
-import { CiFacebook } from 'react-icons/ci'
-import { FaInstagram } from 'react-icons/fa'
-import { FaX } from 'react-icons/fa6'
-import { ImPinterest } from 'react-icons/im'
+import { AiFillInstagram, AiFillTwitterCircle, AiFillYoutube } from 'react-icons/ai'
+import { MdFacebook } from 'react-icons/md'
 
 export default function ContactPage() {
   return (
@@ -16,24 +16,32 @@ export default function ContactPage() {
           {/* Contact Information */}
           <div className='max-w-5xl text-lg md:text-2xl'>
             <div className='pb-8'>
-              <h3 className='pb-4'>Phone</h3>
+              <h3 className='pb-4 font-bold text-base'>Phone</h3>
               <p className='text-pink-400'>(123) 456-7890</p>
             </div>
             <div className='pb-8'>
-              <h3 className='pb-4'>Email</h3>
+              <h3 className='pb-4 font-bold text-base'>Email</h3>
               <p className='text-pink-400'>hello@reallygreatsite.com</p>
             </div>
                       {/* Social Media Icons */}
           <div className='mt-12 lg:mt-0'>
-            <h3 className='pb-4 text-2xl'>Social</h3>
-            <div className='flex justify-center lg:justify-start'>
-              <div className='flex space-x-6 border-solid border-2 border-gray-200 p-4 rounded-md'>
-                <FaInstagram className='text-3xl text-gray-700 hover:text-pink-400 transition' />
-                <ImPinterest className='text-3xl text-gray-700 hover:text-pink-400 transition' />
-                <FaX className='text-3xl text-gray-700 hover:text-pink-400 transition' />
-                <CiFacebook className='text-3xl text-gray-700 hover:text-pink-400 transition' />
-              </div>
+            <FooterList>
+            <h3 className="text-base font-bold mb-2 text-nowrap">Follow Us</h3>
+            <div className="flex gap-2">
+              <Link href="#">
+                <MdFacebook size={24} />
+              </Link>
+              <Link href="#">
+                <AiFillTwitterCircle size={24} />
+              </Link>
+              <Link href="#">
+                <AiFillInstagram size={24} />
+              </Link>
+              <Link href="#">
+                <AiFillYoutube size={24} />
+              </Link>
             </div>
+          </FooterList>
           </div>
           </div>
         </div>

@@ -1,7 +1,7 @@
 import React from 'react';
 import ServiceCard from "../../../ui/ServiceCard";
 import service1 from "../../../../../public/images/service1.svg";
-import service2 from '../../../../../public/images/service2.svg';
+import service2 from '../../../../../public/images/service2.jpg';
 import service3 from '../../../../../public/images/service3.svg';
 import service4 from '../../../../../public/images/service4.svg'; // For business services
 

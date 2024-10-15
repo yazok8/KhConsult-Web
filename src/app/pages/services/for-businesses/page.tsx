@@ -1,5 +1,5 @@
 import React from "react";
-import forBusiness from "../../../../../public/images/forBusiness.svg";
+import forBusiness from "../../../../../public/images/forBusiness.jpg";
 import Image from "next/image";
 
 export default function ForBusinesses() {
@@ -14,7 +14,7 @@ export default function ForBusinesses() {
           <h1 className="text-4xl lg:text-5xl mb-6">For Businesses</h1>
           <div className="text-lg space-y-4 leading-relaxed">
             <p>
-              Are you hiring employees from abroad, or do you need support with residence permit applications? We've got you covered.
+              Are you hiring employees from abroad, or do you need support with residence permit applications? We&apos;ve got you covered.
             </p>
             <p>
               Our team can take over the process and handle the complexities of the German bureaucracy.
