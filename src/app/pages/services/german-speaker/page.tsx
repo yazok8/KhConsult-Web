@@ -11,8 +11,8 @@ export default function GermanSpeaker() {
       <div className="flex flex-col lg:flex-row items-center lg:items-start flex-grow w-full">
         {/* Text Section */}
         <div className="pr-0 lg:pr-16 lg:w-1/2 w-full mb-10 lg:mb-0">
-          <h1 className="text-4xl lg:text-5xl mb-6">Need A German Speaker</h1>
-          <ul className="text-lg space-y-4 leading-relaxed">
+          <h1 className=" lg:text-5xl mb-6">Need A German Speaker</h1>
+          <ul className="text-lg space-y-4">
             <li>
               As a newcomer in Germany, communication with the authorities can be overwhelming. Our team can help with the following:
             </li>

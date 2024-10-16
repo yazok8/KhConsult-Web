@@ -4,6 +4,8 @@ import service1 from "../../../../../public/images/service1.svg";
 import service2 from '../../../../../public/images/service2.jpg';
 import service3 from '../../../../../public/images/service3.svg';
 import service4 from '../../../../../public/images/service4.svg'; // For business services
+import BusinessServiceCard from '@/app/ui/forbusiness-service/BusinessServiceCard';
+
 
 const individualServices = [
   {
@@ -38,7 +40,7 @@ export default function RelocationServices() {
       className="bg-black text-white min-h-screen pt-20"
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-8 lg:px-8">
-        <h1 className="text-4xl md:text-5xl lg:text-6xl text-center mb-12">
+        <h1 className=" md:text-5xl lg:text-6xl text-center mb-12">
           Relocation Services
         </h1>
 
@@ -47,7 +49,7 @@ export default function RelocationServices() {
           
           {/* Individual Services */}
           <div className="lg:w-full w-full">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl text-center lg:text-left py-6">
+            <h2 className="text-3xl md: lg:text-5xl text-center lg:text-left py-6">
               For Individuals
             </h2>
             {/* Responsive gap between services */}
@@ -64,13 +66,13 @@ export default function RelocationServices() {
           </div>
 
           {/* Business Services */}
-          <div className="w-full lg:flex flex-col items-center justify-between">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl text-center lg:text-left py-6">
+          <div className="w-full lg:flex flex-col items-center">
+            <h2 className="text-3xl md: lg:text-5xl text-center lg:text-left py-6">
               For Businesses
             </h2>
-            <div className="flex justify-center items-center w-full pb-8 lg:pb-0">
+            <div className="flex justify-center items-center w-full pb-8 lg:pb-0 mt-0">
               {businessServices.map((service, index) => (
-                <ServiceCard
+                <BusinessServiceCard
                   key={index}
                   imageSrc={service.imageSrc}
                   title={service.title}

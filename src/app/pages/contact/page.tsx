@@ -1,4 +1,5 @@
 import FooterList from '@/app/components/footer/FooterList'
+import SocialMedia from '@/app/ui/SocialMedia'
 import Link from 'next/link'
 import React from 'react'
 import { AiFillInstagram, AiFillTwitterCircle, AiFillYoutube } from 'react-icons/ai'
@@ -8,7 +9,7 @@ export default function ContactPage() {
   return (
     <section id="contact" className='text-start text-black min-h-screen pt-20 overflow-x-hidden px-5'>
       <div className='flex flex-col justify-center mx-auto max-w-6xl'>
-        <h1 className='text-4xl md:text-5xl text-center lg:text-left max-w-3xl mb-12'>
+        <h1 className=' md:text-5xl text-center lg:text-left max-w-3xl mb-12'>
           Get a quote or set up a consultation.
         </h1>
 
@@ -27,20 +28,7 @@ export default function ContactPage() {
           <div className='mt-12 lg:mt-0'>
             <FooterList>
             <h3 className="text-base font-bold mb-2 text-nowrap">Follow Us</h3>
-            <div className="flex gap-2">
-              <Link href="#">
-                <MdFacebook size={24} />
-              </Link>
-              <Link href="#">
-                <AiFillTwitterCircle size={24} />
-              </Link>
-              <Link href="#">
-                <AiFillInstagram size={24} />
-              </Link>
-              <Link href="#">
-                <AiFillYoutube size={24} />
-              </Link>
-            </div>
+            <SocialMedia/>
           </FooterList>
           </div>
           </div>

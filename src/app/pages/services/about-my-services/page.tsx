@@ -8,7 +8,7 @@ export default function AboutMyServiecs() {
       className="min-h-screen flex justify-center mx-auto max-w-6xl px-5 lg:px-5 pt-20"
     >
       <div>
-        <h1 className="text-6xl pb-8">About My Services</h1>
+        <h1 className=" pb-8">About My Services</h1>
         <div className="text-xl">
           Our team comprises foreigners and expats who have already been living
           in Germany for a long time. They have succeeded in securing jobs and

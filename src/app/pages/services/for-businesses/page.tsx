@@ -11,8 +11,8 @@ export default function ForBusinesses() {
       <div className="flex flex-col lg:flex-row items-center lg:items-start flex-grow w-full">
         {/* Text Section */}
         <div className="pr-0 lg:pr-16 lg:w-1/2 w-full mb-10 lg:mb-0">
-          <h1 className="text-4xl lg:text-5xl mb-6">For Businesses</h1>
-          <div className="text-lg space-y-4 leading-relaxed">
+          <h1 className=" lg:text-5xl mb-6">For Businesses</h1>
+          <div className="text-lg space-y-4">
             <p>
               Are you hiring employees from abroad, or do you need support with residence permit applications? We&apos;ve got you covered.
             </p>

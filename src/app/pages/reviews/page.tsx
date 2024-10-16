@@ -8,7 +8,7 @@ export default function ReviewsPage() {
       <div className="flex flex-col lg:flex-row max-w-7xl gap-16 items-start mx-auto">
         
         {/* Heading */}
-        <h1 className="text-4xl md:text-5xl lg:text-6xl mb-8 lg:mb-0 lg:mr-16 lg:text-nowrap">
+        <h1 className=" md:text-5xl lg:text-6xl mb-8 lg:mb-0 lg:mr-16 lg:text-nowrap">
           Early Reviews
         </h1>
 
