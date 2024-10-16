@@ -1,9 +1,6 @@
 import FooterList from '@/app/components/footer/FooterList'
 import SocialMedia from '@/app/ui/SocialMedia'
-import Link from 'next/link'
 import React from 'react'
-import { AiFillInstagram, AiFillTwitterCircle, AiFillYoutube } from 'react-icons/ai'
-import { MdFacebook } from 'react-icons/md'
 
 export default function ContactPage() {
   return (

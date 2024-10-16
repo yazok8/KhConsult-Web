@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import React from 'react'
-import { BsYoutube, BsInstagram, BsFacebook, BsPinterest, BsLinkedin } from 'react-icons/bs';
+import { BsYoutube, BsInstagram, BsFacebook,  BsLinkedin } from 'react-icons/bs';
 
 export default function SocialMedia() {
   return (
