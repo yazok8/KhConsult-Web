@@ -19,7 +19,7 @@ export default function SocialMedia() {
             className="cursor-pointer ease-in-out duration-300"
           />
         </Link>
-        <Link href="https://www.pinterest.com">
+        <Link href="https://www.linkedin.com/company/kh-consultation/">
           <BsLinkedin
             size={30}
             className="cursor-pointer ease-in-out duration-300"

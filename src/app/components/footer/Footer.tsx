@@ -8,6 +8,7 @@ import {
   AiFillYoutube,
 } from "react-icons/ai";
 import Image from "next/image";
+import SocialMedia from "@/app/ui/SocialMedia";
 
 const Footer = () => {
   return (
@@ -44,20 +45,7 @@ const Footer = () => {
 
           <FooterList>
             <h3 className="text-base font-bold mb-2">Follow Us</h3>
-            <div className="flex gap-2">
-              <Link href="#">
-                <MdFacebook size={24} />
-              </Link>
-              <Link href="#">
-                <AiFillTwitterCircle size={24} />
-              </Link>
-              <Link href="#">
-                <AiFillInstagram size={24} />
-              </Link>
-              <Link href="#">
-                <AiFillYoutube size={24} />
-              </Link>
-            </div>
+          <SocialMedia />
           </FooterList>
 
         </div>
