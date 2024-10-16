@@ -1,13 +1,14 @@
 import React from "react";
 import immigration from "../../../../../public/images/immigration.png";
 import Image from "next/image";
+import Container from "@/app/ui/Container";
 
-export default function ImmigrationSupport() {
+
+
+
+export default function ImmigrationSupport({}) {
   return (
-    <section
-      id="immigration-support"
-      className="flex justify-center min-h-screen lg:max-w-6xl flex-wrap mx-auto px-5 pt-20"
-    >
+    <Container id="immigration-support">
       <div className="flex flex-col lg:flex-row items-center lg:items-start flex-grow w-full">
         {/* Text Section */}
         <div className="pr-0 lg:pr-16 lg:w-1/2 w-full mb-10 lg:mb-0">
@@ -37,6 +38,6 @@ export default function ImmigrationSupport() {
           />
         </div>
       </div>
-    </section>
+    </Container>
   );
 }

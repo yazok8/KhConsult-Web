@@ -11,7 +11,7 @@ export default function ServiceCard({
   description: string;
 }) {
   return (
-    <div className="bg-white text-black text-xl max-w-[250px] w-[200px] flex flex-col items-center rounded-lg shadow-md">
+    <div className="bg-white text-black text-xl max-w-[400px] w-[300px] lg:w-[200px] flex flex-col items-center rounded-lg shadow-md">
       <Image
         src={imageSrc}
         alt={title}

@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { BsList } from 'react-icons/bs';
-import khlogo from '../../../public/images/khlogo.svg'; // Adjust the path as necessary
+import khlogo from '../../../public/images/khlogo.png'; // Adjust the path as necessary
 import BurgerMenu from '../ui/BurgerMenu';
 
 export default function Header() {
@@ -44,7 +44,8 @@ export default function Header() {
             <Image
               src={khlogo}
               alt="kh consultation logo"
-              width={100}
+              width={50}
+              height={50}
               className="cursor-pointer"
             />
           </Link>

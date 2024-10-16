@@ -1,12 +1,11 @@
+import Container from "@/app/ui/Container";
 import React from "react";
 
 export default function AboutMyServiecs() {
   return (
     <>    
-    <section
-      id="about-my-services"
-      className="min-h-screen flex justify-center mx-auto max-w-6xl px-5 lg:px-5 pt-20"
-    >
+<Container
+      id="about-my-services">
       <div>
         <h1 className=" pb-8">About My Services</h1>
         <div className="text-xl">
@@ -18,7 +17,7 @@ export default function AboutMyServiecs() {
           </li>
         </div>
       </div>
-    </section>
+    </Container>
     </>
   );
 }

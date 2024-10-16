@@ -7,7 +7,7 @@ export default function Homepage() {
     <div>
       <section
         id="home"
-        className="text-black h-screen text-center flex justify-center items-center space-x-0 px-4"
+        className="text-black h-screen text-center flex justify-center items-center space-x-0 px-5"
       >
         <div className="flex max-w-6xl">       
            <div className="pr-10">
