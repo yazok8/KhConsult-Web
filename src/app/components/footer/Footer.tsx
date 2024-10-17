@@ -1,12 +1,6 @@
 import Link from "next/link";
 import khlogo from "../../../../public/images/khlogo.png"
 import FooterList from "./FooterList";
-import { MdFacebook } from "react-icons/md";
-import {
-  AiFillTwitterCircle,
-  AiFillInstagram,
-  AiFillYoutube,
-} from "react-icons/ai";
 import Image from "next/image";
 import SocialMedia from "@/app/ui/SocialMedia";
 
