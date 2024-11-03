@@ -1,6 +1,5 @@
 import type { Config } from "tailwindcss";
-import {  fontFamily  } from "tailwindcss/defaultTheme"
-
+import {  fontFamily  } from "tailwindcss/defaultTheme";
 const config: Config = {
     darkMode: ["class"],
     content: [
@@ -59,8 +58,21 @@ const config: Config = {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'
-  		}
-  	}
+  		},
+		
+  	},
+	  bounce: {
+		'0%, 100%': { transform: 'translateY(0)' },
+		'50%': { transform: 'translateY(-10px)' },
+	  },
+	  animation: {
+        jump: 'bounce 1s infinite',
+      },
+  },
+  variants: {
+    extend: {
+      animation: ['motion-safe'],
+    },
   },
   plugins: [require("tailwindcss-animate")],
 } satisfies Config

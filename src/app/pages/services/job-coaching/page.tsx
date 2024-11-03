@@ -26,7 +26,6 @@ export default function JobCoaching() {
         <Image
           src={coaching}
           alt="Job coaching"
-          layout="responsive"
           width={800}
           height={600}
           className="rounded-lg"

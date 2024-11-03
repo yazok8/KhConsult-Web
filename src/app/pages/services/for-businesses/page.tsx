@@ -27,7 +27,6 @@ export default function ForBusinesses() {
           <Image
             src={forBusiness}
             alt="For Businesses"
-            layout="responsive"
             width={2000}
             height={1500}
             className="rounded-lg"

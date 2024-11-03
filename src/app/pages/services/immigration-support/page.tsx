@@ -31,7 +31,6 @@ export default function ImmigrationSupport({}) {
           <Image 
             src={immigration} 
             alt="Immigration support" 
-            layout="responsive" 
             width={1000} 
             height={800} 
             className="rounded-lg"

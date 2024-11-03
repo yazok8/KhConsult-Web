@@ -26,7 +26,6 @@ export default function GermanSpeaker() {
           <Image
             src={germanSpeaker}
             alt="immigration"
-            layout="responsive"
             width={2000}
             height={1500}
             className="rounded-lg"

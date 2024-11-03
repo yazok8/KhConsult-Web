@@ -6,15 +6,20 @@ import Image from 'next/image';
 import { BsList } from 'react-icons/bs';
 import khlogo from '../../../public/images/khlogo.png'; // Adjust the path as necessary
 import BurgerMenu from '../ui/BurgerMenu';
+import AppointmentBtn from './AppointmentBtn';
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false); // Mobile menu state
   const [isServicesOpen, setIsServicesOpen] = useState(false); // Services dropdown state
+  
 
   const toggleMenu = () => setIsOpen(prev => !prev);
 
   // Define refs with correct types
   const desktopServicesRef = useRef<HTMLDivElement>(null);
+
+
+
 
   // Handle clicks outside the "Services" dropdown
   useEffect(() => {
@@ -107,6 +112,7 @@ export default function Header() {
         {isOpen && (
           <BurgerMenu isOpen={isOpen} setIsOpen={setIsOpen} />
         )}
+      <AppointmentBtn />
       </nav>
     </header>
   );
