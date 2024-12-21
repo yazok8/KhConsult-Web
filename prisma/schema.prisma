@@ -1,0 +1,181 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+// -------------------------
+//  3) Content Models
+// -------------------------
+// ProcessedEvent is optional—example of a log or event model
+model ProcessedEvent {
+  id          String   @id @map("_id") @db.ObjectId
+  processedAt DateTime @default(now())
+}
+
+
+// -------------------------
+//  1) Enums
+// -------------------------
+enum Role {
+  USER
+  ADMIN
+}
+
+enum ServiceCategory {
+  INDIVIDUAL
+  BUSINESS
+}
+
+// -------------------------
+//  2) User (Admin) Model
+// -------------------------
+model Account {
+  id                String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId            String  @db.ObjectId
+  type              String
+  provider          String
+  providerAccountId String  @map("provider_account_id")
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model User {
+  id             String    @id @default(auto()) @map("_id") @db.ObjectId
+  email          String    @unique
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  emailVerified  DateTime?
+  hashedPassword String
+  name           String
+  username       String    @unique
+  address        String?
+  profileImage   String?
+  role           Role      @default(ADMIN)
+  accounts       Account[]
+  sessions       Session[]
+}
+
+model Session {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  sessionToken String   @unique
+  userId       String   @db.ObjectId
+  expire       DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+
+// Example content block: “About Our Services”
+model AboutOurServices {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  title      String   @unique
+  body       String
+  aboutimage String
+  published  Boolean  @default(true)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+// Example content block: “About Our Team”
+model AboutOurTeam {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  title      String   @unique
+  body       String
+  aboutimage String
+  published  Boolean  @default(true)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+// Services, each mapped to a category (INDIVIDUAL or BUSINESS)
+model Service {
+  id          String          @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  description String
+  imageSrc    String
+  category    ServiceCategory
+  published   Boolean         @default(true)
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+
+  @@index([category])
+}
+
+// Another content block: “For Businesses”
+model ForBusinesses {
+  id               String   @id @default(auto()) @map("_id") @db.ObjectId
+  title            String   @unique
+  body             String
+  ForBusinessImage String
+  published        Boolean  @default(true)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+// Another content block: “Job Relocation”
+model JobRelocation {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  title           String   @unique
+  description     String
+  relocationimage String
+  published       Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+// Another content block: “Studying in Germany”
+model StudyingInGermany {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  title         String   @unique
+  description   String
+  studyingImage String
+  published     Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+// Another content block: “Need a German Speaker”
+model NeedAGermanSpeaker {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  title       String   @unique
+  description String
+  germanImage String
+  published   Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// Simple Blog model
+model BlogArticles {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  title       String   @unique
+  description String
+  published   Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// Testimonials model
+model Testimonials {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  title      String   @unique
+  description String
+  testiImage String
+  published  Boolean  @default(true)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
