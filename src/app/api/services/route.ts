@@ -1,5 +1,5 @@
+import { AddService } from "@/app/admin/actions/services";
 import prisma from "@/lib/prisma";
-import { ServiceCategory } from "@prisma/client";
 import { NextResponse } from "next/server";
 
 export async function GET(){
@@ -12,25 +12,16 @@ export async function GET(){
     }
 }
 
-export async function POST(req:Request){
-    try{
-        const body = await req.json();
-        const {title, description, imageSrc, category}=body;
-
-        if(!title || !description ){
-            return NextResponse.json({err:"Title and description are required"}, {status:400});
-        }
-        const newServce = await prisma.service.create({
-            data:{
-                title,
-                description,
-                imageSrc,
-                category: category as ServiceCategory || "INDIVIDUAL"
-            }
-        });
-        return NextResponse.json(newServce);
-    }catch(err){
-        console.log(err);
-        return NextResponse.json({err:"failed to create service"}, {status:500});
-    }
+export async function POST(req: Request) {
+  try {
+    const formData = await req.formData();
+    const service = await AddService(formData);
+    return NextResponse.json(service, { status: 201 });
+  } catch (err) {
+    console.error("Error creating service:", err);
+    return NextResponse.json(
+      { error: err instanceof Error ? err.message : "Failed to create service" },
+      { status: 500 }
+    );
+  }
 }

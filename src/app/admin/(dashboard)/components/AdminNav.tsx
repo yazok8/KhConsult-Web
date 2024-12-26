@@ -19,11 +19,11 @@ const AdminNav = () => {
   // }   
    
   return (   
-  <div className="fixed left-0 top-0 h-screen w-54 bg-black shadow-xl z-50 flex flex-col">   
-   <div className="      mx-auto
-      xl:px-20
+  <div className="fixed left-0 top-0 h-screen w-54 bg-black shadow-xl z-50 flex flex-col w-60 text-nowrap">   
+   <div className="      
+      mx-auto
       md:px-2
-      px-4">  
+      px-1">  
       <div className="p-6 border-b border-gray-800">  
       <Link href="/admin">  
       <span className="text-white text-xl font-semibold">Admin Dashboard</span>  

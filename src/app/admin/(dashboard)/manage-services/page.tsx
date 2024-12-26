@@ -29,7 +29,7 @@ export default function ServiceListPage() {
           <CardTitle>Our Services</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="py-5">
+          <div className="py-5 mr-auto">
             <Link href="/admin/add-services/new">Create A New Service</Link>
           </div>
           <ul>
