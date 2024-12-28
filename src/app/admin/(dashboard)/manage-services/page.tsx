@@ -3,6 +3,7 @@
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import Image from "next/image";
 
 interface Service {
   id: string;
@@ -35,14 +36,19 @@ export default function ServiceListPage() {
           <ul>
             {services &&
               services.map((service, index) => (
-                <div key={index}>
+                <div key={index} className="flex justify-around flex-wrap">
+                  <div className="max-w-1/4">
                   <li>
                     <span>{service.title}</span>
                     {" | "}
-                    <Link href={`/admin/edit-service/${service.id}/edit`}>
+                    <Link href={`/admin/edit-service/${service.id}`}>
                       Edit
                     </Link>
                   </li>
+                  </div>
+                  <div className="my-5">
+                    <Image src={`https://khconsult.s3.us-east-2.amazonaws.com/${service.imageSrc}`} alt={service.title} width={200} height={100} />
+                  </div>
                 </div>
               ))}
           </ul>

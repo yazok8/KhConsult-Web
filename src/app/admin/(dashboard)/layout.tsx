@@ -1,5 +1,5 @@
 import React from 'react';  
-import AdminHeader from './components/AdminNav';  
+import AdminHeader from '../components/AdminNav';  
   
 interface AdminLayoutProps {  
   children: React.ReactNode;  

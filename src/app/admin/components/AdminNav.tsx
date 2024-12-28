@@ -33,16 +33,16 @@ const AdminNav = () => {
     <div className="flex flex-col items-start md:justify-center p-4 gap-8 md:gap-12 overflow-x-auto flex-nowrap">   
      <SummaryTab />
      <AdminNavItem   
-      label="Edit Team"   
+      label="Manage Team"   
       icon={MdLibraryAdd}   
-      href="/admin/edit-team"   
-      selected={pathname === "/admin/edit-team"}   
+      href="/admin/manage-team"  
+      selected={pathname === "/admin/manage-team"}   
      />   
      <AdminNavItem   
-      label="Edit About Our Services"   
+      label="About Our Services"   
       icon={MdDns}   
-      href="/admin/edit-about-services"   
-      selected={pathname === "/admin/edit-about-services"}   
+      href="/admin/about-services"   
+      selected={pathname === "/admin/about-services"}   
      />   
      <AdminNavItem   
       label="Manage Services"   

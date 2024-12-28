@@ -1,7 +1,8 @@
+import Home from '@/app/(client)/page'
 import React from 'react'
 
 export default function SummaryPage() {
   return (
-    <div>Summary</div>
+    <Home />
   )
 }

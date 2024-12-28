@@ -2,11 +2,10 @@
 
 import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
-import { Service } from "@prisma/client";
+import { Service, ServiceCategory } from "@prisma/client";
 import { addSchema } from "@/lib/validations/service";
 import { uploadImageToS3 } from "./uploadImageToS3";
-
-
+import { NextRequest } from "next/server";
 
 
 /**
@@ -56,5 +55,79 @@ export async function AddService(formData: FormData): Promise<Service> {
   } catch (err) {
     console.error("Error adding service:", err);
     throw new Error("An error occurred while adding the service.");
+  }
+}
+
+// Helper function to convert Blob to Buffer
+export async function blobToBuffer(blob: Blob): Promise<Buffer> {
+  const arrayBuffer = await blob.arrayBuffer();
+  return Buffer.from(arrayBuffer);
+}
+
+// src/app/admin/actions/services.tsx
+
+export async function editService(
+  req: NextRequest,
+  { params }: { params: { id: string } }
+): Promise<Service> {
+  const { id } = params; // Now safe to destructure
+
+  try {
+    const formData = await req.formData();
+
+    const title = formData.get("title") as string | null;
+    const description = formData.get("description") as string | null;
+    const category = formData.get("category") as string | null;
+    const imageFile = formData.get("image") as File | null;
+    const existingImageSrc = formData.get("imageSrc") as string | null;
+
+    // Validate required fields
+    if (!title || !description || !category) {
+      throw new Error("Title, description, and category are required.");
+    }
+
+    // Validate category
+    if (!["INDIVIDUAL", "BUSINESS"].includes(category)) {
+      throw new Error("Invalid category provided.");
+    }
+
+    let imageSrc = existingImageSrc;
+
+    if (imageFile) {
+      // Validate image size before uploading
+      const imageBuffer = await blobToBuffer(imageFile as Blob);
+      const maxImageSize = 10 * 1024 * 1024; // 10 MB
+
+      if (imageBuffer.length > maxImageSize) {
+        throw new Error("Image size should not exceed 10 MB.");
+      }
+
+      // Upload image to S3
+      const imgKey = await uploadImageToS3(imageFile);
+      imageSrc = imgKey;
+
+      // Optionally, delete the old image from S3 if necessary
+      // await deleteImageFromS3(existingImageSrc);
+    }
+
+    // Update the service in the database
+    const updatedService = await prisma.service.update({
+      where: { id },
+      data: {
+        title,
+        description,
+        ...(imageSrc && { imageSrc }),
+        category: category as ServiceCategory,
+      },
+    });
+
+    // Revalidate relevant paths to update caches
+    revalidatePath("/");
+    revalidatePath("/services");
+
+    return updatedService;
+  } catch (err: any) {
+    console.error("Error updating service:", err);
+    throw err; // Let the API route handle the error response
   }
 }

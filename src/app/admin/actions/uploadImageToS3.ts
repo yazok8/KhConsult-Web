@@ -1,3 +1,5 @@
+// src/app/admin/actions/uploadImageToS3.ts
+
 import { S3Client } from "@aws-sdk/client-s3";
 import { Upload } from "@aws-sdk/lib-storage";
 import { v4 as uuidv4 } from "uuid";
@@ -16,8 +18,16 @@ const s3Client = new S3Client({
  * @param file The image file to upload.
  * @returns The key of the uploaded image in S3.
  */
-export async function uploadImageToS3(file: any): Promise<string> {
+export async function uploadImageToS3(file: File): Promise<string> {
+  if (!file) {
+    throw new Error("No file provided for upload.");
+  }
+
   const fileExtension = file.name.split(".").pop();
+  if (!fileExtension) {
+    throw new Error("File must have an extension.");
+  }
+
   const key = `services/${uuidv4()}.${fileExtension}`;
 
   console.log("Uploading to Bucket:", process.env.AWS_S3_BUCKET_NAME);
@@ -40,7 +50,6 @@ export async function uploadImageToS3(file: any): Promise<string> {
         Key: key,
         Body: buffer,
         ContentType: file.type,
-        // Removed ACL since the bucket doesn't allow it
       },
       // Optional: set part size and queue size for multipart uploads
       // partSize: 5 * 1024 * 1024, // 5 MB
@@ -51,8 +60,13 @@ export async function uploadImageToS3(file: any): Promise<string> {
     await parallelUploads3.done();
     console.log("Upload successful:", key);
     return key;
-  } catch (error) {
-    console.error("Error uploading to S3:", error);
+  } catch (error: any) {
+    console.error("Error uploading to S3:", {
+      message: error.message,
+      code: error.code,
+      name: error.name,
+      stack: error.stack,
+    });
     throw new Error("Could not upload image to S3. Please try again later.");
   }
 }
