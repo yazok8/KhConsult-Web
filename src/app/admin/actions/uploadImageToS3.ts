@@ -1,5 +1,6 @@
 // src/app/admin/actions/uploadImageToS3.ts
 
+import { awsConfig } from "@/config/aws";
 import { S3Client } from "@aws-sdk/client-s3";
 import { Upload } from "@aws-sdk/lib-storage";
 import { v4 as uuidv4 } from "uuid";
@@ -16,10 +17,10 @@ export enum S3Folder {
  * Initializes the S3 client with AWS SDK v3.
  */
 const s3Client = new S3Client({
-  region: process.env.AWS_REGION,
+  region: awsConfig.region,
   credentials: {
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID as string,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY as string,
+    accessKeyId: awsConfig.accessKeyId,
+    secretAccessKey: awsConfig.secretAccessKey,
   },
 });
 
@@ -74,13 +75,19 @@ export async function uploadImageToS3(
     await parallelUploads3.done();
     console.log("Upload successful:", key);
     return key;
-  } catch (error: any) {
-    console.error("Error uploading to S3:", {
-      message: error.message,
-      code: error.code,
-      name: error.name,
-      stack: error.stack,
-    });
+  } catch (error: unknown) {
+
+    // Type Guard to check if error is an instance of Error
+    if (error instanceof Error) {
+      console.error("Error uploading to S3:", {
+        message: error.message,
+        name: error.name,
+        stack: error.stack,
+      });
+    } else {
+      // Handle non-Error exceptions
+      console.error("Unknown error uploading to S3:", error);
+    }
     throw new Error("Could not upload image to S3. Please try again later.");
   }
 }
