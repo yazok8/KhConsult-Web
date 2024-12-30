@@ -90,14 +90,14 @@ model AboutOurServices {
 
 // Example content block: “About Our Team”
 model AboutOurTeam {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  name        String   @unique
-  title       String   @unique
-  description String
-  aboutimage  String
-  published   Boolean  @default(true)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  name         String   @unique
+  title        String   @unique
+  description  String
+  profileImage String
+  published    Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }
 
 // Services, each mapped to a category (INDIVIDUAL or BUSINESS)

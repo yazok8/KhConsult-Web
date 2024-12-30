@@ -4,7 +4,7 @@ import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { Service, ServiceCategory } from "@prisma/client";
 import { addSchema } from "@/lib/validations/service";
-import { uploadImageToS3 } from "./uploadImageToS3";
+import { S3Folder, uploadImageToS3 } from "./uploadImageToS3";
 import { NextRequest } from "next/server";
 
 
@@ -13,7 +13,7 @@ import { NextRequest } from "next/server";
  * @param formData The form data containing service details and image file.
  * @returns The created service.
  */
-export async function AddService(formData: FormData): Promise<Service> {
+export async function addService(formData: FormData): Promise<Service> {
   const formEntries = Object.fromEntries(formData.entries());
 
   // Retrieve the image file from formData
@@ -34,15 +34,17 @@ export async function AddService(formData: FormData): Promise<Service> {
   const data = result.data;
 
   try {
-    // Upload image to S3
-    const imgKey = await uploadImageToS3(data.image);
+    // Upload image to S3 under the 'services' folder
+    const imgKey = data.image
+      ? await uploadImageToS3(data.image as File, S3Folder.SERVICES)
+      : "";
 
     // Create the service in the database
     const newService = await prisma.service.create({
       data: {
         title: data.title,
         description: data.description,
-        imageSrc: imgKey,
+        imageSrc: imgKey, // Ensure this matches your Prisma schema
         category: data.category,
       },
     });
@@ -58,19 +60,27 @@ export async function AddService(formData: FormData): Promise<Service> {
   }
 }
 
-// Helper function to convert Blob to Buffer
+/**
+ * Helper function to convert Blob to Buffer
+ * @param blob The Blob object to convert.
+ * @returns A Promise that resolves to a Buffer.
+ */
 export async function blobToBuffer(blob: Blob): Promise<Buffer> {
   const arrayBuffer = await blob.arrayBuffer();
   return Buffer.from(arrayBuffer);
 }
 
-// src/app/admin/actions/services.tsx
-
+/**
+ * Edits an existing service in the database after handling image updates.
+ * @param req The Next.js request object.
+ * @param params The route parameters containing the service ID.
+ * @returns The updated service.
+ */
 export async function editService(
   req: NextRequest,
   { params }: { params: { id: string } }
 ): Promise<Service> {
-  const { id } = params; // Now safe to destructure
+  const { id } = params; // Safe destructuring
 
   try {
     const formData = await req.formData();
@@ -91,19 +101,19 @@ export async function editService(
       throw new Error("Invalid category provided.");
     }
 
-    let imageSrc = existingImageSrc;
+    let imageSrc = existingImageSrc; // Default to existing image
 
     if (imageFile) {
       // Validate image size before uploading
-      const imageBuffer = await blobToBuffer(imageFile as Blob);
+      const imageBuffer = await blobToBuffer(imageFile);
       const maxImageSize = 10 * 1024 * 1024; // 10 MB
 
       if (imageBuffer.length > maxImageSize) {
         throw new Error("Image size should not exceed 10 MB.");
       }
 
-      // Upload image to S3
-      const imgKey = await uploadImageToS3(imageFile);
+      // Upload image to S3 under the 'services' folder
+      const imgKey = await uploadImageToS3(imageFile, S3Folder.SERVICES);
       imageSrc = imgKey;
 
       // Optionally, delete the old image from S3 if necessary
@@ -116,7 +126,7 @@ export async function editService(
       data: {
         title,
         description,
-        ...(imageSrc && { imageSrc }),
+        imageSrc: imageSrc || undefined, // Update if new image is uploaded
         category: category as ServiceCategory,
       },
     });
@@ -126,7 +136,7 @@ export async function editService(
     revalidatePath("/services");
 
     return updatedService;
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error("Error updating service:", err);
     throw err; // Let the API route handle the error response
   }

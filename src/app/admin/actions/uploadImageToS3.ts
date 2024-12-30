@@ -4,7 +4,17 @@ import { S3Client } from "@aws-sdk/client-s3";
 import { Upload } from "@aws-sdk/lib-storage";
 import { v4 as uuidv4 } from "uuid";
 
-// Initialize S3 client with AWS SDK v3
+/**
+ * Enumeration of allowed folders in S3.
+ */
+export enum S3Folder {
+  TEAM = "team",
+  SERVICES = "services",
+}
+
+/**
+ * Initializes the S3 client with AWS SDK v3.
+ */
 const s3Client = new S3Client({
   region: process.env.AWS_REGION,
   credentials: {
@@ -14,11 +24,15 @@ const s3Client = new S3Client({
 });
 
 /**
- * Uploads an image file to S3.
+ * Uploads an image file to S3 under the specified folder.
  * @param file The image file to upload.
+ * @param folder The target folder in S3 ('team' or 'services').
  * @returns The key of the uploaded image in S3.
  */
-export async function uploadImageToS3(file: File): Promise<string> {
+export async function uploadImageToS3(
+  file: File,
+  folder: S3Folder
+): Promise<string> {
   if (!file) {
     throw new Error("No file provided for upload.");
   }
@@ -28,7 +42,9 @@ export async function uploadImageToS3(file: File): Promise<string> {
     throw new Error("File must have an extension.");
   }
 
-  const key = `services/${uuidv4()}.${fileExtension}`;
+  // Generate a unique filename
+  const fileName = `${uuidv4()}.${fileExtension}`;
+  const key = `${folder}/${fileName}`;
 
   console.log("Uploading to Bucket:", process.env.AWS_S3_BUCKET_NAME);
   console.log("Object Key:", key);
@@ -47,13 +63,11 @@ export async function uploadImageToS3(file: File): Promise<string> {
       client: s3Client,
       params: {
         Bucket: process.env.AWS_S3_BUCKET_NAME as string,
-        Key: key,
+        Key: key, // Dynamic folder
         Body: buffer,
         ContentType: file.type,
+        // Removed ACL since bucket does not allow ACLs
       },
-      // Optional: set part size and queue size for multipart uploads
-      // partSize: 5 * 1024 * 1024, // 5 MB
-      // queueSize: 4, // Concurrent parts
     });
 
     // Start the upload

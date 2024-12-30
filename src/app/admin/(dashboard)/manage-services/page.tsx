@@ -4,6 +4,7 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Image from "next/image";
+import { IoMdAdd } from "react-icons/io";
 
 interface Service {
   id: string;
@@ -31,7 +32,11 @@ export default function ServiceListPage() {
         </CardHeader>
         <CardContent>
           <div className="py-5 mr-auto">
-            <Link href="/admin/add-services/new">Create A New Service</Link>
+            <Link href="/admin/add-services/new">
+            <div className="inline-flex m-0 p-0">
+            <IoMdAdd size='20' className="m-0 p-0" />
+           </div>
+            </Link>
           </div>
           <ul>
             {services &&
