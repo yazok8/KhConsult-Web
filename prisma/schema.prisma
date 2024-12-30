@@ -22,6 +22,7 @@ model ProcessedEvent {
 enum Role {
   USER
   ADMIN
+  VIEW_ONLY
 }
 
 enum ServiceCategory {
@@ -62,7 +63,7 @@ model User {
   username       String    @unique
   address        String?
   profileImage   String?
-  role           Role      @default(ADMIN)
+  role           Role      @default(VIEW_ONLY)
   accounts       Account[]
   sessions       Session[]
 }
