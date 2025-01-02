@@ -4,20 +4,21 @@ import Link from "next/link";
 import AdminNavItem from "./AdminNavItem";  
 import { MdDns, MdLibraryAdd } from "react-icons/md";  
 import { usePathname } from "next/navigation";  
-
-// import { signOut, useSession } from "next-auth/react";  
-// import { Button } from "@/components/ui/button";  
+import { Session } from "next-auth";
+import { signOut } from "next-auth/react";
 import SummaryTab from "./tabs/SummaryTab";
+import { Button } from "@/components/ui/button";
   
-  
-const AdminNav = () => {   
+interface AdminNavProps {
+  session: Session; // or Session | null if you prefer
+}  
+
+const AdminNav: React.FC<AdminNavProps> = ({ session })  => {   
   const pathname = usePathname();   
-  /** const { data: session, status } = useSession();  */  
+
+  console.log(session)
    
-  // if (status === "loading") {   
-  //  return <div>Loading...</div>;   
-  // }   
-   
+
   return (   
   <div className="fixed left-0 top-0 h-screen w-54 bg-black shadow-xl z-50 flex flex-col w-60 text-nowrap">   
    <div className="      
@@ -55,16 +56,16 @@ const AdminNav = () => {
       icon={MdDns}   
       href="/admin/faq"   
       selected={pathname === "/admin/faq"}   
-     />  
-     {/* Render additional tabs from context */}   
-     {/* {session && (   
-      <Button   
-       className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"   
-       onClick={() => signOut()}   
-      >   
-       Sign Out   
-      </Button>   
-     )}  */}  
+     />   
+      {/* Sign Out Button */}
+      {session && (
+        <Button
+          className="mt-auto bg-red-500 hover:bg-red-700 text-white font-bold w-full"
+          onClick={() => signOut()}
+        >
+          Sign Out
+        </Button>
+      )}
     </div>   
    </div>   
   </div>   
