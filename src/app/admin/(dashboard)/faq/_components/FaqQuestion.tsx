@@ -2,62 +2,73 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import Link from 'next/link';
-import  { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react';
 import { IoMdAdd } from 'react-icons/io';
 
 interface Faq {
-    id: string;
-    question: string;
-    answer: string;
-  }
-  
+  id: string;
+  question: string;
+  answer: string;
+}
 
 export default function FaqQuestion() {
-    const [question, setQuestion ]= useState<Faq[]>([]);
+  const [questions, setQuestions] = useState<Faq[]>([]);
 
-     useEffect(() => {
-          (async () => {
-            const res = await fetch("/api/faq");
-            const data = await res.json();
-            setQuestion(data);
-          })();
-        }, []);
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await fetch("/api/faq");
+        if (!res.ok) {
+          throw new Error("Failed to fetch FAQs.");
+        }
+        const data: Faq[] = await res.json();
+        setQuestions(data);
+      } catch (error) {
+        console.error("Error fetching FAQs:", error);
+      }
+    })();
+  }, []);
 
   return (
-    <div className="mx-auto flex flex-col">
-    <Card>
-      <CardHeader>
-        <CardTitle>Faq Questions</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className="py-5 mr-auto">
-          <Link href="/admin/faq/add-faq">
-          <div className="inline-flex m-0 p-0">
-          <IoMdAdd size='20' className="m-0 p-0" />
-         </div>
-          </Link>
-        </div>
-        <ul>
-          {question &&
-            question.map((q, index) => (
-              <div key={index} className="flex justify-around flex-wrap">
-                <div className="max-w-1/4">
-                <li>
-                  <span>{q.question}</span>
-                  {" | "}
-                  <Link href={`/admin/faq/edit-faq/${q.id}`}>
-                    Edit
-                  </Link>
-                </li>
-                </div>
-                <div className="my-5">
-                  <p>{q.answer}</p>
-                </div>
+    <div className="mt-20 flex flex-col text-black text-start min-h-screen lg:h-[75vh] md:h-[120vh] pt-20 px-5 max-w-6xl mx-auto">
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-6xl mb-12 text-start">FAQ</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="py-5 mr-auto">
+            <Link href="/admin/faq/add-faq">
+              <div className="inline-flex m-0 p-0">
+                <IoMdAdd size="20" className="m-0 p-0" />
               </div>
-            ))}
-        </ul>
-      </CardContent>
-    </Card>
-  </div>
-  )
+            </Link>
+          </div>
+          {/* Use CSS Grid for layout */}
+          <ul className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {questions.length > 0 ? (
+              questions.map((q) => (
+                <article
+                  key={q.id}
+                  className="flex flex-col bg-slate-300 text-black rounded-lg shadow-lg"
+                >
+                  <Link href={`/admin/faq/edit-faq/${q.id}`}>
+                    <li className="list-none">
+                      <h2 className="p-6 bg-slate-500 rounded-t-lg text-2xl font-semibold">
+                        {q.question}
+                      </h2>
+                    </li>
+                    <div className="p-6 flex-grow">
+                      <p>{q.answer}</p>
+                    </div>
+                  </Link>
+                </article>
+              ))
+            ) : (
+              <p>No FAQs available.</p>
+            )}
+          </ul>
+        </CardContent>
+      </Card>
+    </div>
+  );
 }

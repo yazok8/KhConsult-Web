@@ -38,10 +38,9 @@ export default function TeamTable() {
             <ul>
               {team.map((teamMember) => (
                 <div key={teamMember.id} className="flex justify-around flex-wrap mb-4">
+                   <Link href={`/admin/manage-team/edit-team/${teamMember.id}`} className="flex space-x-12">
                   <div className="max-w-1/4">
-                    <Link href={`/admin/manage-team/edit-team/${teamMember.id}`} className="text-blue-500 underline">
-                      Edit
-                    </Link>
+                      
                     <li>
                       <span className="font-semibold">Name:</span> {teamMember.name}
                     </li>
@@ -49,7 +48,7 @@ export default function TeamTable() {
                       <span className="font-semibold">Title:</span> {teamMember.title}
                     </li>
                   </div>
-                  <div className="my-5">
+                  <div>
                     {teamMember.profileImage ? (
                       <Image
                         src={`https://khconsult.s3.us-east-2.amazonaws.com/${teamMember.profileImage}`}
@@ -58,12 +57,15 @@ export default function TeamTable() {
                         height={200}
                         className="object-cover rounded"
                       />
+                      
                     ) : (
                       <div className="w-50 h-50 bg-gray-200 flex items-center justify-center">
                         <span>No Image</span>
                       </div>
                     )}
+                    
                   </div>
+                  </Link>
                 </div>
               ))}
             </ul>
