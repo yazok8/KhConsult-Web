@@ -49,8 +49,8 @@ export async function addAboutServices(
     const newService = await prisma.aboutOurServices.create({
       data: {
         title: data.title,
-        description: data.description, // Store as is
-        aboutimage: imgKey, // Ensure this matches your Prisma schema
+        description: data.description,
+        aboutimage: imgKey, 
       },
     });
 

@@ -1,7 +1,8 @@
 import React from 'react'
+import FaqQuestion from './_components/FaqQuestion'
 
-export default function FaqPage() {
+export default function page() {
   return (
-    <div>Faq</div>
+    <FaqQuestion />
   )
 }

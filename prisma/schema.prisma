@@ -159,6 +159,15 @@ model NeedAGermanSpeaker {
   updatedAt   DateTime @updatedAt
 }
 
+model faq {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  question    String   @unique
+  answer      String
+  published   Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
 // Simple Blog model
 model BlogArticles {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
