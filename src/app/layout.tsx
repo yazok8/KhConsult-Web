@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";  
 import "./globals.css";  
 import { cn } from "@/lib/utils";  
+import { Toaster } from 'react-hot-toast';
   
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });  
   
@@ -22,6 +23,23 @@ export default function RootLayout({
       className={cn("bg-background font-sans antialiased", inter.variable)}  
     >  
      <main> {children} </main> 
+     <Toaster
+          position="top-right" // Position can be adjusted as needed
+          toastOptions={{
+            success: {
+              style: {
+                background: '#4CAF50',
+                color: '#fff',
+              },
+            },
+            error: {
+              style: {
+                background: '#f44336',
+                color: '#fff',
+              },
+            },
+          }}
+        />
     </body>  
    </html>  
   );  

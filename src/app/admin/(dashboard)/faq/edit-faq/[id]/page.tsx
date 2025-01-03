@@ -9,7 +9,7 @@ interface EditFaqProps {
 
 export default async function editFaqQuestion({ params }: EditFaqProps) {
 
-    const {id} = params;
+    const {id} = await params;
 
     const faq = await prisma.faq.findUnique({ where: { id } });
 
