@@ -8,18 +8,18 @@ interface IParams{
     }
 }
 
-//Delete a single service
+//Delete a single about service
 export async function DELETE(_req:Request,{ params}:IParams){
     try{
         const {id} = params;
-        const deletedService = await prisma.service.delete({
+        const deletedAboutService = await prisma.aboutOurServices.delete({
             where:{
                 id
             }
         });
-        return NextResponse.json(deletedService, {status:200});
+        return NextResponse.json(deletedAboutService);
     }catch(err){
         console.log(err);
-        return NextResponse.json({err:"failed to delete service"}, {status:500});
+        return NextResponse.json({err:"failed to delete about service"}, {status:500});
     }
 }

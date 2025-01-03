@@ -12,6 +12,8 @@ import { Prisma } from "@prisma/client";
 import { Label } from "@radix-ui/react-label";
 import Image from "next/image";
 import { Textarea } from "@/components/ui/textarea";
+import DeleteButton from "@/app/admin/components/DeleteButton";
+
 
 type AboutOurServices = Prisma.AboutOurServicesGetPayload<object>;
 
@@ -34,6 +36,7 @@ export default function AboutOurServicesForm({
   );
 
   const [error, setError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     if (aboutServices?.aboutimage) {
@@ -161,7 +164,23 @@ export default function AboutOurServicesForm({
           {/* Display Error Message */}
           {error && <p className="text-red-500">{error}</p>}
 
-          <Button type="submit">Save</Button>
+          <div className="flex items-center gap-2">
+            <Button type="submit" disabled={isSubmitting}>
+              {isSubmitting ? "Saving..." : "Save"}
+            </Button>
+            {aboutServices && (
+              <DeleteButton
+                apiEndpoint={`/api/aboutServices/delete/${aboutServices.id}`}
+                itemId={aboutServices.id}
+                confirmMessage="Are you sure you want to delete this About Our Services?"
+                successMessage="About Our Services deleted successfully!"
+                errorMessage="Failed to delete this About Our Services."
+                redirectPath="/admin/about-services" // Dynamic redirect path
+                variant="destructive"
+                buttonText="Delete"
+              />
+            )}
+          </div>
         </form>
       </CardContent>
     </Card>

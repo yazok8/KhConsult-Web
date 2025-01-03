@@ -1,6 +1,6 @@
 import prisma from '@/lib/prisma';
 import React from 'react'
-import TeamForm from '../../_components/AddToTeamForm';
+import TeamForm from '../../_components/TeamForm';
 
 interface EditTeamProps {
   params: Promise<{ id: string }>; // Adjusted type to Promise

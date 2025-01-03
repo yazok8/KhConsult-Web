@@ -21,7 +21,7 @@ export default async function AdminAboutOurServices() {
           </CardHeader>
           <CardContent className="text-xl">
             <div className="py-5 mr-auto">
-              <Link href="/admin/add-about-services" className="text-blue-500 underline">
+              <Link href="/admin/about-services/add-about-services" className="text-blue-500 underline">
                 Create A New Service
               </Link>
             </div>
@@ -35,7 +35,7 @@ export default async function AdminAboutOurServices() {
     <Container id="about-my-services">
       <Card>
       <div className="flex justify-end p-5">
-            <Link href={`/admin/edit-about-services/${aboutService.id}`} className="text-blue-500 underline">
+            <Link href={`/admin/about-services/edit-about-services/${aboutService.id}`} className="text-blue-500 underline">
               Edit Service
             </Link>
           </div>

@@ -17,7 +17,7 @@ export async function DELETE(_req:Request,{ params}:IParams){
                 id
             }
         });
-        return NextResponse.json(deletedFaq);
+        return NextResponse.json(deletedFaq, {status:200});
     }catch(err){
         console.log(err);
         return NextResponse.json({err:"failed to delete faq"}, {status:500});

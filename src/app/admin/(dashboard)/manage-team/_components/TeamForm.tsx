@@ -12,6 +12,7 @@ import { Textarea } from '@/components/ui/textarea';
 import Image from 'next/image';
 import { getImageSrc } from '@/lib/imageHelper';
 import { Prisma } from '@prisma/client';
+import DeleteButton from '@/app/admin/components/DeleteButton';
 
 type Team = Prisma.AboutOurTeamGetPayload<{
   select: {
@@ -35,6 +36,7 @@ export default function TeamForm({ team }: TeamFormProps) {
   const [title, setTitle] = useState(team?.title || '');
   const [description, setDescription] = useState(team?.description || '');
   const [error, setError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     if (team?.profileImage) {
@@ -158,7 +160,23 @@ export default function TeamForm({ team }: TeamFormProps) {
           {/* Display Error Message */}
           {error && <p className="text-red-500">{error}</p>}
 
-          <Button type="submit" className='mt-3'>Save</Button>
+          <div className="flex items-center gap-2">
+            <Button type="submit" disabled={isSubmitting}>
+              {isSubmitting ? "Saving..." : "Save"}
+            </Button>
+            {team && (
+              <DeleteButton
+                apiEndpoint={`/api/team/delete-team/${team.id}`}
+                itemId={team.id}
+                confirmMessage="Are you sure you want to delete this team member?"
+                successMessage="Team member deleted successfully!"
+                errorMessage="Failed to delete this team member."
+                redirectPath="/admin/manage-team" // Dynamic redirect path
+                variant="destructive"
+                buttonText="Delete"
+              />
+            )}
+          </div>
         </form>
       </CardContent>
     </Card>

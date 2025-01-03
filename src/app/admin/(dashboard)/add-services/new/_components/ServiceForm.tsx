@@ -12,6 +12,7 @@ import { Textarea } from '@/components/ui/textarea';
 import Image from 'next/image';
 import { getImageSrc } from '@/lib/imageHelper';
 import { Prisma } from '@prisma/client';
+import DeleteButton from '@/app/admin/components/DeleteButton';
 
 type Service = Prisma.ServiceGetPayload<object>;
 
@@ -32,6 +33,7 @@ type Category = 'INDIVIDUAL' | 'BUSINESS';
   const [category, setCategory] = useState(service?.category || 'INDIVIDUAL');
 
   const [error, setError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     if (service?.imageSrc) {
@@ -158,7 +160,23 @@ type Category = 'INDIVIDUAL' | 'BUSINESS';
           {/* Display Error Message */}
           {error && <p className="text-red-500">{error}</p>}
 
-          <Button type="submit">Save</Button>
+          <div className="flex items-center gap-2">
+            <Button type="submit" disabled={isSubmitting}>
+              {isSubmitting ? "Saving..." : "Save"}
+            </Button>
+            {service && (
+              <DeleteButton
+                apiEndpoint={`/api/services/deleteService/${service.id}`}
+                itemId={service.id}
+                confirmMessage="Are you sure you want to delete this Service?"
+                successMessage="Service deleted successfully!"
+                errorMessage="Failed to delete this Service."
+                redirectPath="/admin/manage-services" // Dynamic redirect path
+                variant="destructive"
+                buttonText="Delete"
+              />
+            )}
+          </div>
         </form>
       </CardContent>
     </Card>
