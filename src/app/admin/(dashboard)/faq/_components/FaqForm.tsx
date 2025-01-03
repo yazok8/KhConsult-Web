@@ -1,3 +1,5 @@
+// components/FaqForm.tsx
+
 "use client";
 
 import { useState } from "react";
@@ -24,7 +26,6 @@ export default function FaqForm({ faq }: FaqFormProps) {
   const [answer, setAnswer] = useState(faq?.answer || "");
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isDeleting, setIsDeleting] = useState(false);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -78,7 +79,7 @@ export default function FaqForm({ faq }: FaqFormProps) {
               value={question}
               onChange={(e) => setQuestion(e.target.value)}
               required
-              disabled={isSubmitting || isDeleting}
+              disabled={isSubmitting}
             />
           </div>
 
@@ -90,30 +91,27 @@ export default function FaqForm({ faq }: FaqFormProps) {
               value={answer}
               onChange={(e) => setAnswer(e.target.value)}
               required
-              disabled={isSubmitting || isDeleting}
+              disabled={isSubmitting}
             />
           </div>
 
           {/* Action Buttons */}
           <div className="flex items-center gap-2">
-            <Button type="submit" disabled={isSubmitting || isDeleting}>
+            <Button type="submit" disabled={isSubmitting}>
               {isSubmitting ? "Saving..." : "Save"}
             </Button>
             {faq && (
               <DeleteButton
-              apiEndpoint={`/api/faq/deleteFaq/${faq.id}`}
-              itemId={faq.id}
-              confirmMessage="Are you sure you want to delete this FAQ?"
-              successMessage="FAQ deleted successfully!"
-              errorMessage="Failed to delete FAQ."
-              onSuccess={() => {
-                // Additional actions after successful deletion (optional)
-                // The hook already handles redirection or refresh
-              }}
-              variant="destructive"
-              buttonText="Delete"
-            />
-          )}
+                apiEndpoint={`/api/faq/deleteFaq/${faq.id}`}
+                itemId={faq.id}
+                confirmMessage="Are you sure you want to delete this FAQ?"
+                successMessage="FAQ deleted successfully!"
+                errorMessage="Failed to delete FAQ."
+                redirectPath="/admin/faq" // Dynamic redirect path
+                variant="destructive"
+                buttonText="Delete"
+              />
+            )}
           </div>
         </form>
       </CardContent>

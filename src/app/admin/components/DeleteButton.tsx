@@ -17,6 +17,7 @@ interface DeleteButtonProps {
   onError?: () => void;
   variant?: "default" | "destructive" | "outline" | "ghost" | "link";
   buttonText?: string;
+  redirectPath?: string; // New optional prop
 }
 
 const DeleteButton: React.FC<DeleteButtonProps> = ({
@@ -29,6 +30,7 @@ const DeleteButton: React.FC<DeleteButtonProps> = ({
   onError,
   variant = "destructive",
   buttonText = "Delete",
+  redirectPath, // Destructure the new prop
 }) => {
   const router = useRouter();
   const [isDeleting, setIsDeleting] = useState(false);
@@ -48,10 +50,17 @@ const DeleteButton: React.FC<DeleteButtonProps> = ({
       if (res.ok) {
         toast.success(successMessage);
         onSuccess?.(); // Optional chaining
-        
-        setTimeout(() => {
-            router.push("/admin/faq");
-        }, 2000);
+
+        if (redirectPath) {
+          setTimeout(() => {
+            router.push(redirectPath);
+          }, 2000); // Redirect after 2 seconds
+        } else {
+          // Optional: Refresh the current page or handle differently
+          setTimeout(() => {
+            router.refresh();
+          }, 2000);
+        }
       } else {
         const errorData = await res.json();
         const msg = errorData.err || errorMessage;
