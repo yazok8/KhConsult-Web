@@ -38,7 +38,9 @@ export default function TeamPage() {
                 <div className="max-w-[50%] text-2xl">
                   <li className="font-bold">{teamMember.name}</li>
                   <li className="font-bold">{teamMember.title}</li>
-                  <li>{teamMember.description}</li>
+                  <li
+                            dangerouslySetInnerHTML={{ __html: teamMember.description ?? "" }}
+                  ></li>
                 </div>
                 <div>
                   {teamMember.profileImage ? (

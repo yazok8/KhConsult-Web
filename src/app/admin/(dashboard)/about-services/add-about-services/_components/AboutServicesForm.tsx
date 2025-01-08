@@ -1,7 +1,7 @@
 // src/app/admin/(dashboard)/about-services/_components/AboutServicesForm.tsx
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -11,9 +11,10 @@ import { getImageSrc } from "@/lib/imageHelper";
 import { Prisma } from "@prisma/client";
 import { Label } from "@radix-ui/react-label";
 import Image from "next/image";
-import { Textarea } from "@/components/ui/textarea";
 import DeleteButton from "@/app/admin/components/DeleteButton";
-
+import { ContentState, convertFromHTML, convertToRaw, EditorState } from "draft-js";
+import draftToHtml from "draftjs-to-html";
+import RichTextEditor from "@/components/RichTextEditor";
 
 type AboutOurServices = Prisma.AboutOurServicesGetPayload<object>;
 
@@ -26,23 +27,41 @@ export default function AboutOurServicesForm({
 }: AboutServiceFormProps) {
   const router = useRouter();
 
+  // Ref to track if the component is mounted
+  const isMounted = useRef(true);
+
   const [currentImageSrc, setCurrentImageSrc] = useState<File | string>(
     aboutServices?.aboutimage || ""
   );
 
   const [title, setTitle] = useState(aboutServices?.title || "");
-  const [description, setDescription] = useState(
-    aboutServices?.description || ""
-  );
+  // Draft.js rich text editor state
+  const [descriptionEditorState, setDescriptionEditorState] =
+    useState<EditorState>(EditorState.createEmpty());
 
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
+    // Mark as mounted
+    isMounted.current = true;
+
     if (aboutServices?.aboutimage) {
       const imageSrc = getImageSrc(aboutServices.aboutimage);
       setCurrentImageSrc(imageSrc);
     }
+     // If we have an HTML description, convert to DraftJS EditorState
+     if (aboutServices?.description) {
+      const blocksFromHTML = convertFromHTML(aboutServices.description);
+      const contentState = ContentState.createFromBlockArray(
+        blocksFromHTML.contentBlocks,
+        blocksFromHTML.entityMap
+      );
+      setDescriptionEditorState(EditorState.createWithContent(contentState));
+    }
+    return () => {
+      isMounted.current = false;
+    };
   }, [aboutServices]);
 
   function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -54,10 +73,17 @@ export default function AboutOurServicesForm({
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
 
+    // Convert Draft.js state to HTML
+    let descriptionHTML = "";
+    if (descriptionEditorState) {
+      const raw = convertToRaw(descriptionEditorState.getCurrentContent());
+      descriptionHTML = draftToHtml(raw);
+    }
+
     const formData = new FormData();
 
     formData.append("title", title);
-    formData.append("description", description);
+    formData.append("description", descriptionHTML);
 
     if (
       typeof currentImageSrc === "object" &&
@@ -75,18 +101,32 @@ export default function AboutOurServicesForm({
     const apiEndpoint = aboutServices
       ? `/api/aboutServices/edit/${aboutServices.id}`
       : "/api/aboutServices/add";
+    try {
+      const res = await fetch(apiEndpoint, {
+        method: aboutServices ? "PUT" : "POST",
+        body: formData,
+      });
 
-    const res = await fetch(apiEndpoint, {
-      method: aboutServices ? "PUT" : "POST",
-      body: formData,
-    });
-
-    if (res.ok) {
-      router.push("/admin/about-services");
-    } else {
-      const errorData = await res.json();
-      console.error("Failed to save service:", errorData.error);
-      setError(errorData.error || "Failed to save service.");
+      if (res.ok) {
+        if (isMounted.current) {
+          router.push("/admin/about-services");
+        }
+      } else {
+        const errorData = await res.json();
+        console.error("Failed to save about services:", errorData.error);
+        if (isMounted.current) {
+          setError(errorData.error || "Failed to save about services.");
+        }
+      }
+    } catch (err) {
+      console.error("An unexpected error occurred:", err);
+      if (isMounted.current) {
+        setError("An unexpected error occurred.");
+      }
+    } finally {
+      if (isMounted.current) {
+        setIsSubmitting(false);
+      }
     }
   }
 
@@ -113,13 +153,10 @@ export default function AboutOurServicesForm({
           {/* Description */}
           <div className="py-5 space-y-2 flex flex-col">
             <Label htmlFor="description">Description</Label>
-            <Textarea
-              id="description"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              className="border-solid border-5"
-              required
-            />
+                      <RichTextEditor
+                          editorState={descriptionEditorState}
+                          onEditorStateChange={setDescriptionEditorState}
+                        />
           </div>
 
           {/* File Input */}

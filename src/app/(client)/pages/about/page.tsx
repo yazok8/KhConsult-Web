@@ -23,7 +23,10 @@ export default async function AboutPage() {
         </CardHeader>
         <CardContent className="text-xl">
           {/* Display service details */}
-          <ul><li>{aboutService.description}</li></ul>
+          <div
+            className="text-lg space-y-4"
+            dangerouslySetInnerHTML={{ __html: aboutService.description ?? "" }}
+          />
           {aboutService.aboutimage && (
             <div className="mt-4">
               <Image

@@ -11,7 +11,7 @@ import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import DeleteButton from '@/app/admin/components/DeleteButton';
 
-import { Prisma } from '@prisma/client';
+import { Service } from '@prisma/client';
 import { getImageSrc } from '@/lib/imageHelper';
 
 // Draft.js imports
@@ -26,12 +26,9 @@ import draftToHtml from 'draftjs-to-html';
 // Our custom rich text editor
 import RichTextEditor from '@/components/RichTextEditor';
 
-type Service = Prisma.ServiceGetPayload<{
-  include: {};
-}>;
-
+type ServiceType = Service;
 interface ServiceFormProps {
-  service?: Service | null;
+  service?: ServiceType | null;
 }
 
 export default function ServiceForm({ service }: ServiceFormProps) {

@@ -2,7 +2,7 @@
 
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
@@ -13,6 +13,9 @@ import Image from 'next/image';
 import { getImageSrc } from '@/lib/imageHelper';
 import { Prisma } from '@prisma/client';
 import DeleteButton from '@/app/admin/components/DeleteButton';
+import { ContentState, convertFromHTML, convertToRaw, EditorState } from 'draft-js';
+import draftToHtml from 'draftjs-to-html';
+import RichTextEditor from '@/components/RichTextEditor';
 
 type Team = Prisma.AboutOurTeamGetPayload<{
   select: {
@@ -31,18 +34,38 @@ interface TeamFormProps {
 export default function TeamForm({ team }: TeamFormProps) {
   const router = useRouter();
 
+   // Ref to track if the component is mounted
+    const isMounted = useRef(true);
+
   const [currentImageSrc, setCurrentImageSrc] = useState<File | string>('');
   const [name, setName] = useState(team?.name || '');
   const [title, setTitle] = useState(team?.title || '');
-  const [description, setDescription] = useState(team?.description || '');
+  // Draft.js rich text editor state
+  const [descriptionEditorState, setDescriptionEditorState] =
+    useState<EditorState>(EditorState.createEmpty());
+
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
+
+    isMounted.current = true;
+
     if (team?.profileImage) {
       const imageSrc = getImageSrc(team.profileImage);
       setCurrentImageSrc(imageSrc);
     }
+    if (team?.description) {
+      const blocksFromHTML = convertFromHTML(team.description);
+      const contentState = ContentState.createFromBlockArray(
+        blocksFromHTML.contentBlocks,
+        blocksFromHTML.entityMap
+      );
+      setDescriptionEditorState(EditorState.createWithContent(contentState));
+    }
+    return () => {
+      isMounted.current = false;
+    };
   }, [team]);
 
   function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -54,11 +77,18 @@ export default function TeamForm({ team }: TeamFormProps) {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
   
+
+    let descriptionHTML = "";
+    if (descriptionEditorState) {
+      const raw = convertToRaw(descriptionEditorState.getCurrentContent());
+      descriptionHTML = draftToHtml(raw);
+    }
+
     const formData = new FormData();
     
     formData.append('name', name);
     formData.append('title', title);
-    formData.append('description', description);
+    formData.append('description', descriptionHTML);
   
     if (currentImageSrc instanceof File) {
       formData.append('image', currentImageSrc);
@@ -69,18 +99,35 @@ export default function TeamForm({ team }: TeamFormProps) {
 
     const apiEndpoint = team ? `/api/team/edit-team/${team.id}` : '/api/team/add-team';
   
-    const res = await fetch(apiEndpoint, {
-      method: team ? 'PUT' : 'POST', // Use 'PUT' for edit
-      body: formData,
-    });
-  
-    if (res.ok) { 
-      router.push('/admin/manage-team');
-    } else {
-      const errorData = await res.json();
-      console.error('Failed to save team member profile:', errorData.error);
-      setError(errorData.error || 'Failed to save team member profile.');
+    try {
+      const res = await fetch(apiEndpoint, {
+        method: team ? 'PUT' : 'POST', // Use 'PUT' for edit
+        body: formData,
+      });
+    
+      if (res.ok) { 
+        if (isMounted.current) {
+          router.push('/admin/manage-team');
+        }
+        
+      } else {
+        const errorData = await res.json();
+        console.error('Failed to save team member profile:', errorData.error);
+        if (isMounted.current) {
+          setError(errorData.error || 'Failed to save team member profile.');
+        }
+      }
+    }catch(err){
+      console.error("An unexpected error occurred:", err);
+      if (isMounted.current) {
+        setError("An unexpected error occurred.");
+      }
+    } finally {
+      if (isMounted.current) {
+        setIsSubmitting(false);
+      }
     }
+    
   }
 
   return (
@@ -115,13 +162,10 @@ export default function TeamForm({ team }: TeamFormProps) {
           {/* Description Field */}
           <div className="py-5 space-y-2 flex flex-col">
             <Label htmlFor="description">Description</Label>
-            <Textarea
-              id="description"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              className="border-solid border-5"
-              required
-            />
+            <RichTextEditor
+                          editorState={descriptionEditorState}
+                          onEditorStateChange={setDescriptionEditorState}
+                        />
           </div>
 
           {/* File Input */}
