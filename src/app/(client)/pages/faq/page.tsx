@@ -1,53 +1,66 @@
-export default function FAQ() {
+"use client";
+
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
+
+interface Faq {
+  id: string;
+  question: string;
+  answer: string;
+}
+
+export default function FaqQuestion() {
+  const [questions, setQuestions] = useState<Faq[]>([]);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await fetch("/api/faq");
+        if (!res.ok) {
+          throw new Error("Failed to fetch FAQs.");
+        }
+        const data: Faq[] = await res.json();
+        setQuestions(data);
+      } catch (error) {
+        console.error("Error fetching FAQs:", error);
+      }
+    })();
+  }, []);
+
   return (
-    <section
-      id="faq"
-      className="mt-20 flex flex-col text-black text-start min-h-screen lg:h-[75vh] md:h-[120vh] pt-20 px-5 max-w-6xl mx-auto"
-    >
-      {/* Center the heading */}
-      <h1 className="text-5xl md:text-6xl lg:text-7xl mb-12 text-start">
-        FAQ
-      </h1>
-
-      {/* Center the FAQ items container */}
-      <div className="w-full max-w-6xl mx-auto flex flex-col md:flex-row justify-center items-stretch gap-8">
-        
-        {/* Individual FAQ Item */}
-        <article className="flex flex-col bg-slate-300 text-black rounded-lg shadow-lg w-full md:w-1/3">
-          <h3 className="p-6 bg-slate-500 rounded-t-lg text-2xl font-semibold">
-            What is the advantage of hiring me instead of a lawyer?
-          </h3>
-          <div className="p-6 flex-grow">
-            <p>
-              Having an FAQ section is a great way to present information about your product or service. Using the question-and-answer format makes it more relatable to your users.
-            </p>
-          </div>
-        </article>
-
-        {/* Repeat for other FAQ items */}
-        <article className="flex flex-col bg-slate-300 text-black rounded-lg shadow-lg w-full md:w-1/3">
-          <h3 className="p-6 bg-slate-500 rounded-t-lg text-2xl font-semibold">
-            What kind of deliverables are to be expected?
-          </h3>
-          <div className="p-6 flex-grow">
-            <p>
-              Having an FAQ section is a great way to present information about your product or service. Using the question-and-answer format makes it more relatable to your users.
-            </p>
-          </div>
-        </article>
-
-        <article className="flex flex-col bg-slate-300 text-black rounded-lg shadow-lg w-full md:w-1/3">
-          <h3 className="p-6 bg-slate-500 rounded-t-lg text-2xl font-semibold">
-            How long will the project take and how long until results can be measured?
-          </h3>
-          <div className="p-6 flex-grow">
-            <p>
-              Having an FAQ section is a great way to present information about your product or service. Using the question-and-answer format makes it more relatable to your users.
-            </p>
-          </div>
-        </article>
-
-      </div>
-    </section>
+    <div className="mt-20 flex flex-col text-black text-start min-h-screen lg:h-[75vh] md:h-[120vh] pt-20 px-5 max-w-6xl mx-auto">
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-6xl mb-12 text-start">FAQ</CardTitle>
+        </CardHeader>
+        <CardContent>
+          {/* Use CSS Grid for layout */}
+          <ul className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {questions.length > 0 ? (
+              questions.map((q) => (
+                <article
+                  key={q.id}
+                  className="flex flex-col bg-slate-300 text-black rounded-lg shadow-lg"
+                >
+                  <Link href={`/admin/faq/edit-faq/${q.id}`}>
+                    <li className="list-none">
+                      <h2 className="p-6 bg-slate-500 rounded-t-lg text-2xl font-semibold">
+                        {q.question}
+                      </h2>
+                    </li>
+                    <div className="p-6 flex-grow">
+                      <p>{q.answer}</p>
+                    </div>
+                  </Link>
+                </article>
+              ))
+            ) : (
+              <p>No FAQs available.</p>
+            )}
+          </ul>
+        </CardContent>
+      </Card>
+    </div>
   );
 }

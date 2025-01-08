@@ -17,7 +17,7 @@ export default async function AdminAboutOurServices() {
       <Container id="about-my-services">
         <Card>
           <CardHeader>
-            <CardTitle className="pb-8">Service Not Found</CardTitle>
+            <CardTitle className="pb-8 text-6xl">Service Not Found</CardTitle>
           </CardHeader>
           <CardContent className="text-xl">
             <div className="py-5 mr-auto">
@@ -40,7 +40,7 @@ export default async function AdminAboutOurServices() {
             </Link>
           </div>
         <CardHeader>
-          <CardTitle className="pb-8">{aboutService.title}</CardTitle>
+          <CardTitle className="pb-8 text-6xl">{aboutService.title}</CardTitle>
         </CardHeader>
         <CardContent className="text-xl">
           {/* Display service details */}

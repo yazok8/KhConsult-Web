@@ -2,7 +2,7 @@
 
 import TeamTable from "./_components/TeamTable";
 
-export default function TeamPage() {
+export default function AdminTeamPage() {
   return(
     <TeamTable />
   

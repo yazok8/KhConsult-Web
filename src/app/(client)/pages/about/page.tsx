@@ -1,35 +1,42 @@
-import Image from 'next/image'
-import React from 'react'
-import abphoto from "../../../../../public/images/abphoto.png";
+// src/app/admin/about-our-services/page.tsx
 
-export default function AboutPage() {
-    return (
-      <>
-        <section
-          id="about"
-          className="text-white bg-black flex flex-col  items-center justify-center flex-wrap px-5 lg:px-0 min-h-screen "
-        >
-          <div className='max-w-6xl mx-auto flex-wrap lg:flex-nowrap'>
-          <div className="text-5xl py-8 w-full">
-            <h1 className='px-5 sm:px-0 text-6xl'>About Me</h1>
-          </div>
-          <div className="md:flex flex-col sm:flex-row-reverse sm:justify-center items-start w-full sm:max-w-[90rem] mx-auto">
-            <p className="text-2xl text-left mx-auto sm:mx-0 pb-5 pl-4 sm:max-w-3xl sm:flex-grow sm:flex-shrink max-w-3xl">
-            Hello, im Abdallah. I moved to Germany in 2017. I work as a social worker that help people every  day in challenging and hardful situations. I enjoy that. I have experience in immigration, job coaching, apartment hunting.
-            </p>
-            <div className="flex-shrink-0 mx-auto">
+import Container from '@/app/ui/Container';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import prisma from '@/lib/prisma';
+import Image from 'next/image';
+import React from 'react';
+
+export default async function AboutPage() {
+  // Fetch the single service. Adjust the query if you have specific criteria.
+  const aboutService = await prisma.aboutOurServices.findFirst();
+
+  if (!aboutService) {
+    // Handle the case where the service is not found
+    return;
+  }
+
+  return (
+    <Container id="about-my-services">
+      <Card className='border-none'>
+        <CardHeader>
+          <CardTitle className="pb-8 text-6xl">{aboutService.title}</CardTitle>
+        </CardHeader>
+        <CardContent className="text-xl">
+          {/* Display service details */}
+          <ul><li>{aboutService.description}</li></ul>
+          {aboutService.aboutimage && (
+            <div className="mt-4">
               <Image
-                src={abphoto}
-                alt="kh consultation logo"
-                width={500}
-                height={500} // Ensuring image height is set
-                className="cursor-pointer mx-auto"
+                src={aboutService.aboutimage}
+                alt={aboutService.title}
+                width={400}
+                height={400}
+                className="object-cover"
               />
             </div>
-          </div>
-          </div>
-        </section>
-      </>
-    );
-  }
-   
+          )}
+        </CardContent>
+      </Card>
+    </Container>
+  );
+}

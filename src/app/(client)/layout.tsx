@@ -11,7 +11,7 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
   return (  
    <>  
     <Header />  
-    <main>{children}</main>  
+    <main className='max-w-[1920px]'>{children}</main>  
     <Footer />
    </>  
   );  

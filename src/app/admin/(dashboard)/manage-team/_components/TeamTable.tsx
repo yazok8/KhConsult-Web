@@ -47,14 +47,17 @@ export default function TeamTable() {
                     <li>
                       <span className="font-semibold">Title:</span> {teamMember.title}
                     </li>
+                    <li>
+                    <span className="font-semibold">Description:</span> {teamMember.description}
+                    </li>
                   </div>
                   <div>
                     {teamMember.profileImage ? (
                       <Image
                         src={`https://khconsult.s3.us-east-2.amazonaws.com/${teamMember.profileImage}`}
                         alt={teamMember.title}
-                        width={200}
-                        height={200}
+                        width={400}
+                        height={400}
                         className="object-cover rounded"
                       />
                       
