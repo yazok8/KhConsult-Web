@@ -1,8 +1,9 @@
 "use client";
 
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import sanitizeHtml from "sanitize-html";
 
 interface Faq {
   id: string;
@@ -49,9 +50,12 @@ export default function FaqQuestion() {
                         {q.question}
                       </h2>
                     </li>
-                    <div className="p-6 flex-grow">
-                      <p>{q.answer}</p>
-                    </div>
+                    <div
+                      className="answer-content"
+                      dangerouslySetInnerHTML={{
+                        __html: sanitizeHtml(q.answer),
+                      }}
+                    />
                   </Link>
                 </article>
               ))

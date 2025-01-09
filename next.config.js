@@ -17,6 +17,7 @@ const nextConfig = {
       }
     ], // Replace with your actual bucket domain
   },
+  productionBrowserSourceMaps: false,
   env: {
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
     BUCKET_NAME: process.env.AWS_S3_BUCKET_NAME,

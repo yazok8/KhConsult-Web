@@ -1,54 +1,54 @@
-// src/app/admin/(dashboard)/services/new/page.tsx
+// components/ServiceForm.tsx
 
-'use client';
+"use client";
 
-import React, { useState, useEffect, useRef } from 'react';
-import { useRouter } from 'next/navigation';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import Image from 'next/image';
-import DeleteButton from '@/app/admin/components/DeleteButton';
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import dynamic from "next/dynamic";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
-import { Service } from '@prisma/client';
-import { getImageSrc } from '@/lib/imageHelper';
+import { Service } from "@prisma/client";
+import { getImageSrc } from "@/lib/imageHelper";
 
-// Draft.js imports
-import {
-  EditorState,
-  ContentState,
-  convertFromHTML,
-  convertToRaw,
-} from 'draft-js';
-import draftToHtml from 'draftjs-to-html';
-
-// Our custom rich text editor
-import RichTextEditor from '@/components/RichTextEditor';
+import { useIsMounted } from "@/app/hooks/useIsMounted";
+import DeleteButton from "@/app/admin/components/DeleteButton";
 
 type ServiceType = Service;
+
 interface ServiceFormProps {
   service?: ServiceType | null;
 }
 
-export default function ServiceForm({ service }: ServiceFormProps) {
-  type Category = 'INDIVIDUAL' | 'BUSINESS';
+// Dynamically import RichTextEditor with SSR disabled
+const RichTextEditor = dynamic(() => import("@/components/RichTextEditor"), {
+  ssr: false,
+  loading: () => <p>Loading editor...</p>,
+});
+
+const ServiceForm: React.FC<ServiceFormProps> = ({ service }) => {
+  type Category = "INDIVIDUAL" | "BUSINESS";
 
   const router = useRouter();
 
-  // Ref to track if the component is mounted
-  const isMounted = useRef(true);
+  // Use custom hook to track if the component is mounted
+  const isMounted = useIsMounted();
 
   // Image state (File | string for existing image path)
-  const [currentImageSrc, setCurrentImageSrc] = useState<File | string>('');
+  const [currentImageSrc, setCurrentImageSrc] = useState<File | string>("");
 
   // Other text inputs
-  const [title, setTitle] = useState<string>(service?.title || '');
-  const [category, setCategory] = useState<Category>(service?.category || 'INDIVIDUAL');
+  const [title, setTitle] = useState<string>(service?.title || "");
+  const [category, setCategory] = useState<Category>(
+    service?.category || "INDIVIDUAL"
+  );
 
-  // Draft.js rich text editor state
-  const [descriptionEditorState, setDescriptionEditorState] = useState<EditorState>(
-    EditorState.createEmpty()
+  // Description state (HTML string)
+  const [description, setDescription] = useState<string>(
+    service?.description || ""
   );
 
   // Error and submission status
@@ -59,29 +59,15 @@ export default function ServiceForm({ service }: ServiceFormProps) {
    * Effect to handle component mount and unmount
    */
   useEffect(() => {
-    // Mark as mounted
-    isMounted.current = true;
-
-    // If editing and we have an imageSrc, load it
     if (service?.imageSrc) {
-      const imageSrc = getImageSrc(service.imageSrc);
-      setCurrentImageSrc(imageSrc);
+      setCurrentImageSrc(getImageSrc(service.imageSrc));
     }
 
-    // If we have an HTML description, convert to DraftJS EditorState
     if (service?.description) {
-      const blocksFromHTML = convertFromHTML(service.description);
-      const contentState = ContentState.createFromBlockArray(
-        blocksFromHTML.contentBlocks,
-        blocksFromHTML.entityMap
-      );
-      setDescriptionEditorState(EditorState.createWithContent(contentState));
+      setDescription(service.description);
     }
 
-    // Cleanup function to mark as unmounted
-    return () => {
-      isMounted.current = false;
-    };
+    // No additional setup required for TipTap
   }, [service]);
 
   /**
@@ -94,64 +80,71 @@ export default function ServiceForm({ service }: ServiceFormProps) {
   }
 
   /**
-   * On submit, convert the EditorState to HTML, pass it
-   * (along with other fields) to your API.
+   * On submit, send the form data to the API
    */
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    setError(null);
     setIsSubmitting(true);
 
-    // Convert Draft.js state to HTML
-    let descriptionHTML = '';
-    if (descriptionEditorState) {
-      const raw = convertToRaw(descriptionEditorState.getCurrentContent());
-      descriptionHTML = draftToHtml(raw);
-    }
+    // Create an AbortController instance for this fetch
+    const controller = new AbortController();
+    const signal = controller.signal;
 
     const formData = new FormData();
-    formData.append('title', title);
-    formData.append('description', descriptionHTML);
-    formData.append('category', category);
+    formData.append("title", title);
+    formData.append("description", description);
+    formData.append("category", category);
 
     // Handle file or existing image path
-    if (typeof currentImageSrc === 'object' && currentImageSrc instanceof File) {
-      formData.append('image', currentImageSrc);
-    } else if (service && typeof currentImageSrc === 'string') {
+    if (typeof currentImageSrc === "object" && currentImageSrc instanceof File) {
+      formData.append("image", currentImageSrc);
+    } else if (service && typeof currentImageSrc === "string") {
       // If editing and not changing the image, send existing imageSrc
-      formData.append('imageSrc', service.imageSrc);
+      formData.append("imageSrc", service.imageSrc);
     }
 
     const apiEndpoint = service
       ? `/api/services/editService/${service.id}`
-      : '/api/services/addService';
+      : "/api/services/addService";
 
     try {
       const res = await fetch(apiEndpoint, {
-        method: service ? 'PUT' : 'POST',
+        method: service ? "PUT" : "POST",
         body: formData,
+        signal: signal, // Attach the signal here
       });
+
+      if (!isMounted.current) return; // Prevent further actions if unmounted
 
       if (res.ok) {
         if (isMounted.current) {
-          router.push('/admin/manage-services');
+          router.push("/admin/manage-services");
         }
       } else {
         const errorData = await res.json();
-        console.error('Failed to save service:', errorData.error);
+        console.error("Failed to save service:", errorData.error);
         if (isMounted.current) {
-          setError(errorData.error || 'Failed to save service.');
+          setError(errorData.error || "Failed to save service.");
         }
       }
-    } catch (err) {
-      console.error('An unexpected error occurred:', err);
-      if (isMounted.current) {
-        setError('An unexpected error occurred.');
+    } catch (err: any) {
+      if (err.name === "AbortError") {
+        console.log("Fetch aborted");
+      } else {
+        console.error("An unexpected error occurred:", err);
+        if (isMounted.current) {
+          setError("An unexpected error occurred.");
+        }
       }
     } finally {
       if (isMounted.current) {
         setIsSubmitting(false);
       }
     }
+
+    // Optionally, abort the fetch if needed
+    // return () => controller.abort();
   }
 
   /**
@@ -159,7 +152,7 @@ export default function ServiceForm({ service }: ServiceFormProps) {
    */
   function handleImageError() {
     if (isMounted.current && service?.imageSrc) {
-      const sanitizedImagePath = service.imageSrc.startsWith('/')
+      const sanitizedImagePath = service.imageSrc.startsWith("/")
         ? service.imageSrc.slice(1)
         : service.imageSrc;
       const localImageUrl = `/services/${sanitizedImagePath}`;
@@ -171,7 +164,7 @@ export default function ServiceForm({ service }: ServiceFormProps) {
     <Card>
       <CardHeader>
         <CardTitle>
-          {service ? 'Edit Service' : 'Create A New Service'}
+          {service ? "Edit Service" : "Create A New Service"}
         </CardTitle>
       </CardHeader>
       <CardContent>
@@ -184,16 +177,19 @@ export default function ServiceForm({ service }: ServiceFormProps) {
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               required
+              disabled={isSubmitting}
             />
           </div>
 
           {/* Description (Rich Text) */}
           <div className="py-5 space-y-2 flex flex-col">
             <Label htmlFor="description">Description</Label>
-            <RichTextEditor
-              editorState={descriptionEditorState}
-              onEditorStateChange={setDescriptionEditorState}
-            />
+            {isMounted.current && (
+              <RichTextEditor
+                content={description}
+                onChange={setDescription}
+              />
+            )}
           </div>
 
           {/* File Input */}
@@ -206,17 +202,18 @@ export default function ServiceForm({ service }: ServiceFormProps) {
               accept="image/*"
               required={!service}
               onChange={handleFileChange}
+              disabled={isSubmitting}
             />
           </div>
 
           {/* Existing Image Preview (only if editing and image is a string) */}
           {service != null &&
-            typeof currentImageSrc === 'string' &&
-            currentImageSrc !== '' && (
+            typeof currentImageSrc === "string" &&
+            currentImageSrc !== "" && (
               <div className="my-4">
                 <Image
                   src={
-                    currentImageSrc.startsWith('http')
+                    currentImageSrc.startsWith("http")
                       ? currentImageSrc
                       : `${currentImageSrc}`
                   }
@@ -237,6 +234,7 @@ export default function ServiceForm({ service }: ServiceFormProps) {
               value={category}
               onChange={(e) => setCategory(e.target.value as Category)}
               className="block w-full p-2 border border-gray-300 rounded"
+              disabled={isSubmitting}
             >
               <option value="INDIVIDUAL">Individual</option>
               <option value="BUSINESS">Business</option>
@@ -249,9 +247,9 @@ export default function ServiceForm({ service }: ServiceFormProps) {
           {/* Submit & Delete Buttons */}
           <div className="flex items-center gap-2">
             <Button type="submit" disabled={isSubmitting}>
-              {isSubmitting ? 'Saving...' : 'Save'}
+              {isSubmitting ? "Saving..." : "Save"}
             </Button>
-            {service && (
+            {isMounted.current && service && (
               <DeleteButton
                 apiEndpoint={`/api/services/deleteService/${service.id}`}
                 itemId={service.id}
@@ -268,4 +266,6 @@ export default function ServiceForm({ service }: ServiceFormProps) {
       </CardContent>
     </Card>
   );
-}
+};
+
+export default ServiceForm;

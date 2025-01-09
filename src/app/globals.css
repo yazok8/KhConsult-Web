@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 body{
   line-height: 1.65;
 }
@@ -79,4 +78,44 @@ ul,li{
   body {
     @apply bg-background text-foreground;
   }
+}
+
+
+/* globals.css */
+
+/* Basic styling for the TipTap editor */
+.ProseMirror {
+  min-height: 200px;
+  padding: 10px;
+  border: 1px solid #d1d5db; /* Tailwind's gray-300 */
+  border-radius: 0.375rem; /* Tailwind's rounded-md */
+  outline: none;
+}
+
+.ProseMirror:focus {
+  border-color: #3b82f6; /* Tailwind's blue-500 */
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5); /* Tailwind's blue-500 with opacity */
+}
+
+.ProseMirror img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.375rem; /* Tailwind's rounded-md */
+}
+
+/* Styling for tables */
+.ProseMirror table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.ProseMirror th,
+.ProseMirror td {
+  border: 1px solid #d1d5db; /* Tailwind's gray-300 */
+  padding: 8px;
+  text-align: left;
+}
+
+.ProseMirror th {
+  background-color: #f3f4f6; /* Tailwind's gray-100 */
 }

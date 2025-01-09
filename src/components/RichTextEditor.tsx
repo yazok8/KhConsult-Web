@@ -1,31 +1,106 @@
-// components/RichTextEditor.tsx
+// components/RichTextEditor/RichTextEditor.tsx
 
-'use client';
-
-import React from 'react';
-import { Editor } from 'react-draft-wysiwyg';
-import { EditorState } from 'draft-js';
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import React, { useEffect } from 'react';
+import { useEditor, EditorContent } from '@tiptap/react';
+import StarterKit from '@tiptap/starter-kit';
+import Table from '@tiptap/extension-table';
+import TableRow from '@tiptap/extension-table-row';
+import TableCell from '@tiptap/extension-table-cell';
+import TableHeader from '@tiptap/extension-table-header';
+import Heading from '@tiptap/extension-heading';
+import Link from '@tiptap/extension-link'; // Import Link extension
+import Image from '@tiptap/extension-image'; // Import Image extension
+import Underline from '@tiptap/extension-underline'; // Import Underline extension
+import { MenuBar } from './MenuBar';
 
 interface RichTextEditorProps {
-  editorState: EditorState;
-  onEditorStateChange: (editorState: EditorState) => void;
+  content: string;
+  onChange: (content: string) => void;
 }
 
-export default function RichTextEditor({
-  editorState,
-  onEditorStateChange,
-}: RichTextEditorProps) {
+const RichTextEditor: React.FC<RichTextEditorProps> = ({ content, onChange }) => {
+  const editor = useEditor({
+    extensions: [
+      StarterKit.configure({
+        // Disable only the heading from StarterKit
+        heading: false,
+        // Configure bulletList and orderedList from StarterKit
+        bulletList: {
+          HTMLAttributes: {
+            class: 'list-disc ml-4 space-y-2',
+          },
+        },
+        orderedList: {
+          HTMLAttributes: {
+            class: 'list-decimal ml-4 space-y-2',
+          },
+        },
+        listItem: {
+          HTMLAttributes: {
+            class: 'pl-1',
+          },
+        },
+      }),
+      Table.configure({
+        resizable: true,
+      }),
+      TableRow,
+      TableCell,
+      TableHeader,
+      Heading.configure({
+        levels: [1, 2, 3], // Enable H1, H2, H3
+        HTMLAttributes: {
+          class: "font-bold", // Common class for all headings
+        },
+      }),
+      Link.configure({
+        openOnClick: false, // Customize as needed
+        HTMLAttributes: {
+          rel: 'noopener noreferrer',
+          target: '_blank',
+        },
+      }),
+      Image.configure({
+        inline: false,
+        allowBase64: true, // Allow base64 images if needed
+      }),
+      Underline.configure({
+        HTMLAttributes: {
+          class: 'underline', // Optional: Add a class for styling
+        },
+      }),
+    ],
+    content: content || '',
+    onUpdate: ({ editor }) => {
+      const html = editor.getHTML();
+      console.log("Editor Content Updated:", html); // For debugging
+      onChange(html);
+    },
+    editorProps: {
+      attributes: {
+        class: 'prose prose-sm sm:prose lg:prose-lg xl:prose-xl max-w-none focus:outline-none min-h-[200px] p-4',
+      },
+    },
+  });
+
+  useEffect(() => {
+    return () => {
+      if (editor) {
+        editor.destroy();
+      }
+    };
+  }, [editor]);
+
+  if (!editor) {
+    return null;
+  }
+
   return (
-    <Editor
-      editorState={editorState}
-      onEditorStateChange={onEditorStateChange}
-      toolbar={{
-        options: [
-          'inline', 'blockType', 'fontSize', 'list', 'textAlign',
-          'history', 'embedded', 'emoji', 'image',
-        ],
-      }}
-    />
+    <div className="border border-gray-300 rounded-md">
+      <MenuBar editor={editor} />
+      <EditorContent editor={editor} />
+    </div>
   );
-}
+};
+
+export default RichTextEditor;
