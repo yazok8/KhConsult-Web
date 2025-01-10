@@ -37,7 +37,7 @@ export default function TeamForm({ team }: TeamFormProps) {
   const [currentImageSrc, setCurrentImageSrc] = useState<File | string>('');
   const [name, setName] = useState(team?.name || '');
   const [title, setTitle] = useState(team?.title || '');
-  // Draft.js rich text editor state
+
   const [description, setDescription] = useState<string>(
     team?.description || ""
   );

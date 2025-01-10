@@ -33,7 +33,7 @@ export default function AboutOurServicesForm({
   );
 
   const [title, setTitle] = useState(aboutServices?.title || "");
-  // Draft.js rich text editor state
+  
   // Description state (HTML string)
   const [description, setDescription] = useState<string>(
     aboutServices?.description || ""
