@@ -23,7 +23,6 @@ interface DeleteButtonProps {
 
 const DeleteButton: React.FC<DeleteButtonProps> = ({
   apiEndpoint,
-  itemId,
   confirmMessage = "Are you sure you want to delete this item?",
   successMessage = "Item deleted successfully!",
   errorMessage = "Failed to delete the item.",
@@ -96,12 +95,20 @@ const DeleteButton: React.FC<DeleteButtonProps> = ({
         toast.error(msg);
         onError?.(); // Optional chaining
       }
-    } catch (error: any) {
-      if (error.name === "AbortError") {
-        console.log("Delete fetch aborted");
-        // Optionally, handle abort differently
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        if (error.name === "AbortError") {
+          console.log("Delete fetch aborted");
+          // Optionally, handle abort differently
+        } else {
+          console.error("Delete operation failed:", error.message);
+          if (isMounted.current) {
+            toast.error(errorMessage);
+            onError?.(); // Optional chaining
+          }
+        }
       } else {
-        console.error("Delete operation failed:", error);
+        console.error("An unexpected error occurred:", error);
         if (isMounted.current) {
           toast.error(errorMessage);
           onError?.(); // Optional chaining

@@ -8,22 +8,18 @@ import prisma from '@/lib/prisma';
 type Service = Prisma.ServiceGetPayload<object>;
 
 interface AddServiceProps {
-  params: {
-    id: string;
-  };
-  // searchParams?: {
-  //   [key: string]: string | string[] | undefined;
-  // };
+  params: Promise<{ id: string }>;
 }
 
 export default async function AddService({ params}: AddServiceProps) {
+  const {id} = await params;
   
   let service: Service | null = null;
 
-  if(params.id){
+  if(id){
     service = await prisma.service.findUnique({
       where: {
-        id: params.id
+        id: id
       }
     });
   }

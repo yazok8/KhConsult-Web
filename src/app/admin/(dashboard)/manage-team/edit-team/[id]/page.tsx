@@ -11,7 +11,7 @@ export default async function EditTeam({params}:EditTeamProps) {
 
   const resolvedParams = await params; 
 
-  const {id} = resolvedParams;
+  const {id} = await resolvedParams;
 
   const team = await prisma.aboutOurTeam.findUnique({where:{id}});
 

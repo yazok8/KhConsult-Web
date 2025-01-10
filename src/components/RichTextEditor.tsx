@@ -8,9 +8,10 @@ import TableRow from '@tiptap/extension-table-row';
 import TableCell from '@tiptap/extension-table-cell';
 import TableHeader from '@tiptap/extension-table-header';
 import Heading from '@tiptap/extension-heading';
-import Link from '@tiptap/extension-link'; // Import Link extension
-import Image from '@tiptap/extension-image'; // Import Image extension
-import Underline from '@tiptap/extension-underline'; // Import Underline extension
+import Link from '@tiptap/extension-link';
+import Image from '@tiptap/extension-image';
+import Underline from '@tiptap/extension-underline';
+import Blockquote from '@tiptap/extension-blockquote';
 import { MenuBar } from './MenuBar';
 
 interface RichTextEditorProps {
@@ -22,9 +23,8 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({ content, onChange }) =>
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
-        // Disable only the heading from StarterKit
-        heading: false,
-        // Configure bulletList and orderedList from StarterKit
+        heading: false, // Disable Heading in StarterKit
+        blockquote: false, // Disable Blockquote in StarterKit to reconfigure it
         bulletList: {
           HTMLAttributes: {
             class: 'list-disc ml-4 space-y-2',
@@ -54,7 +54,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({ content, onChange }) =>
         },
       }),
       Link.configure({
-        openOnClick: false, // Customize as needed
+        openOnClick: false,
         HTMLAttributes: {
           rel: 'noopener noreferrer',
           target: '_blank',
@@ -62,18 +62,23 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({ content, onChange }) =>
       }),
       Image.configure({
         inline: false,
-        allowBase64: true, // Allow base64 images if needed
+        allowBase64: true,
       }),
       Underline.configure({
         HTMLAttributes: {
-          class: 'underline', // Optional: Add a class for styling
+          class: 'underline',
+        },
+      }),
+      Blockquote.configure({
+        HTMLAttributes: {
+          class: 'blockquote', // Use lowercase for consistency
         },
       }),
     ],
     content: content || '',
     onUpdate: ({ editor }) => {
       const html = editor.getHTML();
-      console.log("Editor Content Updated:", html); // For debugging
+      console.log("Editor Content Updated:", html);
       onChange(html);
     },
     editorProps: {

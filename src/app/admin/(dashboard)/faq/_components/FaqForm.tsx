@@ -11,13 +11,6 @@ import { Label } from "@radix-ui/react-label";
 import { toast } from "react-hot-toast"; // Import toast
 import DeleteButton from "@/app/admin/components/DeleteButton";
 import { faq } from "@prisma/client"; // Directly import Faq type
-import {
-  ContentState,
-  convertFromHTML,
-  convertToRaw,
-  EditorState,
-} from "draft-js";
-import draftToHtml from "draftjs-to-html";
 import RichTextEditor from "@/components/RichTextEditor";
 
 interface FaqFormProps {
@@ -32,8 +25,8 @@ export default function FaqForm({ faq }: FaqFormProps) {
 
   // State variables
   const [question, setQuestion] = useState<string>(faq?.question || "");
-  const [answerEditorState, setAnswerEditorState] = useState<EditorState>(
-    EditorState.createEmpty()
+  const [answer, setAnswer] = useState<string>(
+    faq?.answer || ""
   );
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
@@ -46,22 +39,8 @@ export default function FaqForm({ faq }: FaqFormProps) {
 
     // If editing and we have an answer, load it into the editor
     if (faq?.answer) {
-      try {
-        const blocksFromHTML = convertFromHTML(faq.answer);
-        const contentState = ContentState.createFromBlockArray(
-          blocksFromHTML.contentBlocks,
-          blocksFromHTML.entityMap
-        );
-        const newEditorState = EditorState.createWithContent(contentState);
-        setAnswerEditorState(newEditorState);
-      } catch (err) {
-        console.error("Error parsing FAQ answer HTML:", err);
-        if (isMounted.current) {
-          setError("Failed to load the FAQ answer.");
-        }
-      }
+     setAnswer(faq.answer)
     }
-
     // Cleanup function to mark as unmounted
     return () => {
       isMounted.current = false;
@@ -76,27 +55,10 @@ export default function FaqForm({ faq }: FaqFormProps) {
     setError(null);
     setIsSubmitting(true);
 
-    // Convert Draft.js state to HTML
-    let answerHTML = "";
-    try {
-      const rawContentState = convertToRaw(answerEditorState.getCurrentContent());
-      answerHTML = draftToHtml(rawContentState);
-      // Optional: Sanitize HTML here if necessary
-      // answerHTML = sanitizeHtml(draftToHtml(rawContentState));
-    } catch (err) {
-      console.error("Error converting editor state to HTML:", err);
-      if (isMounted.current) {
-        setError("Failed to process the FAQ answer.");
-      }
-      toast.error("Failed to process the FAQ answer.");
-      setIsSubmitting(false);
-      return;
-    }
-
     // Prepare form data
     const formData = new FormData();
     formData.append("question", question);
-    formData.append("answer", answerHTML);
+    formData.append("answer", answer);
 
     // Determine API endpoint and method
     const apiEndpoint = faq
@@ -162,9 +124,9 @@ export default function FaqForm({ faq }: FaqFormProps) {
           <div className="py-5 space-y-2 flex flex-col">
             <Label htmlFor="answer">Answer</Label>
             <RichTextEditor
-              editorState={answerEditorState}
-              onEditorStateChange={setAnswerEditorState}
-            />
+                                content={answer}
+                                onChange={setAnswer}
+                        />
           </div>
 
           {/* Action Buttons */}

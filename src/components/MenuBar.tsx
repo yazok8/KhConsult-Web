@@ -15,7 +15,7 @@ import {
   ImageIcon,
   UndoIcon,
   RedoIcon,
-} from "./icons"; // Adjust the path as necessary
+} from "./icons" // Adjust the path as necessary
 
 interface MenuBarProps {
   editor: Editor;
@@ -32,51 +32,71 @@ export const MenuBar: React.FC<MenuBarProps> = ({ editor }) => {
       <div className="flex space-x-1 mr-4">
         <button
           type="button"
-          onClick={() => editor.chain().focus().toggleBold().run()}
+          onClick={() => {
+            console.log("Toggling Bold");
+            editor.chain().focus().toggleBold().run();
+          }}
           className={`p-2 rounded ${
             editor.isActive("bold") ? "bg-blue-500 text-white" : "bg-white dark:bg-gray-700"
           }`}
           aria-label="Bold"
+          title="Bold"
         >
           <BoldIcon className="w-5 h-5" />
         </button>
         <button
           type="button"
-          onClick={() => editor.chain().focus().toggleItalic().run()}
+          onClick={() => {
+            console.log("Toggling Italic");
+            editor.chain().focus().toggleItalic().run();
+          }}
           className={`p-2 rounded ${
             editor.isActive("italic") ? "bg-blue-500 text-white" : "bg-white dark:bg-gray-700"
           }`}
           aria-label="Italic"
+          title="Italic"
         >
           <ItalicIcon className="w-5 h-5" />
         </button>
         <button
           type="button"
-          onClick={() => editor.chain().focus().toggleUnderline().run()}
+          onClick={() => {
+            console.log("Toggling Underline");
+            editor.chain().focus().toggleUnderline().run();
+          }}
           className={`p-2 rounded ${
             editor.isActive("underline") ? "bg-blue-500 text-white" : "bg-white dark:bg-gray-700"
           }`}
           aria-label="Underline"
+          title="Underline"
         >
           <UnderlineIcon className="w-5 h-5" />
         </button>
         <button
           type="button"
-          onClick={() => editor.chain().focus().toggleStrike().run()}
+          onClick={() => {
+            console.log("Toggling Strikethrough");
+            editor.chain().focus().toggleStrike().run();
+          }}
           className={`p-2 rounded ${
             editor.isActive("strike") ? "bg-blue-500 text-white" : "bg-white dark:bg-gray-700"
           }`}
           aria-label="Strikethrough"
+          title="Strikethrough"
         >
           <StrikethroughIcon className="w-5 h-5" />
         </button>
         <button
           type="button"
-          onClick={() => editor.chain().focus().toggleCode().run()}
+          onClick={() => {
+            console.log("Toggling Inline Code");
+            editor.chain().focus().toggleCode().run();
+          }}
           className={`p-2 rounded ${
             editor.isActive("code") ? "bg-blue-500 text-white" : "bg-white dark:bg-gray-700"
           }`}
-          aria-label="Code"
+          aria-label="Inline Code"
+          title="Inline Code"
         >
           <CodeIcon className="w-5 h-5" />
         </button>
@@ -86,37 +106,49 @@ export const MenuBar: React.FC<MenuBarProps> = ({ editor }) => {
       <div className="flex space-x-1 mr-4">
         <button
           type="button"
-          onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
+          onClick={() => {
+            console.log("Toggling Heading 1");
+            editor.chain().focus().toggleHeading({ level: 1 }).run();
+          }}
           className={`p-2 rounded ${
             editor.isActive("heading", { level: 1 })
               ? "bg-blue-500 text-white"
               : "bg-white dark:bg-gray-700"
           }`}
           aria-label="Heading 1"
+          title="Heading 1"
         >
           <span className="font-semibold text-lg">H1</span>
         </button>
         <button
           type="button"
-          onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
+          onClick={() => {
+            console.log("Toggling Heading 2");
+            editor.chain().focus().toggleHeading({ level: 2 }).run();
+          }}
           className={`p-2 rounded ${
             editor.isActive("heading", { level: 2 })
               ? "bg-blue-500 text-white"
               : "bg-white dark:bg-gray-700"
           }`}
           aria-label="Heading 2"
+          title="Heading 2"
         >
           <span className="font-semibold text-lg">H2</span>
         </button>
         <button
           type="button"
-          onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
+          onClick={() => {
+            console.log("Toggling Heading 3");
+            editor.chain().focus().toggleHeading({ level: 3 }).run();
+          }}
           className={`p-2 rounded ${
             editor.isActive("heading", { level: 3 })
               ? "bg-blue-500 text-white"
               : "bg-white dark:bg-gray-700"
           }`}
           aria-label="Heading 3"
+          title="Heading 3"
         >
           <span className="font-semibold text-lg">H3</span>
         </button>
@@ -126,21 +158,29 @@ export const MenuBar: React.FC<MenuBarProps> = ({ editor }) => {
       <div className="flex space-x-1 mr-4">
         <button
           type="button"
-          onClick={() => editor.chain().focus().toggleBulletList().run()}
+          onClick={() => {
+            console.log("Toggling Bullet List");
+            editor.chain().focus().toggleBulletList().run();
+          }}
           className={`p-2 rounded ${
             editor.isActive("bulletList") ? "bg-blue-500 text-white" : "bg-white dark:bg-gray-700"
           }`}
           aria-label="Bullet List"
+          title="Bullet List"
         >
           <ListBulletedIcon className="w-5 h-5" />
         </button>
         <button
           type="button"
-          onClick={() => editor.chain().focus().toggleOrderedList().run()}
+          onClick={() => {
+            console.log("Toggling Ordered List");
+            editor.chain().focus().toggleOrderedList().run();
+          }}
           className={`p-2 rounded ${
             editor.isActive("orderedList") ? "bg-blue-500 text-white" : "bg-white dark:bg-gray-700"
           }`}
           aria-label="Ordered List"
+          title="Ordered List"
         >
           <ListNumberedIcon className="w-5 h-5" />
         </button>
@@ -150,23 +190,17 @@ export const MenuBar: React.FC<MenuBarProps> = ({ editor }) => {
       <div className="flex space-x-1 mr-4">
         <button
           type="button"
-          onClick={() => editor.chain().focus().toggleBlockquote().run()}
+          onClick={() => {
+            console.log("Toggling Blockquote");
+            editor.chain().focus().toggleBlockquote().run();
+          }}
           className={`p-2 rounded ${
             editor.isActive("blockquote") ? "bg-blue-500 text-white" : "bg-white dark:bg-gray-700"
           }`}
           aria-label="Blockquote"
+          title="Blockquote"
         >
           <BlockquoteIcon className="w-5 h-5" />
-        </button>
-        <button
-          type="button"
-          onClick={() => editor.chain().focus().toggleCodeBlock().run()}
-          className={`p-2 rounded ${
-            editor.isActive("codeBlock") ? "bg-blue-500 text-white" : "bg-white dark:bg-gray-700"
-          }`}
-          aria-label="Code Block"
-        >
-          <CodeIcon className="w-5 h-5" />
         </button>
       </div>
 
@@ -175,6 +209,7 @@ export const MenuBar: React.FC<MenuBarProps> = ({ editor }) => {
         <button
           type="button"
           onClick={() => {
+            console.log("Adding Link");
             const url = window.prompt("Enter URL");
             if (url) {
               editor.chain().focus().setLink({ href: url }).run();
@@ -184,12 +219,14 @@ export const MenuBar: React.FC<MenuBarProps> = ({ editor }) => {
             editor.isActive("link") ? "bg-blue-500 text-white" : "bg-white dark:bg-gray-700"
           }`}
           aria-label="Link"
+          title="Add Link"
         >
           <LinkIcon className="w-5 h-5" />
         </button>
         <button
           type="button"
           onClick={() => {
+            console.log("Adding Image");
             const input = document.createElement("input");
             input.type = "file";
             input.accept = "image/*";
@@ -210,6 +247,7 @@ export const MenuBar: React.FC<MenuBarProps> = ({ editor }) => {
             editor.isActive("image") ? "bg-blue-500 text-white" : "bg-white dark:bg-gray-700"
           }`}
           aria-label="Image"
+          title="Add Image"
         >
           <ImageIcon className="w-5 h-5" />
         </button>
@@ -219,17 +257,25 @@ export const MenuBar: React.FC<MenuBarProps> = ({ editor }) => {
       <div className="flex space-x-1">
         <button
           type="button"
-          onClick={() => editor.chain().focus().undo().run()}
+          onClick={() => {
+            console.log("Undo Action");
+            editor.chain().focus().undo().run();
+          }}
           className="p-2 rounded bg-white dark:bg-gray-700"
           aria-label="Undo"
+          title="Undo"
         >
           <UndoIcon className="w-5 h-5" />
         </button>
         <button
           type="button"
-          onClick={() => editor.chain().focus().redo().run()}
+          onClick={() => {
+            console.log("Redo Action");
+            editor.chain().focus().redo().run();
+          }}
           className="p-2 rounded bg-white dark:bg-gray-700"
           aria-label="Redo"
+          title="Redo"
         >
           <RedoIcon className="w-5 h-5" />
         </button>

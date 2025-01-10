@@ -6,7 +6,7 @@ import prisma from '@/lib/prisma';
 import { notFound } from 'next/navigation';
 
 interface EditAboutServicesProps {
-  params:{id:string};
+  params: Promise<{ id: string }>;
 }
 
 export default async function EditAboutServices({ params }: EditAboutServicesProps) {

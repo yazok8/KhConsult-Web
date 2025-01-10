@@ -4,7 +4,7 @@ import FaqForm from '../../_components/FaqForm';
 
 
 interface EditFaqProps {
-    params:{id:string};
+  params: Promise<{ id: string }>;
 }
 
 export default async function editFaqQuestion({ params }: EditFaqProps) {

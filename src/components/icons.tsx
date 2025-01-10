@@ -15,6 +15,7 @@ import {
   FaImage,
   FaUndo,
   FaRedo,
+  FaCodeBranch,
 } from 'react-icons/fa'; // Import from Font Awesome
 
 // Wrapper components
@@ -38,8 +39,12 @@ export const CodeIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
   <FaCode {...props} />
 );
 
+// New Code Block Icon
+export const CodeBlockIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+  <FaCodeBranch {...props} />
+);
+
 export const HeadingIcon: React.FC<{ level: number } & React.SVGProps<SVGSVGElement>> = ({
-  level,
   ...props
 }) => (
   <FaHeading {...props} />

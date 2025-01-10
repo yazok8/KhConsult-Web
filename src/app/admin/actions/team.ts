@@ -81,7 +81,7 @@ export async function blobToBuffer(blob: Blob): Promise<Buffer> {
     req: NextRequest,
     { params }: { params: { id: string } }
   ): Promise<AboutOurTeam> {
-    const { id } = params; // Safe destructuring
+    const { id } = await params; // Safe destructuring
   
     try {
       const formData = await req.formData();

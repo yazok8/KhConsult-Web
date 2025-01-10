@@ -1,6 +1,7 @@
 import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import bcrypt from "bcrypt";
+import { Prisma } from "@prisma/client";
 
 
 
@@ -72,11 +73,14 @@ export default async function resgiserUser(req:Request){
           },
           { status: 201 }
         );
-      } catch (error: any) {
+      } catch (error: unknown) {
         console.error("Error registering user:", error);
-    
+
         // Handle Prisma unique constraint errors
-        if (error.code === "P2002") {
+        if (
+          error instanceof Prisma.PrismaClientKnownRequestError &&
+          error.code === "P2002"
+        ) {
           return NextResponse.json(
             { error: "InternalServerError" },
             { status: 500 }

@@ -2,7 +2,7 @@
 
 import '@tiptap/core';
 import { LinkOptions } from '@tiptap/extension-link';
-import { ImageOptions } from '@tiptap/extension-image';// Import Underline options
+import { ImageOptions } from '@tiptap/extension-image';
 
 declare module '@tiptap/core' {
   interface Commands<ReturnType> {
@@ -58,6 +58,42 @@ declare module '@tiptap/core' {
        * Unset underline
        */
       unsetUnderline: () => ReturnType;
+    };
+
+    /**
+     * Blockquote-related commands
+     */
+    blockquote: {
+      /**
+       * Toggle blockquote
+       */
+      toggleBlockquote: () => ReturnType;
+      /**
+       * Set blockquote
+       */
+      setBlockquote: () => ReturnType;
+      /**
+       * Unset blockquote
+       */
+      unsetBlockquote: () => ReturnType;
+    };
+
+    /**
+     * CodeBlock-related commands
+     */
+    codeBlock: {
+      /**
+       * Toggle code block
+       */
+      toggleCodeBlock: () => ReturnType;
+      /**
+       * Set code block
+       */
+      setCodeBlock: () => ReturnType;
+      /**
+       * Unset code block
+       */
+      unsetCodeBlock: () => ReturnType;
     };
   }
 }

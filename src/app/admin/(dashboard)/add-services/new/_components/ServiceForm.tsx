@@ -128,15 +128,18 @@ const ServiceForm: React.FC<ServiceFormProps> = ({ service }) => {
           setError(errorData.error || "Failed to save service.");
         }
       }
-    } catch (err: any) {
-      if (err.name === "AbortError") {
-        console.log("Fetch aborted");
-      } else {
-        console.error("An unexpected error occurred:", err);
-        if (isMounted.current) {
-          setError("An unexpected error occurred.");
+    } catch (err: unknown) {
+      if(err instanceof Error){
+        if (err.name === "AbortError") {
+          console.log("Fetch aborted");
+        } else {
+          console.error("An unexpected error occurred:", err);
+          if (isMounted.current) {
+            setError("An unexpected error occurred.");
+          }
         }
       }
+ 
     } finally {
       if (isMounted.current) {
         setIsSubmitting(false);

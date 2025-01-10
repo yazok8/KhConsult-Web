@@ -12,8 +12,6 @@ import Image from 'next/image';
 import { getImageSrc } from '@/lib/imageHelper';
 import { Prisma } from '@prisma/client';
 import DeleteButton from '@/app/admin/components/DeleteButton';
-import { ContentState, convertFromHTML, convertToRaw, EditorState } from 'draft-js';
-import draftToHtml from 'draftjs-to-html';
 import RichTextEditor from '@/components/RichTextEditor';
 
 type Team = Prisma.AboutOurTeamGetPayload<{
@@ -40,8 +38,9 @@ export default function TeamForm({ team }: TeamFormProps) {
   const [name, setName] = useState(team?.name || '');
   const [title, setTitle] = useState(team?.title || '');
   // Draft.js rich text editor state
-  const [descriptionEditorState, setDescriptionEditorState] =
-    useState<EditorState>(EditorState.createEmpty());
+  const [description, setDescription] = useState<string>(
+    team?.description || ""
+  );
 
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -55,12 +54,7 @@ export default function TeamForm({ team }: TeamFormProps) {
       setCurrentImageSrc(imageSrc);
     }
     if (team?.description) {
-      const blocksFromHTML = convertFromHTML(team.description);
-      const contentState = ContentState.createFromBlockArray(
-        blocksFromHTML.contentBlocks,
-        blocksFromHTML.entityMap
-      );
-      setDescriptionEditorState(EditorState.createWithContent(contentState));
+      setDescription(team.description);
     }
     return () => {
       isMounted.current = false;
@@ -77,17 +71,11 @@ export default function TeamForm({ team }: TeamFormProps) {
     e.preventDefault();
   
 
-    let descriptionHTML = "";
-    if (descriptionEditorState) {
-      const raw = convertToRaw(descriptionEditorState.getCurrentContent());
-      descriptionHTML = draftToHtml(raw);
-    }
-
     const formData = new FormData();
     
     formData.append('name', name);
     formData.append('title', title);
-    formData.append('description', descriptionHTML);
+    formData.append('description', description);
   
     if (currentImageSrc instanceof File) {
       formData.append('image', currentImageSrc);
@@ -162,8 +150,8 @@ export default function TeamForm({ team }: TeamFormProps) {
           <div className="py-5 space-y-2 flex flex-col">
             <Label htmlFor="description">Description</Label>
             <RichTextEditor
-                          editorState={descriptionEditorState}
-                          onEditorStateChange={setDescriptionEditorState}
+                                content={description}
+                                onChange={setDescription}
                         />
           </div>
 

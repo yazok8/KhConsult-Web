@@ -12,8 +12,6 @@ import { Prisma } from "@prisma/client";
 import { Label } from "@radix-ui/react-label";
 import Image from "next/image";
 import DeleteButton from "@/app/admin/components/DeleteButton";
-import { ContentState, convertFromHTML, convertToRaw, EditorState } from "draft-js";
-import draftToHtml from "draftjs-to-html";
 import RichTextEditor from "@/components/RichTextEditor";
 
 type AboutOurServices = Prisma.AboutOurServicesGetPayload<object>;
@@ -36,8 +34,10 @@ export default function AboutOurServicesForm({
 
   const [title, setTitle] = useState(aboutServices?.title || "");
   // Draft.js rich text editor state
-  const [descriptionEditorState, setDescriptionEditorState] =
-    useState<EditorState>(EditorState.createEmpty());
+  // Description state (HTML string)
+  const [description, setDescription] = useState<string>(
+    aboutServices?.description || ""
+  );
 
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -50,18 +50,12 @@ export default function AboutOurServicesForm({
       const imageSrc = getImageSrc(aboutServices.aboutimage);
       setCurrentImageSrc(imageSrc);
     }
-     // If we have an HTML description, convert to DraftJS EditorState
      if (aboutServices?.description) {
-      const blocksFromHTML = convertFromHTML(aboutServices.description);
-      const contentState = ContentState.createFromBlockArray(
-        blocksFromHTML.contentBlocks,
-        blocksFromHTML.entityMap
-      );
-      setDescriptionEditorState(EditorState.createWithContent(contentState));
+      setDescription(aboutServices.description);
     }
-    return () => {
+    return ()=>{
       isMounted.current = false;
-    };
+    }
   }, [aboutServices]);
 
   function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -73,17 +67,12 @@ export default function AboutOurServicesForm({
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
 
-    // Convert Draft.js state to HTML
-    let descriptionHTML = "";
-    if (descriptionEditorState) {
-      const raw = convertToRaw(descriptionEditorState.getCurrentContent());
-      descriptionHTML = draftToHtml(raw);
-    }
+
 
     const formData = new FormData();
 
     formData.append("title", title);
-    formData.append("description", descriptionHTML);
+    formData.append("description", description);
 
     if (
       typeof currentImageSrc === "object" &&
@@ -154,8 +143,8 @@ export default function AboutOurServicesForm({
           <div className="py-5 space-y-2 flex flex-col">
             <Label htmlFor="description">Description</Label>
                       <RichTextEditor
-                          editorState={descriptionEditorState}
-                          onEditorStateChange={setDescriptionEditorState}
+                                content={description}
+                                onChange={setDescription}
                         />
           </div>
 
