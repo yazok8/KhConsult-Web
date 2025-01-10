@@ -79,7 +79,7 @@ export default function AdminSignIn() {
       <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full">
         <Card className="border-none shadow-none">
           <CardHeader className="pl-0">
-            <CardTitle className="flex justify-center">Kh Consult - Admin Login</CardTitle>
+            <CardTitle className="flex justify-center">Kh Consult - Admin Sign In</CardTitle>
           </CardHeader>
         <form onSubmit={handleSubmit(onSubmit)} className="sign-in-form">
           <div className="max-w-sm mb-4">
