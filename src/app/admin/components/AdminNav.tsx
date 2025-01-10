@@ -2,7 +2,7 @@
 
 import Link from "next/link";  
 import AdminNavItem from "./AdminNavItem";  
-import { MdDns, MdLibraryAdd } from "react-icons/md";  
+import { MdDns } from "react-icons/md";  
 import { usePathname } from "next/navigation";  
 import { Session } from "next-auth";
 import { signOut } from "next-auth/react";
@@ -10,13 +10,11 @@ import SummaryTab from "./tabs/SummaryTab";
 import { Button } from "@/components/ui/button";
   
 interface AdminNavProps {
-  session: Session; // or Session | null if you prefer
+  session: Session;
 }  
 
 const AdminNav: React.FC<AdminNavProps> = ({ session })  => {   
   const pathname = usePathname();   
-
-  console.log(session)
    
 
   return (   
@@ -35,7 +33,7 @@ const AdminNav: React.FC<AdminNavProps> = ({ session })  => {
      <SummaryTab />
      <AdminNavItem   
       label="Manage Team"   
-      icon={MdLibraryAdd}   
+      icon={MdDns}   
       href="/admin/manage-team"  
       selected={pathname === "/admin/manage-team"}   
      />   

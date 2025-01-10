@@ -61,24 +61,6 @@ declare module '@tiptap/core' {
     };
 
     /**
-     * Blockquote-related commands
-     */
-    blockquote: {
-      /**
-       * Toggle blockquote
-       */
-      toggleBlockquote: () => ReturnType;
-      /**
-       * Set blockquote
-       */
-      setBlockquote: () => ReturnType;
-      /**
-       * Unset blockquote
-       */
-      unsetBlockquote: () => ReturnType;
-    };
-
-    /**
      * CodeBlock-related commands
      */
     codeBlock: {

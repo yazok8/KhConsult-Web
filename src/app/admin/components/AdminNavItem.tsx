@@ -6,8 +6,8 @@ interface AdminNavItemProps {
   selected?: boolean;  
   icon: IconType;  
   label: string;  
-  href: string; // Add a href prop  
-  onClose?: () => void; // Optional onClose prop  
+  href: string;   
+  onClose?: () => void;  
 }  
   
 const AdminNavItem: React.FC<AdminNavItemProps> = ({  
@@ -36,7 +36,7 @@ const AdminNavItem: React.FC<AdminNavItemProps> = ({
           onClick={(e) => {  
            e.preventDefault();  
            e.stopPropagation();  
-           onClose(); // Trigger the close action  
+           onClose();
           }}  
         />  
        )}  

@@ -10,7 +10,6 @@ import {
   CodeIcon,
   ListBulletedIcon,
   ListNumberedIcon,
-  BlockquoteIcon,
   LinkIcon,
   ImageIcon,
   UndoIcon,
@@ -186,23 +185,6 @@ export const MenuBar: React.FC<MenuBarProps> = ({ editor }) => {
         </button>
       </div>
 
-      {/* Block Styles */}
-      <div className="flex space-x-1 mr-4">
-        <button
-          type="button"
-          onClick={() => {
-            console.log("Toggling Blockquote");
-            editor.chain().focus().toggleBlockquote().run();
-          }}
-          className={`p-2 rounded ${
-            editor.isActive("blockquote") ? "bg-blue-500 text-white" : "bg-white dark:bg-gray-700"
-          }`}
-          aria-label="Blockquote"
-          title="Blockquote"
-        >
-          <BlockquoteIcon className="w-5 h-5" />
-        </button>
-      </div>
 
       {/* Entities */}
       <div className="flex space-x-1 mr-4">

@@ -78,7 +78,7 @@ const DeleteButton: React.FC<DeleteButtonProps> = ({
         if (redirectPath) {
           timeoutRef.current = setTimeout(() => {
             if (isMounted.current) {
-              router.push(redirectPath); // Redirect after 2 seconds
+              router.push(redirectPath);
             }
           }, 2000);
         } else {

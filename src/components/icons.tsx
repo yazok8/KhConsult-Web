@@ -10,7 +10,6 @@ import {
   FaHeading,
   FaListUl,
   FaListOl,
-  FaQuoteLeft,
   FaLink,
   FaImage,
   FaUndo,
@@ -58,9 +57,6 @@ export const ListNumberedIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props)
   <FaListOl {...props} />
 );
 
-export const BlockquoteIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
-  <FaQuoteLeft {...props} />
-);
 
 export const LinkIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
   <FaLink {...props} />

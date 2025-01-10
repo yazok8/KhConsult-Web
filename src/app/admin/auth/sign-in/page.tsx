@@ -116,7 +116,7 @@ export default function AdminSignIn() {
           
 
           <div className="mt-4">
-            <Button type="submit">Admin Sign in</Button>
+            <Button type="submit">Sign In</Button>
           </div>
         </form>
         </Card>
