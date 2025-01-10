@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { signUpSchema, SignUpValues } from "@/lib/validations/signUp";
@@ -87,6 +88,11 @@ export default function UserSignUp() {
     return (
       <div className="flex items-center justify-center min-h-screen p-5">
         <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full">
+          <Card className="border-none shadow-none">
+          <CardHeader className="pl-0">
+            <CardTitle className="flex justify-center">Kh Consult - Admin Sign Up</CardTitle>
+          </CardHeader>
+          <CardContent>
           <form onSubmit={handleSubmit(onSubmit)} className="sign-up-form">
             <div className="mb-4">
               <Label htmlFor="name">Name</Label>
@@ -161,6 +167,10 @@ export default function UserSignUp() {
               Sign in here
             </span>
           </p>
+          </CardContent>
+
+          </Card>
+
         </div>
       </div>
     );
