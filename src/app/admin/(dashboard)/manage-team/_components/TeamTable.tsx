@@ -24,12 +24,12 @@ export default function TeamTable() {
     }, []);
   
     return (
-      <div className="mx-auto flex flex-col mt-36">
+      <div className="mx-auto flex flex-col mt-36 px-5">
         <Card>
           <CardHeader>
             <CardTitle>Our Team</CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="px-2 lg:p-6">
             <div className="py-5 mr-auto">
               <Link href="/admin/manage-team/add-team">
               <IoMdAdd size='20' />

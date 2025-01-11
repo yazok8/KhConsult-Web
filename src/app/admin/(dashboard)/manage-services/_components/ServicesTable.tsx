@@ -52,7 +52,7 @@ function ServicesTable() {
         <CardHeader>
           <CardTitle className="text-3xl">Our Services</CardTitle>
         </CardHeader>
-        <CardContent className="px-2 lg:p-6 border-none">
+        <CardContent className="px-2 lg:p-6">
           <div className="flex justify-end mb-5">
             <Link href="/admin/add-services/new" className="flex items-center space-x-2 text-blue-600 hover:text-blue-800">
               <IoMdAdd size={24} />
