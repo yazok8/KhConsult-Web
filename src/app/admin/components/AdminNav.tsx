@@ -30,7 +30,7 @@ const AdminNav: React.FC<AdminNavProps> = ({ session }) => {
     <>
       {/* Toggle Button */}
       <button 
-        className="fixed top-4 left-4 z-60 text-white text-2xl bg-black p-0 md:ml-8" // Hidden on medium and larger screens
+        className="fixed top-4 left-4 z-60 text-black text-2xl bg-transparent p-0 md:ml-8" // Hidden on medium and larger screens
         onClick={toggleNav}
       >
         {openNav ? <MdClose /> : <MdMenu />}
@@ -38,7 +38,7 @@ const AdminNav: React.FC<AdminNavProps> = ({ session }) => {
 
       {
         openNav && // Show navbar when openNav is true
-        <div className="fixed left-0 top-0 h-full md:h-screen w-60 bg-black shadow-xl z-50 flex flex-col text-nowrap w-full md:max-w-[32%] lg:max-w-[22%]">   
+        <div className="fixed left-0 top-0 h-full md:h-screen bg-black shadow-xl z-50 flex flex-col text-nowrap w-full md:max-w-[32%] lg:max-w-[22%]">   
           <div className="mx-auto md:px-2 px-1">  
             <div className="p-6 border-b border-gray-800 flex justify-between items-center">  
               <Button className="bg-transparent p-0" onClick={() => setOpenNav(false)}>  
