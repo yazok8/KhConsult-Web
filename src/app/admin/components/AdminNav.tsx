@@ -83,7 +83,7 @@ const AdminNav: React.FC<AdminNavProps> = ({ session }) => {
               {/* Sign Out Button */}
               {session && (
                 <Button
-                  className="mt-auto bg-red-500 hover:bg-red-700 text-white font-bold w-full"
+                  className="mt-auto bg-red-500 hover:bg-red-700 text-white font-bold w-full max-w-[85%]"
                   onClick={() => signOut()}
                 >
                   Sign Out

@@ -1,79 +1,119 @@
-"use client"
+// TeamTable.tsx
+"use client";
 
-import React, { useEffect, useState } from "react";
-import Link from "next/link";
-import Image from "next/image";
-import { AboutOurTeam } from "@prisma/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import Image from "next/image";
+import Link from "next/link";
+import React, { useEffect, useState } from "react";
 import { IoMdAdd } from "react-icons/io";
 
+interface TeamMember {
+  id: string;
+  name: string;
+  title: string;
+  description: string;
+  profileImage: string | null;
+}
 
-export default function TeamTable() {
-    const [team, setTeam] = useState<AboutOurTeam[]>([]);
+function TeamTable() {
+  const [team, setTeam] = useState<TeamMember[]>([]);
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
 
-    useEffect(() => {
-      (async () => {
+  useEffect(() => {
+    const fetchTeam = async () => {
+      try {
         const res = await fetch("/api/team");
-        if (res.ok) {
-          const data = await res.json();
-          setTeam(data);
-        } else {
-          console.error("Failed to fetch team data.");
+        if (!res.ok) {
+          throw new Error("Failed to fetch team members.");
         }
-      })();
-    }, []);
-  
+        const data: TeamMember[] = await res.json();
+        setTeam(data);
+      } catch (err) {
+        console.error("Error fetching team members:", err);
+        setError("Unable to load team members at this time.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTeam();
+  }, []);
+
+  if (loading) {
     return (
-      <div className="mx-auto flex flex-col mt-36 px-5">
-        <Card>
-          <CardHeader>
-            <CardTitle>Our Team</CardTitle>
-          </CardHeader>
-          <CardContent className="px-2 lg:p-6">
-            <div className="py-5 mr-auto">
-              <Link href="/admin/manage-team/add-team">
-              <IoMdAdd size='20' />
-              </Link>
-            </div>
-            <ul>
-              {team.map((teamMember) => (
-                <div key={teamMember.id} className=" mb-4">
-                   <Link href={`/admin/manage-team/edit-team/${teamMember.id}`} className="flex flex-col md:flex-row space-x-12">
-                  <div className="max-w-1/4">
-                      
-                    <li>
-                      <span className="font-semibold">Name:</span> {teamMember.name}
-                    </li>
-                    <li>
-                      <span className="font-semibold">Title:</span> {teamMember.title}
-                    </li>
-                    <li>
-                    <span className="font-semibold">Description:</span> {teamMember.description}
-                    </li>
-                  </div>
-                  <div className="contents">
-                    {teamMember.profileImage ? (
-                      <Image
-                        src={`https://khconsult.s3.us-east-2.amazonaws.com/${teamMember.profileImage}`}
-                        alt={teamMember.title}
-                        width={400}
-                        height={400}
-                        className="object-cover rounded mx-auto"
-                      />
-                      
-                    ) : (
-                      <div className="w-50 h-50 bg-gray-200 flex items-center justify-center">
-                        <span>No Image</span>
+      <div className="flex justify-center items-center h-screen">
+        <p className="text-gray-500">Loading team members...</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="mx-auto flex flex-col max-w-6xl mt-20 px-5">
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-3xl">Our Team</CardTitle>
+        </CardHeader>
+        <CardContent className="px-2 lg:p-6">
+          <div className="flex justify-end mb-5">
+            <Link href="/admin/manage-team/add-team">
+              <div className="flex items-center space-x-2 text-blue-600 hover:text-blue-800">
+                <IoMdAdd size={24} />
+                <span>Add Team Member</span>
+              </div>
+            </Link>
+          </div>
+
+          {error ? (
+            <p className="text-red-500">{error}</p>
+          ) : team.length === 0 ? (
+            <p className="text-gray-500">No team members available.</p>
+          ) : (
+            <ul className="space-y-4">
+              {team.map((member) => (
+                <li
+                  key={member.id}
+                  className="bg-white rounded-lg p-0 lg:p-4 hover:bg-gray-50 transition"
+                >
+                  <Link href={`/admin/manage-team/edit-team/${member.id}`}>
+                    <div className="flex flex-col-reverse lg:flex-row items-center space-x-4">
+                      {/* Team Member Details */}
+                      <div className="flex-1">
+                        <h2 className="text-xl font-semibold text-gray-800">
+                          {member.name}
+                        </h2>
+                        <p className="text-gray-600 mt-2">{member.title}</p>
+                        <p className="text-gray-600 mt-1">
+                          {member.description}
+                        </p>
                       </div>
-                    )}
-                    
-                  </div>
+
+                      {/* Team Member Image */}
+                      <div className="flex-shrink-0 my-4">
+                        {member.profileImage ? (
+                          <Image
+                            src={`https://khconsult.s3.us-east-2.amazonaws.com/${member.profileImage}`}
+                            alt={member.name}
+                            width={200}
+                            height={200}
+                            className="object-cover rounded-full"
+                          />
+                        ) : (
+                          <div className="w-24 h-24 bg-gray-200 flex items-center justify-center rounded-full">
+                            <span className="text-gray-500">No Image</span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
                   </Link>
-                </div>
+                </li>
               ))}
             </ul>
-          </CardContent>
-        </Card>
-      </div>
-    )
+          )}
+        </CardContent>
+      </Card>
+    </div>
+  );
 }
+
+export default TeamTable;
