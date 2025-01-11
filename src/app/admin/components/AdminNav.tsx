@@ -1,7 +1,6 @@
 // AdminNav.tsx
 "use client";
 
-import Link from "next/link";  
 import AdminNavItem from "./AdminNavItem";  
 import { MdDns, MdMenu, MdClose } from "react-icons/md"; // Imported MdMenu and MdClose
 import { usePathname } from "next/navigation";  
