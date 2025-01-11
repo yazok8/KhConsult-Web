@@ -24,7 +24,7 @@ export default function TeamTable() {
     }, []);
   
     return (
-      <div className="mx-auto flex flex-col">
+      <div className="mx-auto flex flex-col mt-36">
         <Card>
           <CardHeader>
             <CardTitle>Our Team</CardTitle>
@@ -37,8 +37,8 @@ export default function TeamTable() {
             </div>
             <ul>
               {team.map((teamMember) => (
-                <div key={teamMember.id} className="flex justify-around flex-wrap mb-4">
-                   <Link href={`/admin/manage-team/edit-team/${teamMember.id}`} className="flex space-x-12">
+                <div key={teamMember.id} className=" mb-4">
+                   <Link href={`/admin/manage-team/edit-team/${teamMember.id}`} className="flex flex-col md:flex-row space-x-12">
                   <div className="max-w-1/4">
                       
                     <li>
@@ -51,14 +51,14 @@ export default function TeamTable() {
                     <span className="font-semibold">Description:</span> {teamMember.description}
                     </li>
                   </div>
-                  <div>
+                  <div className="contents">
                     {teamMember.profileImage ? (
                       <Image
                         src={`https://khconsult.s3.us-east-2.amazonaws.com/${teamMember.profileImage}`}
                         alt={teamMember.title}
                         width={400}
                         height={400}
-                        className="object-cover rounded"
+                        className="object-cover rounded mx-auto"
                       />
                       
                     ) : (

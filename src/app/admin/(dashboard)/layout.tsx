@@ -24,7 +24,7 @@ export default async function AdminDashboardLayout({ children }: AdminLayoutProp
   return (  
    <>  
     <AdminHeader session={session} />  
-    <main className='pl-[250px]'>{children}</main>  
+    <main className='pl-0 md:pl-[250px]'>{children}</main>  
    </>  
   );  
 }

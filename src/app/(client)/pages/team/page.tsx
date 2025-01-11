@@ -35,7 +35,7 @@ export default function TeamPage() {
                 key={teamMember.id}
                 className="flex justify-between flex-wrap mb-4"
               >
-                <div className="max-w-[50%] text-2xl">
+                <div className="md:max-w-[50%] text-2xl">
                   <li className="font-bold">{teamMember.name}</li>
                   <li className="font-bold">{teamMember.title}</li>
                   <li
@@ -52,7 +52,7 @@ export default function TeamPage() {
                       className="object-cover rounded"
                     />
                   ) : (
-                    <div className="w-50 h-50 bg-gray-200 flex items-center justify-center">
+                    <div className="w-full md:w-50 h-50 bg-gray-200 flex items-center justify-center">
                       <span>No Image</span>
                     </div>
                   )}

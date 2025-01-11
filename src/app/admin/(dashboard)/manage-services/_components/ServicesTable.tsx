@@ -48,11 +48,11 @@ function ServicesTable() {
 
   return (
     <div className="mx-auto flex flex-col max-w-6xl mt-20 px-5">
-      <Card>
+      <Card className="border-none">
         <CardHeader>
           <CardTitle className="text-3xl">Our Services</CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="px-2 lg:p-6 border-none">
           <div className="flex justify-end mb-5">
             <Link href="/admin/add-services/new" className="flex items-center space-x-2 text-blue-600 hover:text-blue-800">
               <IoMdAdd size={24} />
@@ -67,15 +67,15 @@ function ServicesTable() {
           ) : (
             <ul className="space-y-4">
               {services.map((service) => (
-                <li key={service.id} className="bg-white shadow-md rounded-lg p-4 hover:bg-gray-50 transition">
-                  <Link href={`/admin/edit-service/${service.id}`} className="flex items-center space-x-4">
+                <li key={service.id} className="bg-white shadow-md rounded-lg p-0 lg:p-4 hover:bg-gray-50 transition">
+                  <Link href={`/admin/edit-service/${service.id}`} className="flex flex-col-reverse lg:flex-row-reverse items-center space-x-4">
                     {/* Service Image */}
-                    <div className="flex-shrink-0">
+                    <div className="flex-shrink-0 my-4">
                       <Image
                         src={`https://khconsult.s3.us-east-2.amazonaws.com/${service.imageSrc}`}
                         alt={service.title}
-                        width={100}
-                        height={100}
+                        width={400}
+                        height={400}
                         className="object-cover rounded-md"
                       />
                     </div>
