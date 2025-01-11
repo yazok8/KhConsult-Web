@@ -68,7 +68,7 @@ function ServicesTable() {
             <ul className="space-y-4">
               {services.map((service) => (
                 <li key={service.id} className="bg-white shadow-md rounded-lg p-0 lg:p-4 hover:bg-gray-50 transition">
-                  <Link href={`/admin/edit-service/${service.id}`} className="flex flex-col-reverse lg:flex-row-reverse items-center space-x-4">
+                  <Link href={`/admin/manage-services/edit-service/${service.id}`} className="flex flex-col-reverse lg:flex-row-reverse items-center space-x-4">
                     {/* Service Image */}
                     <div className="flex-shrink-0 my-4">
                       <Image
