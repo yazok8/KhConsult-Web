@@ -118,7 +118,7 @@ export default function TeamForm({ team }: TeamFormProps) {
   }
 
   return (
-    <Card>
+    <Card className="mt-20 border-none">
       <CardHeader>
         <CardTitle>{team ? 'Edit Team Member' : 'Add A New Team Member'}</CardTitle>
       </CardHeader>

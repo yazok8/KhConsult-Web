@@ -120,7 +120,7 @@ export default function AboutOurServicesForm({
   }
 
   return (
-    <Card>
+    <Card className="mt-20 border-none">
       <CardHeader>
         <CardTitle>
           {aboutServices ? "Edit Service" : "Create A New Service"}

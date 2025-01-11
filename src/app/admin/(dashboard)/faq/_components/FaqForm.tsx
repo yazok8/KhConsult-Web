@@ -102,7 +102,7 @@ export default function FaqForm({ faq }: FaqFormProps) {
   }
 
   return (
-    <Card>
+    <Card className="mt-20 border-none">
       <CardHeader>
         <CardTitle>{faq ? "Edit FAQ" : "Create A New FAQ"}</CardTitle>
       </CardHeader>

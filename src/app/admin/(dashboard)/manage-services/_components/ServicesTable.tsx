@@ -48,7 +48,7 @@ function ServicesTable() {
 
   return (
     <div className="mx-auto flex flex-col max-w-6xl mt-20 px-5">
-      <Card className="border-none">
+      <Card>
         <CardHeader>
           <CardTitle className="text-3xl">Our Services</CardTitle>
         </CardHeader>

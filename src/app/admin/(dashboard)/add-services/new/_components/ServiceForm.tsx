@@ -164,7 +164,8 @@ const ServiceForm: React.FC<ServiceFormProps> = ({ service }) => {
   }
 
   return (
-    <Card>
+    <div className="mt-20">
+    <Card className="border-none">
       <CardHeader>
         <CardTitle>
           {service ? "Edit Service" : "Create A New Service"}
@@ -268,6 +269,7 @@ const ServiceForm: React.FC<ServiceFormProps> = ({ service }) => {
         </form>
       </CardContent>
     </Card>
+    </div>
   );
 };
 
