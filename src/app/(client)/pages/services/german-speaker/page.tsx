@@ -1,45 +1,29 @@
 "use client";
-
-// Force the page to always run as dynamic
 export const dynamic = "force-dynamic";
 
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Image from "next/image";
 import Container from "@/app/ui/Container";
-import { Service } from "@prisma/client";
-import { fetchServices } from "../_components/FetchService";
+import { useServicesSWR } from "../_components/useServiceSWR"; 
 
 export default function GermanSpeaker() {
-  const [services, setServices] = useState<Service[] | null>(null);
-  const [error, setError] = useState<string>("");
-
-  // Fetch latest services on mount
-  useEffect(() => {
-    fetchServices()
-      .then((data) => setServices(data))
-      .catch((err) => setError(err.message));
-  }, []);
+  const { services, isLoading, error } = useServicesSWR();
 
   if (error) {
-    return <p>Failed to load services: {error}</p>;
+    return <p>Failed to load services: {error.message}</p>;
   }
-
-  if (!services) {
+  if (isLoading || !services) {
     return <p>Loading services...</p>;
   }
-
   if (services.length < 3) {
     return <p>Not enough services to display the third one.</p>;
   }
 
-  // For example, you said "the 3rd service," but your code used services[0].
-  // Adjust this logic if needed.
-  const thirdService = services[0]; 
+  const thirdService = services[0]; // or whichever index you want
 
   return (
     <Container id="need-a-german-speaker">
       <div className="flex flex-col lg:flex-row items-center lg:items-start flex-grow w-full">
-        {/* Text Section */}
         <div className="pr-0 lg:pr-16 lg:w-1/2 w-full mb-10 lg:mb-0">
           <h1 className="lg:text-5xl mb-6">{thirdService.title}</h1>
           <div
@@ -50,7 +34,6 @@ export default function GermanSpeaker() {
           />
         </div>
 
-        {/* Image Section */}
         <div className="lg:w-1/2 w-full">
           {thirdService.imageSrc ? (
             <Image

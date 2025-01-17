@@ -1,27 +1,21 @@
 "use client";
-
-import Container from '@/app/ui/Container';
+import useSWR from "swr";
+import Container from "@/app/ui/Container";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { AboutOurTeam } from "@prisma/client";
 import Image from "next/image";
-import { useEffect, useState } from "react";
 
 export default function TeamPage() {
-  const [team, setTeam] = useState<AboutOurTeam[]>([]);
+  const fetcher = (url: string) => fetch(url, { cache: "no-store" }).then(r => r.json());
 
-  useEffect(() => {
-    (async () => {
-      const res = await fetch("/api/team",{
-        cache: 'no-store'
-      });
-      if (res.ok) {
-        const data = await res.json();
-        setTeam(data);
-      } else {
-        console.error("Failed to fetch team data.");
-      }
-    })();
-  }, []);
+  const { data: team, error } = useSWR<AboutOurTeam[]>("/api/team", fetcher);
+
+  if (error) {
+    return <p>Failed to load team data: {error.message}</p>;
+  }
+  if (!team) {
+    return <p>Loading team data...</p>;
+  }
 
   return (
     <Container id="team">
@@ -32,23 +26,25 @@ export default function TeamPage() {
         <CardContent className="flex">
           <div className="py-5 mr-auto"></div>
           <ul>
-            {team.map((teamMember) => (
+            {team.map((member) => (
               <div
-                key={teamMember.id}
+                key={member.id}
                 className="flex justify-between flex-wrap mb-4"
               >
                 <div className="md:max-w-[50%] text-2xl">
-                  <li className="font-bold">{teamMember.name}</li>
-                  <li className="font-bold">{teamMember.title}</li>
+                  <li className="font-bold">{member.name}</li>
+                  <li className="font-bold">{member.title}</li>
                   <li
-                            dangerouslySetInnerHTML={{ __html: teamMember.description ?? "" }}
-                  ></li>
+                    dangerouslySetInnerHTML={{
+                      __html: member.description ?? "",
+                    }}
+                  />
                 </div>
                 <div>
-                  {teamMember.profileImage ? (
+                  {member.profileImage ? (
                     <Image
-                      src={`https://khconsult.s3.us-east-2.amazonaws.com/${teamMember.profileImage}`}
-                      alt={teamMember.title}
+                      src={`https://khconsult.s3.us-east-2.amazonaws.com/${member.profileImage}`}
+                      alt={member.title}
                       width={300}
                       height={300}
                       className="object-cover rounded"
