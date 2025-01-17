@@ -5,7 +5,6 @@
 import React from "react";
 import Image from "next/image";
 import Container from "@/app/ui/Container";
- // Adjust the path as necessary
 import useSWR from "swr";
 import { Service } from '@prisma/client';
 
@@ -28,6 +27,8 @@ export default function GermanSpeaker() {
   if (services.length < 3) {
     return <p>Not enough services to display the third one.</p>;
   }
+
+  
 
   // Correctly access the third service
   const thirdService = services[0];

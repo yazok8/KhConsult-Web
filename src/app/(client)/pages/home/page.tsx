@@ -14,12 +14,13 @@ export default function Homepage() {
           <Image
             src={khlogo}
             alt="kh consultation logo"
-            width={200}
+            width={300}
             className="cursor-pointer mx-auto"
           />
         </div>
-        <div className="text-center m-auto text-5xl max-w-min">
-          <h1>Relocation Services</h1>
+        <div className="text-center m-auto text-5xl max-w-min whitespace-nowrap">
+          <h1 className="text-6xl">Relocation Services</h1>
+          <p className="mt-12">If we did it! So can you!</p>
         </div>
         </div>
 

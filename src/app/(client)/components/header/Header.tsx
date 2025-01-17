@@ -71,18 +71,12 @@ export default function Header() {
                 Services
               </button>
               {isServicesOpen && (
-                <ul className="absolute bg-white text-black mt-4 rounded shadow-lg">
+                <ul className="absolute bg-white text-black mt-4 rounded shadow-lg whitespace-nowrap">
                   <li className="px-4 py-2 hover:bg-gray-200">
                     <Link href="/#about-my-services">About my Services</Link>
                   </li>
                   <li className="px-4 py-2 hover:bg-gray-200">
-                    <Link href="/#relocation-services">Relocation Services</Link>
-                  </li>
-                  <li className="px-4 py-2 hover:bg-gray-200">
-                    <Link href="/#immigration-support">Immigration Support</Link>
-                  </li>
-                  <li className="px-4 py-2 hover:bg-gray-200">
-                    <Link href="/#job-coaching">Job Coaching</Link>
+                    <Link href="/#job-relocation">Job Relocation</Link>
                   </li>
                   <li className="px-4 py-2 hover:bg-gray-200">
                     <Link href="/#need-a-german-speaker">Need A German Speaker</Link>
@@ -94,8 +88,8 @@ export default function Header() {
               )}
             </div>
 
-            <Link className="px-5" href="/#reviews">
-              Reviews
+            <Link className="px-5" href="/#faq">
+              FAQ
             </Link>
             <Link className="px-5" href="/#contact">
               Contact

@@ -10,13 +10,13 @@ import BusinessServiceCard from '@/app/ui/forbusiness-service/BusinessServiceCar
 const individualServices = [
   {
     imageSrc: service1,
-    title: "Immigration Support",
+    title: "Job Coaching",
     description: "Filling out forms and help throughout the process",
   },
   {
     imageSrc: service2,
-    title: "Job Coaching",
-    description: "Assist you in finding a job in Germany",
+    title: "Studying in Germany",
+    description: "Support your journey of securing a student place in Germany",
   },
   {
     imageSrc: service3,
