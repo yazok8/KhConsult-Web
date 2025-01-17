@@ -60,10 +60,12 @@ export default function FaqForm({ faq }: FaqFormProps) {
     formData.append("question", question);
     formData.append("answer", answer);
 
+    const baseUrl = process.env.NEXT_PUBLIC_PROD_URL ?? "http://localhost:3000"; 
+
     // Determine API endpoint and method
     const apiEndpoint = faq
-      ? `/api/faq/editFaq/${faq.id}`
-      : "/api/faq/addFaq";
+      ? `${baseUrl}/api/faq/editFaq/${faq.id}`
+      : `${baseUrl}/api/faq/addFaq`;
     const method = faq ? "PUT" : "POST";
 
     try {

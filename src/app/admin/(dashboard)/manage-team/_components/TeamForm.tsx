@@ -84,7 +84,9 @@ export default function TeamForm({ team }: TeamFormProps) {
       formData.append('imageSrc', team.profileImage);
     }
 
-    const apiEndpoint = team ? `/api/team/edit-team/${team.id}` : '/api/team/add-team';
+    const baseUrl = process.env.NEXT_PUBLIC_PROD_URL ?? "http://localhost:3000"; 
+
+    const apiEndpoint = team ? `${baseUrl}/api/team/edit-team/${team.id}` : `${baseUrl}/api/team/add-team`;
   
     try {
       const res = await fetch(apiEndpoint, {
