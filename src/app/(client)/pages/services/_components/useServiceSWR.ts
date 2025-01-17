@@ -1,16 +1,19 @@
-// app/(site)/_components/useServicesSWR.ts
-
 import useSWR from "swr";
 import { Service } from "@prisma/client";
 
-// We'll add a timestamp query param to avoid caching issues
 const fetcher = (url: string) =>
-  fetch(`${url}?ts=${Date.now()}`, { cache: "no-store" }).then((r) => {
+  fetch(url, {
+    cache: 'no-store',
+    headers: {
+      'Cache-Control': 'no-cache, no-store, must-revalidate',
+      'Pragma': 'no-cache',
+      'Expires': '0',
+    }
+  }).then((r) => {
     if (!r.ok) throw new Error("Failed to fetch services");
     return r.json();
   });
 
-// A reusable hook for fetching Services
 export function useServicesSWR() {
   const {
     data: services,
@@ -18,16 +21,16 @@ export function useServicesSWR() {
     isLoading,
     mutate
   } = useSWR<Service[]>("/api/services", fetcher, {
-    // Optional SWR config
     revalidateOnFocus: true,
     revalidateOnReconnect: true,
-    refreshInterval: 30_000,
+    refreshInterval: 5000, // Poll every 5 seconds
+    dedupingInterval: 2000, // Dedupe requests within 2 seconds
   });
 
   return {
     services,
     isLoading,
     error,
-    mutate, // in case you want to manually refresh data
+    mutate, // Expose mutate for manual revalidation
   };
 }

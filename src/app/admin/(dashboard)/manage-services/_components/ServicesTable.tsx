@@ -1,52 +1,38 @@
 "use client";
 
-export const dynamic = "force-dynamic";
-
+import { useServicesSWR } from "@/app/(client)/pages/services/_components/useServiceSWR";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { IoMdAdd } from "react-icons/io";
 
-interface Service {
-  id: string;
-  title: string;
-  description: string;
-  imageSrc: string;
-}
-
 function ServicesTable() {
-  const [services, setServices] = useState<Service[]>([]);
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-  
+  const { services, error, isLoading, mutate } = useServicesSWR();
 
-  useEffect(() => {
-    const fetchServices = async () => {
-      try {
-        // Append a timestamp to the URL to break any possible CDN cache
-        const url = `/api/services?ts=${Date.now()}`;
-        const res = await fetch(url, { cache: "no-store" });
-        if (!res.ok) {
-          throw new Error("Failed to fetch services.");
-        }
-        const data: Service[] = await res.json();
-        setServices(data);
-      } catch (err) {
-        console.error("Error fetching services:", err);
-        setError("Unable to load services at this time.");
-      } finally {
-        setLoading(false);
-      }
-    };
+  // Refresh data when component mounts and periodically
+  React.useEffect(() => {
+    mutate(); // Initial revalidation
+    
+    const interval = setInterval(() => {
+      mutate(); // Periodic revalidation
+    }, 5000);
 
-    fetchServices();
-  }, []);
+    return () => clearInterval(interval);
+  }, [mutate]);
 
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="flex justify-center items-center h-screen">
         <p className="text-gray-500">Loading services...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <p className="text-red-500">Error loading services: {error.message}</p>
       </div>
     );
   }
@@ -59,22 +45,28 @@ function ServicesTable() {
         </CardHeader>
         <CardContent className="px-2 lg:p-6">
           <div className="flex justify-end mb-5">
-            <Link href="/admin/manage-services/add-services/new" className="flex items-center space-x-2 text-blue-600 hover:text-blue-800">
+            <Link
+              href="/admin/manage-services/add-services/new"
+              className="flex items-center space-x-2 text-blue-600 hover:text-blue-800"
+            >
               <IoMdAdd size={24} />
               <span>Add New Service</span>
             </Link>
           </div>
 
-          {error ? (
-            <p className="text-red-500">{error}</p>
-          ) : services.length === 0 ? (
+          {!services || services.length === 0 ? (
             <p className="text-gray-500">No services available.</p>
           ) : (
             <ul className="space-y-4">
               {services.map((service) => (
-                <li key={service.id} className="bg-white shadow-md rounded-lg p-0 lg:p-4 hover:bg-gray-50 transition">
-                  <Link href={`/admin/manage-services/edit-service/${service.id}`} className="flex flex-col-reverse lg:flex-row-reverse items-center space-x-4">
-                    {/* Service Image */}
+                <li
+                  key={service.id}
+                  className="bg-white shadow-md rounded-lg p-0 lg:p-4 hover:bg-gray-50 transition"
+                >
+                  <Link
+                    href={`/admin/manage-services/edit-service/${service.id}`}
+                    className="flex flex-col-reverse lg:flex-row-reverse items-center space-x-4"
+                  >
                     <div className="flex-shrink-0 my-4">
                       <Image
                         src={`https://khconsult.s3.us-east-2.amazonaws.com/${service.imageSrc}`}
@@ -85,10 +77,14 @@ function ServicesTable() {
                       />
                     </div>
 
-                    {/* Service Details */}
                     <div>
-                      <h2 className="text-xl font-semibold text-gray-800">{service.title}</h2>
-                      <p className="text-gray-600 mt-2">{service.description}</p>
+                      <h2 className="text-xl font-semibold text-gray-800">
+                        {service.title}
+                      </h2>
+                      <div
+                        className="text-gray-600 mt-2"
+                        dangerouslySetInnerHTML={{ __html: service.description }}
+                      />
                     </div>
                   </Link>
                 </li>
