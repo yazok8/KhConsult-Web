@@ -1,5 +1,7 @@
 "use client";
 
+export const dynamic = "force-dynamic";
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Image from "next/image";
 import Link from "next/link";
@@ -21,7 +23,9 @@ function ServicesTable() {
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const res = await fetch("/api/services");
+        // Append a timestamp to the URL to break any possible CDN cache
+        const url = `/api/services?ts=${Date.now()}`;
+        const res = await fetch(url, { cache: "no-store" });
         if (!res.ok) {
           throw new Error("Failed to fetch services.");
         }
