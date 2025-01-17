@@ -104,11 +104,10 @@ const ServiceForm: React.FC<ServiceFormProps> = ({ service }) => {
       formData.append("imageSrc", service.imageSrc);
     }
 
-    const baseUrl = process.env.NEXT_PUBLIC_PROD_URL ?? "http://localhost:3000"; 
 
     const apiEndpoint = service
-    ? `${baseUrl}/api/services/editService/${service.id}`
-    : `${baseUrl}/api/services/addService`;
+    ? `/api/services/editService/${service.id}`
+    : `/api/services/addService`;
 
     try {
       const res = await fetch(apiEndpoint, {

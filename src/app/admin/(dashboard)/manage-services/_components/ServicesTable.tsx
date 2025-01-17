@@ -19,6 +19,7 @@ function ServicesTable() {
   const [services, setServices] = useState<Service[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  
 
   useEffect(() => {
     const fetchServices = async () => {

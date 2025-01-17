@@ -86,12 +86,10 @@ export default function AboutOurServicesForm({
         formData.append("imageSrc", "");
       }
     }
-
-    const baseUrl = process.env.NEXT_PUBLIC_PROD_URL ?? "http://localhost:3000"; 
     
     const apiEndpoint = aboutServices
-      ? `${baseUrl}/api/aboutServices/edit/${aboutServices.id}`
-      : `${baseUrl}/api/aboutServices/add`;
+      ? `/api/aboutServices/edit/${aboutServices.id}`
+      : `/api/aboutServices/add`;
     try {
       const res = await fetch(apiEndpoint, {
         method: aboutServices ? "PUT" : "POST",
