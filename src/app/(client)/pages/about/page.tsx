@@ -1,5 +1,7 @@
 // src/app/admin/about-our-services/page.tsx
 
+export const dynamic = "force-dynamic";
+
 import Container from '@/app/ui/Container';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import prisma from '@/lib/prisma';

@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import React from "react";
 import GermanSpeaker from "./german-speaker/page";
 import ForBusinesses from "./for-businesses/page";
