@@ -8,7 +8,11 @@ import Image from "next/image";
 export default function TeamPage() {
   const fetcher = (url: string) => fetch(url, { cache: "no-store" }).then(r => r.json());
 
-  const { data: team, error } = useSWR<AboutOurTeam[]>("/api/team", fetcher);
+  const { data: team, error } = useSWR<AboutOurTeam[]>("/api/team", fetcher,{
+    revalidateOnFocus:true,
+    revalidateOnReconnect: true,
+    refreshInterval: 30_000,
+  });
 
   if (error) {
     return <p>Failed to load team data: {error.message}</p>;

@@ -19,8 +19,9 @@ export function useServicesSWR() {
     mutate
   } = useSWR<Service[]>("/api/services", fetcher, {
     // Optional SWR config
-    revalidateOnFocus: false,
+    revalidateOnFocus: true,
     revalidateOnReconnect: true,
+    refreshInterval: 30_000,
   });
 
   return {
