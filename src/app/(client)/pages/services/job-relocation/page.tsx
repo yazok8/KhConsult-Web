@@ -1,23 +1,28 @@
-// src/components/JobRelocation.tsx
-
 "use client";
 
-import React from "react";
-import coaching from "../../../../../../public/images/coaching.jpg";
+// Force the page to always run as dynamic
+export const dynamic = "force-dynamic";
+
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Container from "@/app/ui/Container";
 import { Service } from "@prisma/client";
-import useSWR from "swr"; // Corrected import
+import { fetchServices } from "../_components/FetchService";
 
-// Define the fetcher function
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function JobRelocation() {
-  // Use SWR to fetch data
-  const { data: services, error } = useSWR<Service[]>("/api/services", fetcher);
+  const [services, setServices] = useState<Service[] | null>(null);
+  const [error, setError] = useState<string>("");
+
+  // Fetch latest services on mount
+  useEffect(() => {
+    fetchServices()
+      .then((data) => setServices(data))
+      .catch((err) => setError(err.message));
+  }, []);
 
   if (error) {
-    return <p>Failed to load services.</p>;
+    return <p>Failed to load services: {error}</p>;
   }
 
   if (!services) {
@@ -28,6 +33,7 @@ export default function JobRelocation() {
     return <p>Not enough services to display the third one.</p>;
   }
 
+  // Based on your code, the "firstService" was actually services[1].
   const firstService = services[1];
 
   return (
@@ -38,7 +44,9 @@ export default function JobRelocation() {
           <h1 className=" lg:text-5xl mb-5">{firstService.title}</h1>
           <div
             className="text-lg space-y-4"
-            dangerouslySetInnerHTML={{ __html: firstService.description ?? "" }}
+            dangerouslySetInnerHTML={{
+              __html: firstService.description ?? "",
+            }}
           />
         </div>
 
@@ -51,11 +59,11 @@ export default function JobRelocation() {
               width={2000}
               height={1500}
               className="rounded-lg"
-              priority // Optional: prioritize loading for above-the-fold images
+              priority
             />
           ) : (
             <Image
-              src={coaching}
+              src="/images/coaching.jpg" 
               alt={firstService.title}
               width={1000}
               height={800}
