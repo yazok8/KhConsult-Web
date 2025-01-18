@@ -8,7 +8,7 @@ export function useFAQ() {
     error,
     isLoading,
     mutate
-  } = useSWRWithConfig<faq[]>("/api/faqs");
+  } = useSWRWithConfig<faq[]>("/api/faq");
 
   return {
     faqs,

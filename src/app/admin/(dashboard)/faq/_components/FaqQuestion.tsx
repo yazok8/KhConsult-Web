@@ -12,7 +12,6 @@ export default function FaqQuestion() {
   // Refresh data when component mounts and periodically
   useEffect(() => {
     mutate();
-    
     const interval = setInterval(() => {
       mutate();
     }, 5000);
