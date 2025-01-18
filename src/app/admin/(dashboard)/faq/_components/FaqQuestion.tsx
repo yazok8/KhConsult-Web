@@ -2,32 +2,39 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
 import { IoMdAdd } from 'react-icons/io';
-
-interface Faq {
-  id: string;
-  question: string;
-  answer: string;
-}
+import { useEffect } from 'react';
+import { useFAQ } from '@/app/hooks/useFaq';
 
 export default function FaqQuestion() {
-  const [questions, setQuestions] = useState<Faq[]>([]);
+  const { faqs, error, isLoading, mutate } = useFAQ();
 
+  // Refresh data when component mounts and periodically
   useEffect(() => {
-    (async () => {
-      try {
-        const res = await fetch("/api/faq");
-        if (!res.ok) {
-          throw new Error("Failed to fetch FAQs.");
-        }
-        const data: Faq[] = await res.json();
-        setQuestions(data);
-      } catch (error) {
-        console.error("Error fetching FAQs:", error);
-      }
-    })();
-  }, []);
+    mutate();
+    
+    const interval = setInterval(() => {
+      mutate();
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [mutate]);
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <p className="text-gray-500">Loading FAQs...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <p className="text-red-500">Error loading FAQs: {error.message}</p>
+      </div>
+    );
+  }
 
   return (
     <div className="mt-20 flex flex-col text-black text-start min-h-screen lg:h-[75vh] md:h-[120vh] pt-20 px-5 max-w-6xl mx-auto">
@@ -43,10 +50,11 @@ export default function FaqQuestion() {
               </div>
             </Link>
           </div>
-          {/* Use CSS Grid for layout */}
           <ul className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {questions.length > 0 ? (
-              questions.map((q) => (
+            {!faqs || faqs.length === 0 ? (
+              <p>No FAQs available.</p>
+            ) : (
+              faqs.map((q) => (
                 <article
                   key={q.id}
                   className="flex flex-col bg-slate-300 text-black rounded-lg shadow-lg"
@@ -63,8 +71,6 @@ export default function FaqQuestion() {
                   </Link>
                 </article>
               ))
-            ) : (
-              <p>No FAQs available.</p>
             )}
           </ul>
         </CardContent>

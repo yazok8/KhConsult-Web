@@ -1,21 +1,22 @@
 "use client";
 
-import { useServicesSWR } from "@/app/(client)/pages/services/_components/useServiceSWR";
+import { useServices } from "@/app/hooks/useServices";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { IoMdAdd } from "react-icons/io";
 
+
 function ServicesTable() {
-  const { services, error, isLoading, mutate } = useServicesSWR();
+  const { services, error, isLoading, mutate } = useServices();
 
   // Refresh data when component mounts and periodically
   React.useEffect(() => {
-    mutate(); // Initial revalidation
+    mutate();
     
     const interval = setInterval(() => {
-      mutate(); // Periodic revalidation
+      mutate();
     }, 5000);
 
     return () => clearInterval(interval);
