@@ -15,7 +15,7 @@ export default function Homepage() {
     px-5">
       <div>
         <div className="flex max-w-6xl">
-          <div className="pr-10">
+          <div className="mr-4 md:mr-10">
             <Image
               src={khlogo}
               alt="kh consultation logo"
@@ -23,9 +23,9 @@ export default function Homepage() {
               className="cursor-pointer mx-auto"
             />
           </div>
-          <div className="text-center m-auto text-5xl max-w-min whitespace-nowrap">
-            <h1 className="text-6xl">Relocation Services</h1>
-            <p className="mt-12">If we did it! So can you!</p>
+          <div className="text-center m-auto max-w-min whitespace-nowrap ">
+            <h1 className="text-2xl md:text-5xl">Relocation Services</h1>
+            <p className="mt-8 text-lg md:text-2xl">If we did it! So can you!</p>
           </div>
         </div>
       </div>

@@ -13,6 +13,7 @@ import Image from 'next/image';
 import { getImageSrc } from '@/lib/imageHelper';
 import { Prisma } from '@prisma/client';
 import DeleteButton from '@/app/admin/components/DeleteButton';
+import { mutate } from "swr";
 
 
 const RichTextEditor = dynamic(() => import("@/components/RichTextEditor"), {
@@ -100,8 +101,15 @@ export default function TeamForm({ team }: TeamFormProps) {
       });
     
       if (res.ok) { 
+        await mutate('/api/team');
+
+        if(team){
+          await mutate(`/api/team/${team.id}`);
+        }
+
         if (isMounted.current) {
           router.push('/admin/manage-team');
+          router.refresh();
         }
         
       } else {

@@ -1,9 +1,15 @@
 import { editFaqQuestion } from "@/app/admin/actions/faq";
+import { getCORSHeaders } from "@/app/utils/apiConfig";
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
 interface IParams {
   params: { id: string };
+}
+
+export async function OPTIONS(req: NextRequest) {
+  const origin = req.headers.get("origin");
+  return NextResponse.json(null, { headers: getCORSHeaders(origin) });
 }
 
 /**
@@ -13,30 +19,33 @@ interface IParams {
  * @returns The updated service or an error response.
  */
 export async function PUT(req: NextRequest, context: IParams) {
+  const origin = req.headers.get("origin");
+
   try {
-    // Extract the faq ID from the route parameters
     const { id } = context.params;
-
-    // Pass the request and parameters to the editFaqQuestion function
     const updatedFaqQuestion = await editFaqQuestion(req, { params: { id } });
-
-    // Return the updated service as a JSON response
-    return NextResponse.json(updatedFaqQuestion, { status: 200 });
-  } catch (err: unknown) {
-    // Handle validation errors using Zod
+    return NextResponse.json(updatedFaqQuestion, { 
+      status: 200,
+      headers: getCORSHeaders(origin)
+    });
+  }  catch (err: unknown) {
     if (err instanceof z.ZodError) {
       console.error("Validation Error:", err.flatten().fieldErrors);
       return NextResponse.json(
         { errors: err.flatten().fieldErrors },
-        { status: 400 }
+        { 
+          status: 400,
+          headers: getCORSHeaders(origin)
+        }
       );
     }
-
-    // Handle other server errors
     console.error("Error updating faqQuestion:", err);
     return NextResponse.json(
       { error: "Failed to update faqQuestion." },
-      { status: 500 }
+      { 
+        status: 500,
+        headers: getCORSHeaders(origin)
+      }
     );
   }
 }

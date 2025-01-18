@@ -12,7 +12,7 @@ import { toast } from "react-hot-toast"; // Import toast
 import DeleteButton from "@/app/admin/components/DeleteButton";
 import { faq } from "@prisma/client"; // Directly import Faq type
 import dynamic from "next/dynamic";
-
+import {mutate} from "swr";
 
 const RichTextEditor = dynamic(() => import("@/components/RichTextEditor"), {
   ssr: false,
@@ -78,16 +78,28 @@ export default function FaqForm({ faq }: FaqFormProps) {
       const res = await fetch(apiEndpoint, {
         method: method,
         body: formData,
+        cache: 'no-store',
+        headers: {
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+          'Pragma': 'no-cache',
+          'Expires': '0',
+        }
+
       });
 
       if (res.ok) {
-        toast.success("FAQ saved successfully!");
-        // Redirect after a short delay
-        setTimeout(() => {
-          if (isMounted.current) {
-            router.push("/admin/faq");
-          }
-        }, 2000); // 2 seconds delay
+        await mutate('/api/faq');
+        toast.success("FAQ saved successfully!")
+      if(faq){
+        await mutate(`/api/faq/${faq.id}`)
+      }
+
+      if(isMounted.current){
+        router.push("/admin/faq");
+        router.refresh();
+      }
+        
+      // 2 seconds delay
       } else {
         const errorData = await res.json();
         console.error("Failed to save FAQ:", errorData.error);

@@ -12,6 +12,7 @@ import { Prisma } from "@prisma/client";
 import { Label } from "@radix-ui/react-label";
 import Image from "next/image";
 import DeleteButton from "@/app/admin/components/DeleteButton";
+import {mutate} from "swr";
 
 
 const RichTextEditor = dynamic(() => import("@/components/RichTextEditor"), {
@@ -102,8 +103,15 @@ export default function AboutOurServicesForm({
       });
 
       if (res.ok) {
+        await mutate("/api/aboutServices");
+
+        if(aboutServices){
+          await mutate(`api/aboutServices/${aboutServices.id}`)
+        }
+
         if (isMounted.current) {
           router.push("/admin/about-services");
+          router.refresh();
         }
       } else {
         const errorData = await res.json();

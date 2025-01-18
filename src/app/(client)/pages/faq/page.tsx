@@ -51,7 +51,7 @@ export default function FaqQuestion() {
                       </h2>
                     </li>
                     <div
-                      className="answer-content"
+                      className="answer-content p-4"
                       dangerouslySetInnerHTML={{
                         __html: sanitizeHtml(q.answer),
                       }}
