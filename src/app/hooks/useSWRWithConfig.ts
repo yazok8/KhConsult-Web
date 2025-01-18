@@ -1,3 +1,5 @@
+// hooks/useSWRWithConfig.ts
+
 import useSWR, { SWRConfiguration } from "swr";
 
 const defaultFetcher = (url: string) =>
@@ -16,8 +18,11 @@ const defaultFetcher = (url: string) =>
 const defaultConfig: SWRConfiguration = {
   revalidateOnFocus: true,
   revalidateOnReconnect: true,
-  refreshInterval: 5000,
-  dedupingInterval: 2000,
+  refreshInterval: 0, // Disable automatic polling
+  dedupingInterval: 0, // Disable deduping to always fetch fresh data
+  revalidateOnMount: true, // Always revalidate when component mounts
+  shouldRetryOnError: true,
+  errorRetryCount: 3,
 };
 
 export function useSWRWithConfig<T>(

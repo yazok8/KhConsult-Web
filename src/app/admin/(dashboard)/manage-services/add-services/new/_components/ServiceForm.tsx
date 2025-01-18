@@ -16,6 +16,7 @@ import { getImageSrc } from "@/lib/imageHelper";
 
 import { useIsMounted } from "@/app/hooks/useIsMounted";
 import DeleteButton from "@/app/admin/components/DeleteButton";
+import { mutate } from "swr";
 
 type ServiceType = Service;
 
@@ -119,10 +120,21 @@ const ServiceForm: React.FC<ServiceFormProps> = ({ service }) => {
       if (!isMounted.current) return; // Prevent further actions if unmounted
 
       if (res.ok) {
+        // Immediately revalidate the services cache
+        await mutate('/api/services');
+        
+        // Force revalidation of the specific service if editing
+        if (service) {
+          await mutate(`/api/services/${service.id}`);
+        }
+
+
         if (isMounted.current) {
           router.push("/admin/manage-services");
+          router.refresh();
         }
-      } else {
+      }
+      else {
         const errorData = await res.json();
         console.error("Failed to save service:", errorData.error);
         if (isMounted.current) {

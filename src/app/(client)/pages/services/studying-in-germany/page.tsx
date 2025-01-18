@@ -3,31 +3,25 @@
 // Force the page to always run as dynamic
 export const dynamic = "force-dynamic";
 
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Image from "next/image";
 import Container from "@/app/ui/Container";
-import { Service } from "@prisma/client";
-import { fetchServices } from "../_components/FetchService";
+import { useServicesSWR } from "../_components/useServiceSWR";
+
 
 
 export default function StudyingInGermany() {
-  const [services, setServices] = useState<Service[] | null>(null);
-  const [error, setError] = useState<string>("");
-
-  // Fetch latest services on mount
-  useEffect(() => {
-    fetchServices()
-      .then((data) => setServices(data))
-      .catch((err) => setError(err.message));
-  }, []);
-
-  if (error) {
-    return <p>Failed to load services: {error}</p>;
-  }
-
-  if (!services) {
-    return <p>Loading services...</p>;
-  }
+  const { services, isLoading, error } = useServicesSWR();
+ 
+   if (error) {
+     return <p>Failed to load services: {error.message}</p>;
+   }
+   if (isLoading || !services) {
+     return <p>Loading services...</p>;
+   }
+   if (services.length < 3) {
+     return <p>Not enough services to display the third one.</p>;
+   }
 
 
   // Based on your code, the "firstService" was actually services[1].
