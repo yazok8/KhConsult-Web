@@ -6,13 +6,18 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-
+import dynamic from "next/dynamic";
 import { getImageSrc } from "@/lib/imageHelper";
 import { Prisma } from "@prisma/client";
 import { Label } from "@radix-ui/react-label";
 import Image from "next/image";
 import DeleteButton from "@/app/admin/components/DeleteButton";
-import RichTextEditor from "@/components/RichTextEditor";
+
+
+const RichTextEditor = dynamic(() => import("@/components/RichTextEditor"), {
+  ssr: false,
+  loading: () => <p>Loading editor...</p>,
+});
 
 type AboutOurServices = Prisma.AboutOurServicesGetPayload<object>;
 

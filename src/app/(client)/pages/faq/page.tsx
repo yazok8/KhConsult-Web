@@ -46,7 +46,6 @@ export default function FaqQuestion() {
                   key={q.id}
                   className="flex flex-col bg-slate-300 text-black rounded-lg shadow-lg"
                 >
-                  <Link href={`/admin/faq/edit-faq/${q.id}`}>
                     <li className="list-none">
                       <h2 className="p-6 bg-slate-500 rounded-t-lg text-2xl font-semibold">
                         {q.question}
@@ -58,7 +57,6 @@ export default function FaqQuestion() {
                         __html: sanitizeHtml(q.answer),
                       }}
                     />
-                  </Link>
                 </article>
               ))
             ) : (

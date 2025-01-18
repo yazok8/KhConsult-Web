@@ -7,12 +7,19 @@ import { useRouter } from 'next/navigation';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
+import dynamic from "next/dynamic";
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import { getImageSrc } from '@/lib/imageHelper';
 import { Prisma } from '@prisma/client';
 import DeleteButton from '@/app/admin/components/DeleteButton';
-import RichTextEditor from '@/components/RichTextEditor';
+
+
+const RichTextEditor = dynamic(() => import("@/components/RichTextEditor"), {
+  ssr: false,
+  loading: () => <p>Loading editor...</p>,
+});
+
 
 type Team = Prisma.AboutOurTeamGetPayload<{
   select: {

@@ -26,7 +26,7 @@ export default async function AboutPage() {
         <CardContent className="text-xl">
           {/* Display service details */}
           <div
-            className="text-lg space-y-4"
+            className="text-xl space-y-4"
             dangerouslySetInnerHTML={{ __html: aboutService.description ?? "" }}
           />
           {aboutService.aboutimage && (

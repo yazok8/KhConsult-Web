@@ -11,7 +11,15 @@ import { Label } from "@radix-ui/react-label";
 import { toast } from "react-hot-toast"; // Import toast
 import DeleteButton from "@/app/admin/components/DeleteButton";
 import { faq } from "@prisma/client"; // Directly import Faq type
-import RichTextEditor from "@/components/RichTextEditor";
+import dynamic from "next/dynamic";
+
+
+const RichTextEditor = dynamic(() => import("@/components/RichTextEditor"), {
+  ssr: false,
+  loading: () => <p>Loading editor...</p>,
+});
+
+
 
 interface FaqFormProps {
   faq?: faq | null;
