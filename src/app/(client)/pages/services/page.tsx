@@ -9,10 +9,10 @@ import StudyingInGermany from "./studying-in-germany/page";
 export default function Services() {
   return (
     <div className="overflow-hidden">
-      <JobRelocation/>
+      <ForBusinesses/>
       <StudyingInGermany/>
       <GermanSpeaker/>
-      <ForBusinesses/>
+      <JobRelocation/>
     </div>
   );
 }
