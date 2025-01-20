@@ -1,6 +1,9 @@
 import type { Config } from "tailwindcss";
 import {  fontFamily  } from "tailwindcss/defaultTheme";
+import typography from "@tailwindcss/typography"
+
 const config: Config = {
+	optimizeFonts: true,
     darkMode: ["class"],
     content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -54,6 +57,13 @@ const config: Config = {
   				'5': 'hsl(var(--chart-5))'
   			}
   		},
+		fontSize: {
+			// Example: Fluid font size from 1.5rem to 3rem
+			'fluid-2xl': 'clamp(1.5rem, 2vw + 1rem, 2.5rem)',
+			'fluid-3xl': 'clamp(1.75rem, 2.5vw + 1rem, 3rem)',
+			'fluid-5xl': 'clamp(2.25rem, 3vw + 1rem, 4rem)',
+			'fluid-6xl': 'clamp(2.5rem, 4vw + 1rem, 5rem)',
+		},
   		borderRadius: {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
@@ -74,6 +84,8 @@ const config: Config = {
       animation: ['motion-safe'],
     },
   },
-  plugins: [require("tailwindcss-animate")],
-} satisfies Config
+  plugins: [typography],
+
+} satisfies Config;
+
 export default config;

@@ -68,7 +68,7 @@ function ServicesTable() {
                     href={`/admin/manage-services/edit-service/${service.id}`}
                     className="flex flex-col-reverse lg:flex-row-reverse items-center space-x-4"
                   >
-                    <div className="flex-shrink-0 my-4">
+                    <div className="flex-shrink-0 my-4 px-5">
                       <Image
                         src={`https://khconsult.s3.us-east-2.amazonaws.com/${service.imageSrc}`}
                         alt={service.title}

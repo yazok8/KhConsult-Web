@@ -85,14 +85,20 @@ function BurgerMenu({ isOpen, setIsOpen }: BurgerMenuProps) {
       <div className="flex-col py-4">
         <ul>
           <li
-            className="py-4 hover:underline hover:decoration-[#f68519]"
+            className="py-4"
             onClick={() => setIsOpen(false)}
           >
             <Link href="/#about">About</Link>
           </li>
+          <li
+            className="py-4"
+            onClick={() => setIsOpen(false)}
+          >
+            <Link href="/#team">Team</Link>
+          </li>
           {/* Mobile Services Menu */}
           <li
-            className="py-4 hover:underline hover:decoration-[#f68519] relative"
+            className="py-4 relative"
             ref={mobileServicesRef}
           >
             <div
@@ -121,22 +127,16 @@ function BurgerMenu({ isOpen, setIsOpen }: BurgerMenuProps) {
             {isServicesOpen && (
               <ul className="pl-4 mt-2">
                 <li className="py-2 hover:bg-gray-200">
-                  <Link className="hover:underline" href="/#about-my-services">About my Services</Link>
+                  <Link href="/#job-relocation">Job Relocation</Link>
                 </li>
                 <li className="py-2 hover:bg-gray-200">
-                  <Link className="hover:underline" href="/#relocation-services">Relocation Services</Link>
+                  <Link href="/#need-a-german-speaker">Need A German Speaker</Link>
                 </li>
                 <li className="py-2 hover:bg-gray-200">
-                  <Link className="hover:underline" href="/#immigration-support">Immigration Support</Link>
+                  <Link href="/#studying-in-germany">Studying In Germany</Link>
                 </li>
                 <li className="py-2 hover:bg-gray-200">
-                  <Link className="hover:underline" href="/#job-coaching">Job Coaching</Link>
-                </li>
-                <li className="py-2 hover:bg-gray-200">
-                  <Link className="hover:underline" href="/#need-a-german-speaker">Need A German Speaker</Link>
-                </li>
-                <li className="py-2 hover:bg-gray-200">
-                  <Link className="hover:underline" href="/#for-businesses">For Businesses</Link>
+                  <Link href="/#for-businesses">For Businesses</Link>
                 </li>
               </ul>
             )}

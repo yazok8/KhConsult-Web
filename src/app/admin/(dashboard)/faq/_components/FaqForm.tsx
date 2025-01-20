@@ -84,7 +84,6 @@ export default function FaqForm({ faq }: FaqFormProps) {
           'Pragma': 'no-cache',
           'Expires': '0',
         }
-
       });
 
       if (res.ok) {

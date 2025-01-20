@@ -18,12 +18,12 @@ export default async function AboutPage() {
   }
 
   return (
-    <Container id="about-my-services">
-      <Card className='border-none'>
-        <CardHeader>
-          <CardTitle className="pb-8 text-6xl">{aboutService.title}</CardTitle>
+    <Container id="about">
+      <Card className='border-none shadow-none'>
+        <CardHeader className='pl-0'>
+          <CardTitle className="pb-2 text-2xl md:text-5xl font-bold text-start">{aboutService.title}</CardTitle>
         </CardHeader>
-        <CardContent className="text-xl">
+        <CardContent className="text-xl p-0">
           {/* Display service details */}
           <div
             className="text-xl space-y-4"
@@ -34,8 +34,7 @@ export default async function AboutPage() {
               <Image
                 src={aboutService.aboutimage}
                 alt={aboutService.title}
-                width={400}
-                height={400}
+                fill
                 className="object-cover"
               />
             </div>

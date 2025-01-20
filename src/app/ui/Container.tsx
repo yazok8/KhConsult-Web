@@ -1,13 +1,23 @@
+// Container.tsx
 import React from 'react';
+import { twMerge } from 'tailwind-merge'; // Add this if you want to handle class conflicts
 
 interface ContainerProps {
     children: React.ReactNode;
-    id?:string
-  }
-  
+    id?: string;
+    className?: string;
+}
 
-export default function Container({children,id}:ContainerProps) {
+export default function Container({ children, id, className }: ContainerProps) {
   return (
-    <section id={id} className='flex justify-center min-h-screen lg:max-w-6xl flex-wrap mx-auto px-5 pt-20'>{children}</section>
-  )
+    <section 
+      id={id} 
+      className={twMerge(
+        'flex justify-center min-h-screen lg:max-w-6xl flex-wrap mx-auto px-5 pt-20',
+        className
+      )}
+    >
+      {children}
+    </section>
+  );
 }

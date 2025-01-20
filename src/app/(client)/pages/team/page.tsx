@@ -23,19 +23,18 @@ export default function TeamPage() {
 
   return (
     <Container id="team">
-      <Card className="border-none">
-        <CardHeader>
-          <CardTitle className="text-6xl">About Our Team</CardTitle>
+      <Card className="border-none shadow-none">
+        <CardHeader className='pb-3`'>
+          <CardTitle className="pb-2 text-3xl md:text-5xl font-bold text-center">About Our Team</CardTitle>
         </CardHeader>
-        <CardContent className="flex">
-          <div className="py-5 mr-auto"></div>
+        <CardContent className="flex p-0">
           <ul>
             {team.map((member) => (
               <div
                 key={member.id}
                 className="flex justify-between flex-wrap mb-4"
               >
-                <div className="md:max-w-[50%] text-2xl">
+                <div className="md:max-w-[50%] text-xl md:text-2xl">
                   <li className="font-bold">{member.name}</li>
                   <li className="font-bold">{member.title}</li>
                   <li
@@ -51,7 +50,7 @@ export default function TeamPage() {
                       alt={member.title}
                       width={300}
                       height={300}
-                      className="object-cover rounded"
+                      className="object-cover rounded w-[500px] md:w-[300px]"
                     />
                   ) : (
                     <div className="w-full md:w-50 h-50 bg-gray-200 flex items-center justify-center">

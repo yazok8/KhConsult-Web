@@ -5,8 +5,9 @@ import React from "react";
 import Image from "next/image";
 import Container from "@/app/ui/Container";
 import { useServicesSWR } from "../_components/useServiceSWR"; 
+import Typography from "@/components/Typography";
 
-export default function ForBusinesses() {
+export default function JobRelocation() {
   // Use our custom SWR hook to fetch data
   const { services, isLoading, error } = useServicesSWR();
 
@@ -22,28 +23,30 @@ export default function ForBusinesses() {
     return <p>Not enough services to display the third one.</p>;
   }
 
-  const lastService = services[2];
+  const firstService = services[2];
 
   return (
-    <Container id="job-relocation">
+    <Container id="job-relocation" className="pt-10 md:pt-20 ">
       <div className="flex flex-col lg:flex-row items-center lg:items-start flex-grow w-full">
         {/* Text Section */}
         <div className="pr-0 lg:pr-16 lg:w-1/2 w-full mb-10 lg:mb-0">
-          <h1 className=" lg:text-5xl mb-5">{lastService.title}</h1>
-          <div
-            className="text-lg space-y-4"
-            dangerouslySetInnerHTML={{
-              __html: lastService.description ?? "",
-            }}
-          />
-        </div>
+        <Typography variant="h2" className="font-bold mb-4 md:mb-8">
+          {firstService.title}
+        </Typography>
+        <div
+          className="text-lg space-y-4 leading-8"
+          dangerouslySetInnerHTML={{
+            __html: firstService.description ?? "",
+          }}
+        />
+      </div>
 
         {/* Image Section */}
         <div className="lg:w-1/2 w-full">
-          {lastService.imageSrc ? (
+          {firstService.imageSrc ? (
             <Image
-              src={`https://khconsult.s3.us-east-2.amazonaws.com/${lastService.imageSrc}`}
-              alt={lastService.title}
+              src={`https://khconsult.s3.us-east-2.amazonaws.com/${firstService.imageSrc}`}
+              alt={firstService.title}
               width={2000}
               height={1500}
               className="rounded-lg"
@@ -52,7 +55,7 @@ export default function ForBusinesses() {
           ) : (
             <Image
               src="/images/coaching.jpg"
-              alt={lastService.title}
+              alt={firstService.title}
               width={1000}
               height={800}
               className="rounded-lg"

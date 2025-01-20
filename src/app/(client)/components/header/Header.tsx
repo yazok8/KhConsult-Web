@@ -59,6 +59,9 @@ export default function Header() {
             <Link className="px-5" href="/#about">
               About
             </Link>
+            <Link className="px-5" href="/#team">
+              Team
+            </Link>
 
             {/* Desktop Services Menu */}
             <div className="relative" ref={desktopServicesRef}>
@@ -73,13 +76,13 @@ export default function Header() {
               {isServicesOpen && (
                 <ul className="absolute bg-white text-black mt-4 rounded shadow-lg whitespace-nowrap">
                   <li className="px-4 py-2 hover:bg-gray-200">
-                    <Link href="/#about-my-services">About my Services</Link>
-                  </li>
-                  <li className="px-4 py-2 hover:bg-gray-200">
                     <Link href="/#job-relocation">Job Relocation</Link>
                   </li>
                   <li className="px-4 py-2 hover:bg-gray-200">
                     <Link href="/#need-a-german-speaker">Need A German Speaker</Link>
+                  </li>
+                  <li className="px-4 py-2 hover:bg-gray-200">
+                    <Link href="/#studying-in-germany">Studying In Germany</Link>
                   </li>
                   <li className="px-4 py-2 hover:bg-gray-200">
                     <Link href="/#for-businesses">For Businesses</Link>

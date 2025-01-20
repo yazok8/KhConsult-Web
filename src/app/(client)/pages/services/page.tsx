@@ -1,18 +1,29 @@
 export const dynamic = "force-dynamic";
 
 import React from "react";
-import GermanSpeaker from "./german-speaker/page";
-import ForBusinesses from "./for-businesses/page";
-import JobRelocation from "./job-relocation/page";
+
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import Container from "@/app/ui/Container";
+import ForBusinesses from "./ForBusinesses/page";
 import StudyingInGermany from "./studying-in-germany/page";
+import GermanSpeaker from "./german-speaker/page";
+import JobRelocation from "./Job-Relocation/page";
+
 
 export default function Services() {
   return (
-    <div className="overflow-hidden">
-      <ForBusinesses/>
-      <StudyingInGermany/>
-      <GermanSpeaker/>
-      <JobRelocation/>
-    </div>
+    <Container id="services">
+    <Card className='p-0 border-none shadow-none'>
+      <CardHeader className='border-none pl-9'>
+        <CardTitle className="text-3xl md:text-5xl font-bold border-none text-center">Our Services</CardTitle>
+      </CardHeader>
+      <CardContent className="p-0 border-none">
+      <JobRelocation />
+      <GermanSpeaker />
+      <StudyingInGermany />
+      <ForBusinesses />
+      </CardContent>
+      </Card>
+    </Container>
   );
 }
