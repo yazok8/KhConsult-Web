@@ -21,6 +21,8 @@ export default async function AdminDashboardLayout({ children }: AdminLayoutProp
     redirect("/403");
   } 
   
+console.log(session?.user.role)
+
   return (  
    <>  
     <AdminHeader session={session} />  

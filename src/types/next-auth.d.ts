@@ -1,13 +1,15 @@
-import { DefaultSession, DefaultUser } from "next-auth";
+// types/next-auth.d.ts
+
+import NextAuth from "next-auth";
 import { Role } from "@prisma/client";
 
 declare module "next-auth" {
-  interface User extends DefaultUser {
+  interface User extends NextAuth.DefaultUser {
     username: string;
     role: Role;
   }
 
-  interface Session extends DefaultSession {
+  interface Session extends NextAuth.DefaultSession {
     user: {
       id: string;
       username: string;

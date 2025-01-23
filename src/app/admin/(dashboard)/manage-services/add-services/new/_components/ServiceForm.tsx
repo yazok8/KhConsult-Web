@@ -16,6 +16,7 @@ import { getImageSrc } from "@/lib/imageHelper";
 
 import { useIsMounted } from "@/app/hooks/useIsMounted";
 import DeleteButton from "@/app/admin/components/DeleteButton";
+import { useSession } from "next-auth/react";
 import { mutate } from "swr";
 
 type ServiceType = Service;
@@ -34,6 +35,15 @@ const ServiceForm: React.FC<ServiceFormProps> = ({ service }) => {
   type Category = "INDIVIDUAL" | "BUSINESS";
 
   const router = useRouter();
+
+  const { data: session, status } = useSession();
+
+
+  // Debugging: Log the session object
+  console.log("Session Data:", session);
+  console.log("Session Status:", status);
+
+  const isViewOnly = session?.user?.role === "VIEW_ONLY";
 
   // Use custom hook to track if the component is mounted
   const isMounted = useIsMounted();
@@ -176,6 +186,13 @@ const ServiceForm: React.FC<ServiceFormProps> = ({ service }) => {
     }
   }
 
+
+  if (isViewOnly && !service) {
+    return <p className="flex justify-center items-center mt-[30%]">You do not have permission to add new FAQs.</p>;
+  }
+
+
+  if (!isViewOnly && service) {
   return (
     <div className="mt-20">
     <Card className="border-none">
@@ -284,6 +301,75 @@ const ServiceForm: React.FC<ServiceFormProps> = ({ service }) => {
     </Card>
     </div>
   );
+}
+
+if (isViewOnly && service) {
+  return (
+    <Card className="mt-20 border-none">
+            <CardHeader>
+              <CardTitle>Edit {title}</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="py-5 space-y-2">
+                <Label htmlFor="title">Title</Label>
+                <Input id="title" value={title} disabled />
+              </div>
+    
+              <div className="py-5 space-y-2 flex flex-col">
+                <Label htmlFor="discription">Description</Label>
+                <RichTextEditor
+                  session={session}
+                  content={description}
+                  onChange={() => {}} // No-op since it's read-only
+                />
+              </div>
+              <div className="space-y-2">
+            <Label htmlFor="image">Image (File)</Label>
+            <Input
+              type="file"
+              id="image"
+              name="image"
+              accept="image/*"
+              required={!service}
+              onChange={() => {}}
+              disabled
+            />
+          </div>
+          {service != null &&
+            typeof currentImageSrc === "string" &&
+            currentImageSrc !== "" && (
+              <div className="my-4">
+                <Image
+                  src={
+                    currentImageSrc.startsWith("http")
+                      ? currentImageSrc
+                      : `${currentImageSrc}`
+                  }
+                  height={400}
+                  width={400}
+                  alt="Service Image"
+                  className="rounded-lg"
+                  onError={handleImageError}
+                />
+              </div>
+            )}
+                   <div className="py-5 space-y-2">
+            <Label htmlFor="category">Category</Label>
+            <select
+              id="category"
+              value={category}
+              className="block w-full p-2 border border-gray-300 rounded"
+              disabled
+            >
+              <option value="INDIVIDUAL">Individual</option>
+              <option value="BUSINESS">Business</option>
+            </select>
+          </div>
+            </CardContent>
+          </Card>
+  )
+
+}
 };
 
 export default ServiceForm;

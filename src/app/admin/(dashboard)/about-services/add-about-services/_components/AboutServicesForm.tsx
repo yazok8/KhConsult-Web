@@ -13,6 +13,7 @@ import { Label } from "@radix-ui/react-label";
 import Image from "next/image";
 import DeleteButton from "@/app/admin/components/DeleteButton";
 import {mutate} from "swr";
+import { useSession } from "next-auth/react";
 
 
 const RichTextEditor = dynamic(() => import("@/components/RichTextEditor"), {
@@ -30,6 +31,14 @@ export default function AboutOurServicesForm({
   aboutServices,
 }: AboutServiceFormProps) {
   const router = useRouter();
+
+  const { data: session, status } = useSession();
+
+  // Debugging: Log the session object
+  console.log("Session Data:", session);
+  console.log("Session Status:", status);
+
+  const isViewOnly = session?.user?.role === "VIEW_ONLY";
 
   // Ref to track if the component is mounted
   const isMounted = useRef(true);
@@ -132,6 +141,7 @@ export default function AboutOurServicesForm({
     }
   }
 
+  if (!isViewOnly && aboutServices) {
   return (
     <Card className="mt-20 border-none">
       <CardHeader>
@@ -223,5 +233,30 @@ export default function AboutOurServicesForm({
         </form>
       </CardContent>
     </Card>
-  );
+  )
+  }
+  if (isViewOnly && aboutServices) {
+     return (
+          <Card className="mt-20 border-none">
+            <CardHeader>
+              <CardTitle>About Our Services</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="py-5 space-y-2">
+                <Label htmlFor="title">Title</Label>
+                <Input id="title" value={title} disabled />
+              </div>
+    
+              <div className="py-5 space-y-2 flex flex-col">
+                <Label htmlFor="discription">Description</Label>
+                <RichTextEditor
+                  session={session}
+                  content={description}
+                  onChange={() => {}} // No-op since it's read-only
+                />
+              </div>
+            </CardContent>
+          </Card>
+     )
+  }
 }

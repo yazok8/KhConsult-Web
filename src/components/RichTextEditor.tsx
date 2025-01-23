@@ -1,5 +1,7 @@
 // components/RichTextEditor/RichTextEditor.tsx
 
+"use client";
+
 import React, { useEffect } from 'react';
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
@@ -13,13 +15,18 @@ import Image from '@tiptap/extension-image';
 import Underline from '@tiptap/extension-underline';
 import Blockquote from '@tiptap/extension-blockquote';
 import { MenuBar } from './MenuBar';
+import { Session } from "next-auth";
 
 interface RichTextEditorProps {
   content: string;
   onChange: (content: string) => void;
+  session?: Session;
 }
 
-const RichTextEditor: React.FC<RichTextEditorProps> = ({ content, onChange }) => {
+const RichTextEditor: React.FC<RichTextEditorProps> = ({ content, onChange, session }) => {
+
+  const isViewOnly = session?.user?.role === "VIEW_ONLY";
+
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
@@ -76,6 +83,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({ content, onChange }) =>
       }),
     ],
     content: content || '',
+    editable: !isViewOnly, // Make editor read-only if isViewOnly is true
     onUpdate: ({ editor }) => {
       const html = editor.getHTML();
       console.log("Editor Content Updated:", html);
@@ -101,8 +109,11 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({ content, onChange }) =>
   }
 
   return (
-    <div className="border border-gray-300 rounded-md">
-      <MenuBar editor={editor} />
+    <div className={`border border-gray-300 rounded-md ${isViewOnly ? 'bg-gray-100' : 'bg-white'}`}>
+      {/* Conditionally render the MenuBar only if not in view-only mode */}
+      {!isViewOnly && <MenuBar editor={editor} />}
+      
+      {/* Always render EditorContent, but it's read-only when isViewOnly is true */}
       <EditorContent editor={editor} />
     </div>
   );

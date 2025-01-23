@@ -1,9 +1,12 @@
+
+
 import React from 'react';  
 import type { Metadata } from "next";  
 import { Inter } from "next/font/google";  
 import "./globals.css";  
 import { cn } from "@/lib/utils";  
 import { Toaster } from 'react-hot-toast';
+import Provider from '@/components/Provider';
   
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });  
   
@@ -21,7 +24,8 @@ export default function RootLayout({
    <html lang="en">  
     <body  
       className={cn("bg-background font-sans antialiased", inter.variable)}  
-    >  
+    > 
+    <Provider>
      <main> {children} </main> 
      <Toaster
           position="top-right" // Position can be adjusted as needed
@@ -40,6 +44,7 @@ export default function RootLayout({
             },
           }}
         />
+        </Provider> 
     </body>  
    </html>  
   );  

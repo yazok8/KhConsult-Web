@@ -87,7 +87,6 @@ ul,li{
 .ProseMirror {
   min-height: 200px;
   padding: 10px;
-  border: 1px solid #d1d5db; /* Tailwind's gray-300 */
   border-radius: 0.375rem; /* Tailwind's rounded-md */
   outline: none;
 }
@@ -111,11 +110,71 @@ ul,li{
 
 .ProseMirror th,
 .ProseMirror td {
-  border: 1px solid #d1d5db; /* Tailwind's gray-300 */
   padding: 8px;
   text-align: left;
 }
 
 .ProseMirror th {
   background-color: #f3f4f6; /* Tailwind's gray-100 */
+}
+
+
+/* Custom slider styles */
+.slick-prev,
+.slick-next {
+  z-index: 10;
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.9) !important;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.slick-prev {
+  left: 0;
+}
+
+.slick-next {
+  right: 0;
+}
+
+.slick-prev:before,
+.slick-next:before {
+  color: #666;
+  font-size: 24px;
+}
+
+.slick-prev:hover,
+.slick-next:hover {
+  background: rgba(255, 255, 255, 1) !important;
+}
+
+/* Remove default slide spacing on mobile */
+@media (max-width: 640px) {
+  .slick-slide > div {
+    margin: 0;
+  }
+  
+  .slick-list {
+    margin: 0 !important;
+  }
+
+  /* Center the slide content */
+  .slick-slide {
+    padding: 0;
+  }
+}
+
+/* Adjust dots position */
+.slick-dots {
+  bottom: -35px;
+}
+
+.slick-dots li button:before {
+  font-size: 8px;
+}
+
+/* Ensure slide content doesn't overflow */
+.slick-slide {
+  box-sizing: border-box;
 }

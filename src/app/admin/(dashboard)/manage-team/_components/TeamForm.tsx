@@ -13,6 +13,7 @@ import Image from 'next/image';
 import { getImageSrc } from '@/lib/imageHelper';
 import { Prisma } from '@prisma/client';
 import DeleteButton from '@/app/admin/components/DeleteButton';
+import { useSession } from "next-auth/react";
 import { mutate } from "swr";
 
 
@@ -38,6 +39,15 @@ interface TeamFormProps {
 
 export default function TeamForm({ team }: TeamFormProps) {
   const router = useRouter();
+
+  const { data: session, status } = useSession();
+
+
+  // Debugging: Log the session object
+  console.log("Session Data:", session);
+  console.log("Session Status:", status);
+
+  const isViewOnly = session?.user?.role === "VIEW_ONLY";
 
    // Ref to track if the component is mounted
     const isMounted = useRef(true);
@@ -129,102 +139,170 @@ export default function TeamForm({ team }: TeamFormProps) {
         setIsSubmitting(false);
       }
     }
-    
   }
 
-  return (
-    <Card className="mt-20 border-none">
-      <CardHeader>
-        <CardTitle>{team ? 'Edit Team Member' : 'Add A New Team Member'}</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <form onSubmit={handleSubmit}>
-          {/* Name Field */}
-          <div className="py-5 space-y-2">
-            <Label htmlFor="name">Name</Label>
-            <Input
-              id="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-            />
-          </div>
+  if (isViewOnly && !team) {
+    return <p className="flex justify-center items-center mt-[30%]">You do not have permission to add to our Team.</p>;
+  }
 
-          {/* Title Field */}
-          <div className="py-5 space-y-2">
-            <Label htmlFor="title">Title</Label>
-            <Input
-              id="title"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              required
-            />
-          </div>
-
-          {/* Description Field */}
-          <div className="py-5 space-y-2 flex flex-col">
-            <Label htmlFor="description">Description</Label>
-            <RichTextEditor
-                                content={description}
-                                onChange={setDescription}
-                        />
-          </div>
-
-          {/* File Input */}
-          <div className="space-y-2">
+  if (!isViewOnly && team) {
+    return (
+      <Card className="mt-20 border-none">
+        <CardHeader>
+          <CardTitle>{team ? 'Edit Team Member' : 'Add A New Team Member'}</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handleSubmit}>
+            {/* Name Field */}
+            <div className="py-5 space-y-2">
+              <Label htmlFor="name">Name</Label>
+              <Input
+                id="name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+              />
+            </div>
+  
+            {/* Title Field */}
+            <div className="py-5 space-y-2">
+              <Label htmlFor="title">Title</Label>
+              <Input
+                id="title"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                required
+              />
+            </div>
+  
+            {/* Description Field */}
+            <div className="py-5 space-y-2 flex flex-col">
+              <Label htmlFor="description">Description</Label>
+              <RichTextEditor
+                                  content={description}
+                                  onChange={setDescription}
+                          />
+            </div>
+  
+            {/* File Input */}
+            <div className="space-y-2">
+              <Label htmlFor="image">Image (File)</Label>
+              <Input
+                type="file"
+                id="image"
+                name="image"
+                accept="image/*" // Optional: restrict to image files
+                required={!team} // Only required if creating a new team member
+                onChange={handleFileChange}
+              />
+            </div>
+  
+            {/* Existing Image Preview (only if editing and image is a string) */}
+            {team && typeof currentImageSrc === 'string' && currentImageSrc !== '' && (  
+              <div className="my-4">  
+                <Image  
+                  src={currentImageSrc.startsWith('http') ? currentImageSrc : `https://khconsult.s3.us-east-2.amazonaws.com/${currentImageSrc}`}  
+                  height={400}  
+                  width={400}  
+                  alt="Team Member Image"  
+                  onError={() => {  
+                    if (!team.profileImage) return;  
+                    const sanitizedImagePath = team.profileImage.startsWith('/') 
+                      ? team.profileImage.slice(1)  
+                      : team.profileImage;  
+                    const localImageUrl = `/teams/${sanitizedImagePath}`;  
+                    setCurrentImageSrc(localImageUrl);  
+                  }}  
+                />  
+              </div>  
+            )}  
+  
+            {/* Display Error Message */}
+            {error && <p className="text-red-500">{error}</p>}
+  
+            <div className="flex items-center gap-2">
+              <Button type="submit" disabled={isSubmitting}>
+                {isSubmitting ? "Saving..." : "Save"}
+              </Button>
+              {team && (
+                <DeleteButton
+                  apiEndpoint={`/api/team/delete-team/${team.id}`}
+                  itemId={team.id}
+                  confirmMessage="Are you sure you want to delete this team member?"
+                  successMessage="Team member deleted successfully!"
+                  errorMessage="Failed to delete this team member."
+                  redirectPath="/admin/manage-team" // Dynamic redirect path
+                  variant="destructive"
+                  buttonText="Delete"
+                />
+              )}
+            </div>
+          </form>
+        </CardContent>
+      </Card>
+    );
+  }
+  if (isViewOnly && team) {
+    return (
+      <Card className="mt-20 border-none">
+        <CardHeader>
+          <CardTitle>View Team Member</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <form>
+            {/* Name Field */}
+            <div className="py-5 space-y-2">
+              <Label htmlFor="name">Name</Label>
+              <Input id="name" value={name} disabled />
+            </div>
+  
+            {/* Title Field */}
+            <div className="py-5 space-y-2">
+              <Label htmlFor="title">Title</Label>
+              <Input id="title" value={title} disabled />
+            </div>
+  
+            {/* Description Field */}
+            <div className="py-5 space-y-2 flex flex-col">
+              <Label htmlFor="description">Description</Label>
+              <RichTextEditor
+                session={session}
+                content={description}
+                onChange={() => {}} // No-op since it's read-only
+              />
+            </div>
+            <div className="space-y-2">
             <Label htmlFor="image">Image (File)</Label>
             <Input
               type="file"
               id="image"
               name="image"
-              accept="image/*" // Optional: restrict to image files
-              required={!team} // Only required if creating a new team member
-              onChange={handleFileChange}
+              accept="image/*"
+              onChange={() => {}}
+              disabled
             />
           </div>
-
-          {/* Existing Image Preview (only if editing and image is a string) */}
-          {team && typeof currentImageSrc === 'string' && currentImageSrc !== '' && (  
-            <div className="my-4">  
-              <Image  
-                src={currentImageSrc.startsWith('http') ? currentImageSrc : `https://khconsult.s3.us-east-2.amazonaws.com/${currentImageSrc}`}  
-                height={400}  
-                width={400}  
-                alt="Team Member Image"  
-                onError={() => {  
-                  if (!team.profileImage) return;  
-                  const sanitizedImagePath = team.profileImage.startsWith('/') 
-                    ? team.profileImage.slice(1)  
-                    : team.profileImage;  
-                  const localImageUrl = `/teams/${sanitizedImagePath}`;  
-                  setCurrentImageSrc(localImageUrl);  
-                }}  
-              />  
-            </div>  
-          )}  
-
-          {/* Display Error Message */}
-          {error && <p className="text-red-500">{error}</p>}
-
-          <div className="flex items-center gap-2">
-            <Button type="submit" disabled={isSubmitting}>
-              {isSubmitting ? "Saving..." : "Save"}
-            </Button>
-            {team && (
-              <DeleteButton
-                apiEndpoint={`/api/team/delete-team/${team.id}`}
-                itemId={team.id}
-                confirmMessage="Are you sure you want to delete this team member?"
-                successMessage="Team member deleted successfully!"
-                errorMessage="Failed to delete this team member."
-                redirectPath="/admin/manage-team" // Dynamic redirect path
-                variant="destructive"
-                buttonText="Delete"
-              />
-            )}
-          </div>
-        </form>
-      </CardContent>
-    </Card>
-  );
+            {/* Image Display */}
+            <div className="space-y-2">
+              <Label htmlFor="image">Image</Label>
+              {typeof currentImageSrc === 'string' && currentImageSrc !== '' && (
+                <div className="my-4">
+                  <Image
+                    src={
+                      currentImageSrc.startsWith('http')
+                        ? currentImageSrc
+                        : `https://khconsult.s3.us-east-2.amazonaws.com/${currentImageSrc}`
+                    }
+                    height={400}
+                    width={400}
+                    alt="Team Member Image"
+                  />
+                </div>
+              )}
+            </div>
+          </form>
+        </CardContent>
+      </Card>
+    );
+  }
 }
