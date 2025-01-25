@@ -214,7 +214,59 @@ export default function FaqForm({ faq }: FaqFormProps) {
       </Card>
     );
   }
+  
+  // Render the add/edit form for users with appropriate permissions
+  return(
+    <Card className="mt-20 border-none">
+    <CardHeader>
+      <CardTitle>{faq ? "Edit FAQ" : "Create A New FAQ"}</CardTitle>
+    </CardHeader>
+    <CardContent>
+      <form onSubmit={handleSubmit}>
+        {/* Question */}
+        <div className="py-5 space-y-2">
+          <Label htmlFor="question">Question</Label>
+          <Input
+            id="question"
+            value={question}
+            onChange={(e) => setQuestion(e.target.value)}
+            required
+            disabled={isSubmitting}
+          />
+        </div>
 
-  // Default fallback
-  return null;
+        {/* Answer */}
+        <div className="py-5 space-y-2 flex flex-col">
+          <Label htmlFor="answer">Answer</Label>
+          <RichTextEditor
+            content={answer}
+            onChange={setAnswer}
+          />
+        </div>
+
+        {/* Action Buttons */}
+        <div className="flex items-center gap-2">
+          <Button type="submit" disabled={isSubmitting}>
+            {isSubmitting ? "Saving..." : "Save"}
+          </Button>
+          {faq && (
+            <DeleteButton
+              apiEndpoint={`/api/faq/deleteFaq/${faq.id}`}
+              itemId={faq.id}
+              confirmMessage="Are you sure you want to delete this FAQ?"
+              successMessage="FAQ deleted successfully!"
+              errorMessage="Failed to delete FAQ."
+              redirectPath="/admin/faq"
+              variant="destructive"
+              buttonText="Delete"
+            />
+          )}
+        </div>
+
+        {/* Display Error Message */}
+        {error && <p className="text-red-500 mt-4">{error}</p>}
+      </form>
+    </CardContent>
+  </Card>
+  )
 }

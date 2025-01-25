@@ -38,7 +38,6 @@ const ServiceForm: React.FC<ServiceFormProps> = ({ service }) => {
 
   const { data: session, status } = useSession();
 
-
   // Debugging: Log the session object
   console.log("Session Data:", session);
   console.log("Session Status:", status);
@@ -108,17 +107,19 @@ const ServiceForm: React.FC<ServiceFormProps> = ({ service }) => {
     formData.append("category", category);
 
     // Handle file or existing image path
-    if (typeof currentImageSrc === "object" && currentImageSrc instanceof File) {
+    if (
+      typeof currentImageSrc === "object" &&
+      currentImageSrc instanceof File
+    ) {
       formData.append("image", currentImageSrc);
     } else if (service && typeof currentImageSrc === "string") {
       // If editing and not changing the image, send existing imageSrc
       formData.append("imageSrc", service.imageSrc);
     }
 
-
     const apiEndpoint = service
-    ? `/api/services/editService/${service.id}`
-    : `/api/services/addService`;
+      ? `/api/services/editService/${service.id}`
+      : `/api/services/addService`;
 
     try {
       const res = await fetch(apiEndpoint, {
@@ -131,20 +132,18 @@ const ServiceForm: React.FC<ServiceFormProps> = ({ service }) => {
 
       if (res.ok) {
         // Immediately revalidate the services cache
-        await mutate('/api/services');
-        
+        await mutate("/api/services");
+
         // Force revalidation of the specific service if editing
         if (service) {
           await mutate(`/api/services/${service.id}`);
         }
 
-
         if (isMounted.current) {
           router.push("/admin/manage-services");
           router.refresh();
         }
-      }
-      else {
+      } else {
         const errorData = await res.json();
         console.error("Failed to save service:", errorData.error);
         if (isMounted.current) {
@@ -152,7 +151,7 @@ const ServiceForm: React.FC<ServiceFormProps> = ({ service }) => {
         }
       }
     } catch (err: unknown) {
-      if(err instanceof Error){
+      if (err instanceof Error) {
         if (err.name === "AbortError") {
           console.log("Fetch aborted");
         } else {
@@ -162,7 +161,6 @@ const ServiceForm: React.FC<ServiceFormProps> = ({ service }) => {
           }
         }
       }
- 
     } finally {
       if (isMounted.current) {
         setIsSubmitting(false);
@@ -186,144 +184,146 @@ const ServiceForm: React.FC<ServiceFormProps> = ({ service }) => {
     }
   }
 
-
   if (isViewOnly && !service) {
-    return <p className="flex justify-center items-center mt-[30%]">You do not have permission to add new FAQs.</p>;
+    return (
+      <p className="flex justify-center items-center mt-[30%]">
+        You do not have permission to add new FAQs.
+      </p>
+    );
   }
 
-
   if (!isViewOnly && service) {
-  return (
-    <div className="mt-20">
-    <Card className="border-none">
-      <CardHeader>
-        <CardTitle>
-          {service ? "Edit Service" : "Create A New Service"}
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        <form onSubmit={handleSubmit}>
-          {/* Title */}
-          <div className="py-5 space-y-2">
-            <Label htmlFor="title">Title</Label>
-            <Input
-              id="title"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              required
-              disabled={isSubmitting}
-            />
-          </div>
-
-          {/* Description (Rich Text) */}
-          <div className="py-5 space-y-2 flex flex-col">
-            <Label htmlFor="description">Description</Label>
-            {isMounted.current && (
-              <RichTextEditor
-                content={description}
-                onChange={setDescription}
-              />
-            )}
-          </div>
-
-          {/* File Input */}
-          <div className="space-y-2">
-            <Label htmlFor="image">Image (File)</Label>
-            <Input
-              type="file"
-              id="image"
-              name="image"
-              accept="image/*"
-              required={!service}
-              onChange={handleFileChange}
-              disabled={isSubmitting}
-            />
-          </div>
-
-          {/* Existing Image Preview (only if editing and image is a string) */}
-          {service != null &&
-            typeof currentImageSrc === "string" &&
-            currentImageSrc !== "" && (
-              <div className="my-4">
-                <Image
-                  src={
-                    currentImageSrc.startsWith("http")
-                      ? currentImageSrc
-                      : `${currentImageSrc}`
-                  }
-                  height={400}
-                  width={400}
-                  alt="Service Image"
-                  className="rounded-lg"
-                  onError={handleImageError}
-                />
-              </div>
-            )}
-
-          {/* Category */}
-          <div className="py-5 space-y-2">
-            <Label htmlFor="category">Category</Label>
-            <select
-              id="category"
-              value={category}
-              onChange={(e) => setCategory(e.target.value as Category)}
-              className="block w-full p-2 border border-gray-300 rounded"
-              disabled={isSubmitting}
-            >
-              <option value="INDIVIDUAL">Individual</option>
-              <option value="BUSINESS">Business</option>
-            </select>
-          </div>
-
-          {/* Display Error Message */}
-          {error && <p className="text-red-500">{error}</p>}
-
-          {/* Submit & Delete Buttons */}
-          <div className="flex items-center gap-2">
-            <Button type="submit" disabled={isSubmitting}>
-              {isSubmitting ? "Saving..." : "Save"}
-            </Button>
-            {isMounted.current && service && (
-              <DeleteButton
-                apiEndpoint={`/api/services/deleteService/${service.id}`}
-                itemId={service.id}
-                confirmMessage="Are you sure you want to delete this Service?"
-                successMessage="Service deleted successfully!"
-                errorMessage="Failed to delete this Service."
-                redirectPath="/admin/manage-services"
-                variant="destructive"
-                buttonText="Delete"
-              />
-            )}
-          </div>
-        </form>
-      </CardContent>
-    </Card>
-    </div>
-  );
-}
-
-if (isViewOnly && service) {
-  return (
-    <Card className="mt-20 border-none">
-            <CardHeader>
-              <CardTitle>Edit {title}</CardTitle>
-            </CardHeader>
-            <CardContent>
+    return (
+      <div className="mt-20">
+        <Card className="border-none">
+          <CardHeader>
+            <CardTitle>
+              {service ? "Edit Service" : "Create A New Service"}
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleSubmit}>
+              {/* Title */}
               <div className="py-5 space-y-2">
                 <Label htmlFor="title">Title</Label>
-                <Input id="title" value={title} disabled />
-              </div>
-    
-              <div className="py-5 space-y-2 flex flex-col">
-                <Label htmlFor="discription">Description</Label>
-                <RichTextEditor
-                  session={session}
-                  content={description}
-                  onChange={() => {}} // No-op since it's read-only
+                <Input
+                  id="title"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  required
+                  disabled={isSubmitting}
                 />
               </div>
+
+              {/* Description (Rich Text) */}
+              <div className="py-5 space-y-2 flex flex-col">
+                <Label htmlFor="description">Description</Label>
+                {isMounted.current && (
+                  <RichTextEditor
+                    content={description}
+                    onChange={setDescription}
+                  />
+                )}
+              </div>
+
+              {/* File Input */}
               <div className="space-y-2">
+                <Label htmlFor="image">Image (File)</Label>
+                <Input
+                  type="file"
+                  id="image"
+                  name="image"
+                  accept="image/*"
+                  required={!service}
+                  onChange={handleFileChange}
+                  disabled={isSubmitting}
+                />
+              </div>
+
+              {/* Existing Image Preview (only if editing and image is a string) */}
+              {service != null &&
+                typeof currentImageSrc === "string" &&
+                currentImageSrc !== "" && (
+                  <div className="my-4">
+                    <Image
+                      src={
+                        currentImageSrc.startsWith("http")
+                          ? currentImageSrc
+                          : `${currentImageSrc}`
+                      }
+                      height={400}
+                      width={400}
+                      alt="Service Image"
+                      className="rounded-lg"
+                      onError={handleImageError}
+                    />
+                  </div>
+                )}
+
+              {/* Category */}
+              <div className="py-5 space-y-2">
+                <Label htmlFor="category">Category</Label>
+                <select
+                  id="category"
+                  value={category}
+                  onChange={(e) => setCategory(e.target.value as Category)}
+                  className="block w-full p-2 border border-gray-300 rounded"
+                  disabled={isSubmitting}
+                >
+                  <option value="INDIVIDUAL">Individual</option>
+                  <option value="BUSINESS">Business</option>
+                </select>
+              </div>
+
+              {/* Display Error Message */}
+              {error && <p className="text-red-500">{error}</p>}
+
+              {/* Submit & Delete Buttons */}
+              <div className="flex items-center gap-2">
+                <Button type="submit" disabled={isSubmitting}>
+                  {isSubmitting ? "Saving..." : "Save"}
+                </Button>
+                {isMounted.current && service && (
+                  <DeleteButton
+                    apiEndpoint={`/api/services/deleteService/${service.id}`}
+                    itemId={service.id}
+                    confirmMessage="Are you sure you want to delete this Service?"
+                    successMessage="Service deleted successfully!"
+                    errorMessage="Failed to delete this Service."
+                    redirectPath="/admin/manage-services"
+                    variant="destructive"
+                    buttonText="Delete"
+                  />
+                )}
+              </div>
+            </form>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
+  if (isViewOnly && service) {
+    return (
+      <Card className="mt-20 border-none">
+        <CardHeader>
+          <CardTitle>Edit {title}</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="py-5 space-y-2">
+            <Label htmlFor="title">Title</Label>
+            <Input id="title" value={title} disabled />
+          </div>
+
+          <div className="py-5 space-y-2 flex flex-col">
+            <Label htmlFor="discription">Description</Label>
+            <RichTextEditor
+              session={session}
+              content={description}
+              onChange={() => {}} // No-op since it's read-only
+            />
+          </div>
+          <div className="space-y-2">
             <Label htmlFor="image">Image (File)</Label>
             <Input
               type="file"
@@ -353,7 +353,7 @@ if (isViewOnly && service) {
                 />
               </div>
             )}
-                   <div className="py-5 space-y-2">
+          <div className="py-5 space-y-2">
             <Label htmlFor="category">Category</Label>
             <select
               id="category"
@@ -365,11 +365,119 @@ if (isViewOnly && service) {
               <option value="BUSINESS">Business</option>
             </select>
           </div>
-            </CardContent>
-          </Card>
-  )
+        </CardContent>
+      </Card>
+    );
+  }
+  // // Render the add/edit form for users with appropriate permissions
+  return (
+    <div className="mt-20">
+      <Card className="border-none">
+        <CardHeader>
+          <CardTitle>
+            {service ? "Edit Service" : "Create A New Service"}
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handleSubmit}>
+            {/* Title */}
+            <div className="py-5 space-y-2">
+              <Label htmlFor="title">Title</Label>
+              <Input
+                id="title"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                required
+                disabled={isSubmitting}
+              />
+            </div>
 
-}
+            {/* Description (Rich Text) */}
+            <div className="py-5 space-y-2 flex flex-col">
+              <Label htmlFor="description">Description</Label>
+              {isMounted.current && (
+                <RichTextEditor
+                  content={description}
+                  onChange={setDescription}
+                />
+              )}
+            </div>
+
+            {/* File Input */}
+            <div className="space-y-2">
+              <Label htmlFor="image">Image (File)</Label>
+              <Input
+                type="file"
+                id="image"
+                name="image"
+                accept="image/*"
+                required={!service}
+                onChange={handleFileChange}
+                disabled={isSubmitting}
+              />
+            </div>
+
+            {/* Existing Image Preview (only if editing and image is a string) */}
+            {service != null &&
+              typeof currentImageSrc === "string" &&
+              currentImageSrc !== "" && (
+                <div className="my-4">
+                  <Image
+                    src={
+                      currentImageSrc.startsWith("http")
+                        ? currentImageSrc
+                        : `${currentImageSrc}`
+                    }
+                    height={400}
+                    width={400}
+                    alt="Service Image"
+                    className="rounded-lg"
+                    onError={handleImageError}
+                  />
+                </div>
+              )}
+
+            {/* Category */}
+            <div className="py-5 space-y-2">
+              <Label htmlFor="category">Category</Label>
+              <select
+                id="category"
+                value={category}
+                onChange={(e) => setCategory(e.target.value as Category)}
+                className="block w-full p-2 border border-gray-300 rounded"
+                disabled={isSubmitting}
+              >
+                <option value="INDIVIDUAL">Individual</option>
+                <option value="BUSINESS">Business</option>
+              </select>
+            </div>
+
+            {/* Display Error Message */}
+            {error && <p className="text-red-500">{error}</p>}
+
+            {/* Submit & Delete Buttons */}
+            <div className="flex items-center gap-2">
+              <Button type="submit" disabled={isSubmitting}>
+                {isSubmitting ? "Saving..." : "Save"}
+              </Button>
+              {isMounted.current && service && (
+                <DeleteButton
+                  apiEndpoint={`/api/services/deleteService/${service.id}`}
+                  itemId={service.id}
+                  confirmMessage="Are you sure you want to delete this Service?"
+                  successMessage="Service deleted successfully!"
+                  errorMessage="Failed to delete this Service."
+                  redirectPath="/admin/manage-services"
+                  variant="destructive"
+                  buttonText="Delete"
+                />
+              )}
+            </div>
+          </form>
+        </CardContent>
+      </Card>
+    </div>
+  );
 };
 
 export default ServiceForm;

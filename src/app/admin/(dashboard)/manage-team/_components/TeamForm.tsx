@@ -16,12 +16,10 @@ import DeleteButton from '@/app/admin/components/DeleteButton';
 import { useSession } from "next-auth/react";
 import { mutate } from "swr";
 
-
 const RichTextEditor = dynamic(() => import("@/components/RichTextEditor"), {
   ssr: false,
   loading: () => <p>Loading editor...</p>,
 });
-
 
 type Team = Prisma.AboutOurTeamGetPayload<{
   select: {
@@ -39,9 +37,7 @@ interface TeamFormProps {
 
 export default function TeamForm({ team }: TeamFormProps) {
   const router = useRouter();
-
   const { data: session, status } = useSession();
-
 
   // Debugging: Log the session object
   console.log("Session Data:", session);
@@ -49,22 +45,19 @@ export default function TeamForm({ team }: TeamFormProps) {
 
   const isViewOnly = session?.user?.role === "VIEW_ONLY";
 
-   // Ref to track if the component is mounted
-    const isMounted = useRef(true);
+  // Ref to track if the component is mounted
+  const isMounted = useRef(true);
 
   const [currentImageSrc, setCurrentImageSrc] = useState<File | string>('');
   const [name, setName] = useState(team?.name || '');
   const [title, setTitle] = useState(team?.title || '');
-
   const [description, setDescription] = useState<string>(
     team?.description || ""
   );
-
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
-
     isMounted.current = true;
 
     if (team?.profileImage) {
@@ -87,7 +80,9 @@ export default function TeamForm({ team }: TeamFormProps) {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-  
+
+    setIsSubmitting(true);
+    setError(null); // Reset error state before submission
 
     const formData = new FormData();
     
@@ -129,7 +124,7 @@ export default function TeamForm({ team }: TeamFormProps) {
           setError(errorData.error || 'Failed to save team member profile.');
         }
       }
-    }catch(err){
+    } catch(err) {
       console.error("An unexpected error occurred:", err);
       if (isMounted.current) {
         setError("An unexpected error occurred.");
@@ -141,107 +136,15 @@ export default function TeamForm({ team }: TeamFormProps) {
     }
   }
 
+  // Conditional Rendering Based on User Role and Presence of Team Data
   if (isViewOnly && !team) {
-    return <p className="flex justify-center items-center mt-[30%]">You do not have permission to add to our Team.</p>;
-  }
-
-  if (!isViewOnly && team) {
     return (
-      <Card className="mt-20 border-none">
-        <CardHeader>
-          <CardTitle>{team ? 'Edit Team Member' : 'Add A New Team Member'}</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit}>
-            {/* Name Field */}
-            <div className="py-5 space-y-2">
-              <Label htmlFor="name">Name</Label>
-              <Input
-                id="name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-              />
-            </div>
-  
-            {/* Title Field */}
-            <div className="py-5 space-y-2">
-              <Label htmlFor="title">Title</Label>
-              <Input
-                id="title"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                required
-              />
-            </div>
-  
-            {/* Description Field */}
-            <div className="py-5 space-y-2 flex flex-col">
-              <Label htmlFor="description">Description</Label>
-              <RichTextEditor
-                                  content={description}
-                                  onChange={setDescription}
-                          />
-            </div>
-  
-            {/* File Input */}
-            <div className="space-y-2">
-              <Label htmlFor="image">Image (File)</Label>
-              <Input
-                type="file"
-                id="image"
-                name="image"
-                accept="image/*" // Optional: restrict to image files
-                required={!team} // Only required if creating a new team member
-                onChange={handleFileChange}
-              />
-            </div>
-  
-            {/* Existing Image Preview (only if editing and image is a string) */}
-            {team && typeof currentImageSrc === 'string' && currentImageSrc !== '' && (  
-              <div className="my-4">  
-                <Image  
-                  src={currentImageSrc.startsWith('http') ? currentImageSrc : `https://khconsult.s3.us-east-2.amazonaws.com/${currentImageSrc}`}  
-                  height={400}  
-                  width={400}  
-                  alt="Team Member Image"  
-                  onError={() => {  
-                    if (!team.profileImage) return;  
-                    const sanitizedImagePath = team.profileImage.startsWith('/') 
-                      ? team.profileImage.slice(1)  
-                      : team.profileImage;  
-                    const localImageUrl = `/teams/${sanitizedImagePath}`;  
-                    setCurrentImageSrc(localImageUrl);  
-                  }}  
-                />  
-              </div>  
-            )}  
-  
-            {/* Display Error Message */}
-            {error && <p className="text-red-500">{error}</p>}
-  
-            <div className="flex items-center gap-2">
-              <Button type="submit" disabled={isSubmitting}>
-                {isSubmitting ? "Saving..." : "Save"}
-              </Button>
-              {team && (
-                <DeleteButton
-                  apiEndpoint={`/api/team/delete-team/${team.id}`}
-                  itemId={team.id}
-                  confirmMessage="Are you sure you want to delete this team member?"
-                  successMessage="Team member deleted successfully!"
-                  errorMessage="Failed to delete this team member."
-                  redirectPath="/admin/manage-team" // Dynamic redirect path
-                  variant="destructive"
-                  buttonText="Delete"
-                />
-              )}
-            </div>
-          </form>
-        </CardContent>
-      </Card>
+      <p className="flex justify-center items-center mt-[30%]">
+        You do not have permission to add to our Team.
+      </p>
     );
   }
+
   if (isViewOnly && team) {
     return (
       <Card className="mt-20 border-none">
@@ -255,13 +158,13 @@ export default function TeamForm({ team }: TeamFormProps) {
               <Label htmlFor="name">Name</Label>
               <Input id="name" value={name} disabled />
             </div>
-  
+
             {/* Title Field */}
             <div className="py-5 space-y-2">
               <Label htmlFor="title">Title</Label>
               <Input id="title" value={title} disabled />
             </div>
-  
+
             {/* Description Field */}
             <div className="py-5 space-y-2 flex flex-col">
               <Label htmlFor="description">Description</Label>
@@ -271,17 +174,7 @@ export default function TeamForm({ team }: TeamFormProps) {
                 onChange={() => {}} // No-op since it's read-only
               />
             </div>
-            <div className="space-y-2">
-            <Label htmlFor="image">Image (File)</Label>
-            <Input
-              type="file"
-              id="image"
-              name="image"
-              accept="image/*"
-              onChange={() => {}}
-              disabled
-            />
-          </div>
+
             {/* Image Display */}
             <div className="space-y-2">
               <Label htmlFor="image">Image</Label>
@@ -305,4 +198,101 @@ export default function TeamForm({ team }: TeamFormProps) {
       </Card>
     );
   }
+
+  // Render the add/edit form for users with appropriate permissions
+  return (
+    <Card className="mt-20 border-none">
+      <CardHeader>
+        <CardTitle>{team ? 'Edit Team Member' : 'Add A New Team Member'}</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <form onSubmit={handleSubmit}>
+          {/* Name Field */}
+          <div className="py-5 space-y-2">
+            <Label htmlFor="name">Name</Label>
+            <Input
+              id="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
+          </div>
+
+          {/* Title Field */}
+          <div className="py-5 space-y-2">
+            <Label htmlFor="title">Title</Label>
+            <Input
+              id="title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              required
+            />
+          </div>
+
+          {/* Description Field */}
+          <div className="py-5 space-y-2 flex flex-col">
+            <Label htmlFor="description">Description</Label>
+            <RichTextEditor
+              content={description}
+              onChange={setDescription}
+            />
+          </div>
+
+          {/* File Input */}
+          <div className="space-y-2">
+            <Label htmlFor="image">Image (File)</Label>
+            <Input
+              type="file"
+              id="image"
+              name="image"
+              accept="image/*" // Optional: restrict to image files
+              required={!team} // Only required if creating a new team member
+              onChange={handleFileChange}
+            />
+          </div>
+
+          {/* Existing Image Preview (only if editing and image is a string) */}
+          {team && typeof currentImageSrc === 'string' && currentImageSrc !== '' && (  
+            <div className="my-4">  
+              <Image  
+                src={currentImageSrc.startsWith('http') ? currentImageSrc : `https://khconsult.s3.us-east-2.amazonaws.com/${currentImageSrc}`}  
+                height={400}  
+                width={400}  
+                alt="Team Member Image"  
+                onError={() => {  
+                  if (!team.profileImage) return;  
+                  const sanitizedImagePath = team.profileImage.startsWith('/') 
+                    ? team.profileImage.slice(1)  
+                    : team.profileImage;  
+                  const localImageUrl = `/teams/${sanitizedImagePath}`;  
+                  setCurrentImageSrc(localImageUrl);  
+                }}  
+              />  
+            </div>  
+          )}  
+
+          {/* Display Error Message */}
+          {error && <p className="text-red-500">{error}</p>}
+
+          <div className="flex items-center gap-2">
+            <Button type="submit" disabled={isSubmitting}>
+              {isSubmitting ? "Saving..." : "Save"}
+            </Button>
+            {team && (
+              <DeleteButton
+                apiEndpoint={`/api/team/delete-team/${team.id}`}
+                itemId={team.id}
+                confirmMessage="Are you sure you want to delete this team member?"
+                successMessage="Team member deleted successfully!"
+                errorMessage="Failed to delete this team member."
+                redirectPath="/admin/manage-team" // Dynamic redirect path
+                variant="destructive"
+                buttonText="Delete"
+              />
+            )}
+          </div>
+        </form>
+      </CardContent>
+    </Card>
+  );
 }
