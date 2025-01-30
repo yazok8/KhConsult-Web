@@ -5,7 +5,7 @@ export const dynamic = "force-dynamic";
 
 import React from "react";
 import Image from "next/image";
-import Container from "@/app/ui/Container";
+import Container from "@/components/Container";
 import { useServicesSWR } from "../_components/useServiceSWR";
 import Typography from "@/components/Typography";
 
@@ -25,7 +25,7 @@ export default function GermanSpeaker() {
   const secondService = services[3];
 
   return (
-    <Container id="need-a-german-speaker" className="border-none shadow-none">
+    <Container id="need-a-german-speaker">
       <div className="flex flex-col lg:flex-row items-center lg:items-start flex-grow w-full">
         { isLoading || !services ? <p>Loading services...</p> : <>
         

@@ -2,7 +2,7 @@ import Link from "next/link";
 import khlogo from "../../../../../public/images/khlogo.png"
 import FooterList from "./FooterList";
 import Image from "next/image";
-import SocialMedia from "@/app/ui/SocialMedia";
+import SocialMedia from "@/components/SocialMedia";
 
 const Footer = () => {
   return (

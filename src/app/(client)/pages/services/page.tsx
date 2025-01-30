@@ -3,7 +3,7 @@ export const dynamic = "force-dynamic";
 import React from "react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import Container from "@/app/ui/Container";
+import Container from "@/components/Container";
 import ForBusinesses from "./ForBusinesses/page";
 import StudyingInGermany from "./studying-in-germany/page";
 import GermanSpeaker from "./german-speaker/page";

@@ -1,6 +1,6 @@
 "use client";
 import useSWR from "swr";
-import Container from "@/app/ui/Container";
+import Container from "@/components/Container";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { AboutOurTeam } from "@prisma/client";
 import Image from "next/image";

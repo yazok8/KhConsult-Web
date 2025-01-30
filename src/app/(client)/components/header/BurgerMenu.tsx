@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { BsX } from 'react-icons/bs';
 import khlogo from '../../../../../public/images/khlogo.svg'; // Adjust the path as necessary
-import SocialMedia from '../../../ui/SocialMedia';
+import SocialMedia from '../../../../components/SocialMedia';
 
 interface BurgerMenuProps {
   isOpen: boolean;

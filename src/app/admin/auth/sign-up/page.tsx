@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -9,11 +10,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
+import { Spinner } from "@/components/ui/spinner";
+
 
 
 
 export default function UserSignUp() {
     const router = useRouter();
+    const [isLoading, setIsLoading] = useState(false);
     const {
       handleSubmit,
       formState: { errors },
@@ -29,7 +33,8 @@ export default function UserSignUp() {
       },
     });
   
-    async function onSubmit(values: SignUpValues) {  
+    async function onSubmit(values: SignUpValues) {
+      setIsLoading(true);  
       try {  
        const response = await fetch("/api/auth/register", {  
         method: "POST",  
@@ -81,6 +86,8 @@ export default function UserSignUp() {
       } catch (error: unknown) {  
        console.error("Sign-up failed:", error);  
        toast.error("Something went wrong!");  
+      }finally{
+        setIsLoading(false);
       }  
     }  
     
@@ -102,6 +109,7 @@ export default function UserSignUp() {
                 {...register("name")}
                 placeholder="Enter your name"
                 className="mt-1 block w-full"
+                disabled={isLoading}
               />
               {errors.name && (
                 <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
@@ -115,6 +123,7 @@ export default function UserSignUp() {
                 {...register("username")}
                 placeholder="Enter your username"
                 className="mt-1 block w-full"
+                disabled={isLoading}
               />
               {errors.username && (
                 <p className="text-red-500 text-sm mt-1">{errors.username.message}</p>
@@ -130,6 +139,7 @@ export default function UserSignUp() {
                 {...register("email")}
                 placeholder="Enter your email"
                 className="mt-1 block w-full"
+                disabled={isLoading}
               />
               {errors.email && (
                 <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
@@ -144,6 +154,7 @@ export default function UserSignUp() {
                 {...register("password")}
                 placeholder="Enter your password"
                 className="mt-1 block w-full"
+                disabled={isLoading}
               />
               {errors.password && (
                 <p className="text-red-500 text-sm mt-1">
@@ -153,8 +164,14 @@ export default function UserSignUp() {
             </div>
   
             <div className="mt-4">
-              <Button type="submit" className="w-full">
-                Sign Up
+            <Button type="submit" disabled={isLoading} className="w-full">
+                {isLoading ? (
+                  <>
+                    <Spinner className="mr-2" /> Signing Up...
+                  </>
+                ) : (
+                  "Sign Up"
+                )}
               </Button>
             </div>
           </form>

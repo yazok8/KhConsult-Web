@@ -1,4 +1,3 @@
-// components/ServiceCard.js
 import Image,{StaticImageData} from "next/image";
 
 export default function ServiceCard({

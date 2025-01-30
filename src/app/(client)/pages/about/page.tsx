@@ -3,7 +3,7 @@
 
 export const dynamic = "force-dynamic";
 
-import Container from '@/app/ui/Container';
+import Container from '@/components/Container';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import useSWR from "swr";
 import Image from 'next/image';

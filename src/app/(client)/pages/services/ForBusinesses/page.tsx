@@ -3,7 +3,7 @@ export const dynamic = "force-dynamic";
 
 import React from "react";
 import Image from "next/image";
-import Container from "@/app/ui/Container";
+import Container from "@/components/Container";
 import { useServicesSWR } from "../_components/useServiceSWR";
 import Typography from "@/components/Typography";
 import { Inter } from "next/font/google"; // Add font import
@@ -36,7 +36,7 @@ export default function ForBusinesses() {
   const lastService = services[1];
 
   return (
-    <Container id="for-businesses" className="min-h-0 pt-14">
+    <Container id="for-businesses" className="min-h-0 md:pt-40 items-start">
       <div
         className={`flex flex-col lg:flex-row items-center lg:items-start flex-grow w-full ${inter.className}`}
       >

@@ -3,7 +3,7 @@ export const dynamic = "force-dynamic";
 
 import React from "react";
 import Image from "next/image";
-import Container from "@/app/ui/Container";
+import Container from "@/components/Container";
 import { useServicesSWR } from "../_components/useServiceSWR"; 
 import Typography from "@/components/Typography";
 

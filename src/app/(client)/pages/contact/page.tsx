@@ -1,5 +1,5 @@
 import FooterList from '@/app/(client)/components/footer/FooterList'
-import SocialMedia from '@/app/ui/SocialMedia'
+import SocialMedia from '@/components/SocialMedia'
 import React from 'react'
 
 export default function ContactPage() {

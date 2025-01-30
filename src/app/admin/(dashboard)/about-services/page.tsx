@@ -1,7 +1,7 @@
 "use client";
 
 import { useAboutServices } from '@/app/hooks/useAboutServices';
-import Container from '@/app/ui/Container';
+import Container from '@/components/Container';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import Image from 'next/image';
 import Link from 'next/link';
