@@ -19,7 +19,9 @@ export default async function EditTeam({params}:EditTeamProps) {
     return <div>Team not found</div>
   }
 
-  return (
+  return (<div className='pl-12'>
     <TeamForm team={team} />
+  </div>
+
   )
 }

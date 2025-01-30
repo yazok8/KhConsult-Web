@@ -20,7 +20,9 @@ export default async function EditService({ params }: EditServiceProps) {
     return <div>Service not found.</div>;
   }
 
-  return (
-    <ServiceForm service={service} />
+  return (<div className='pl-12'>
+        <ServiceForm service={service} />
+  </div>
+
   )
 }

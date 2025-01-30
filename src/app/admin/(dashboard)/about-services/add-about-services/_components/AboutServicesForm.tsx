@@ -146,7 +146,7 @@ export default function AboutOurServicesForm({
     <Card className="mt-20 border-none">
       <CardHeader>
         <CardTitle>
-          {aboutServices ? "Edit Service" : "Create A New Service"}
+          {aboutServices ? "Edit About Our Services" : "Create A New About Our Services"}
         </CardTitle>
       </CardHeader>
       <CardContent>

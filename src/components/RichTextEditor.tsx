@@ -91,7 +91,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({ content, onChange, sess
     },
     editorProps: {
       attributes: {
-        class: 'prose prose-sm sm:prose lg:prose-lg xl:prose-xl max-w-none focus:outline-none min-h-[200px] p-4',
+        class: 'prose max-w-none focus:outline-none min-h-[200px] p-4',
       },
     },
   });

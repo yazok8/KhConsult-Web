@@ -13,11 +13,8 @@ export default function StudyingInGermany() {
   if (error) {
     return <p>Failed to load services: {error.message}</p>;
   }
-  if (isLoading || !services) {
-    return <p>Loading services...</p>;
-  }
-  if (services.length < 3) {
-    return <p>Not enough services to display the third one.</p>;
+  if (!services) {
+    return;
   }
 
   const thirdService = services[0]; // or whichever index you want
@@ -25,7 +22,8 @@ export default function StudyingInGermany() {
   return (
     <Container id="studying-in-germany">
       <div className="flex flex-col lg:flex-row items-center lg:items-start flex-grow w-full">
-      <div className="pr-0 lg:pr-16 lg:w-1/2 w-full mb-10 lg:mb-0">
+        { isLoading || !services ?  <p>Loading services...</p> : <>
+          <div className="pr-0 lg:pr-16 lg:w-1/2 w-full mb-10 lg:mb-0">
         <Typography variant="h2" className="font-bold mb-4 md:mb-8 whitespace-nowrap">
           {thirdService.title}
         </Typography>
@@ -57,6 +55,8 @@ export default function StudyingInGermany() {
             />
           )}
         </div>
+        </>}
+
       </div>
     </Container>
   );

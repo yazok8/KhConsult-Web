@@ -17,13 +17,9 @@ export default function GermanSpeaker() {
    if (error) {
      return <p>Failed to load services: {error.message}</p>;
    }
-   if (isLoading || !services) {
-     return <p>Loading services...</p>;
+   if ( !services) {
+     return;
    }
-   if (services.length < 3) {
-     return <p>Not enough services to display the third one.</p>;
-   }
-
 
   // Based on your code, the "firstService" was actually services[1].
   const secondService = services[3];
@@ -31,8 +27,10 @@ export default function GermanSpeaker() {
   return (
     <Container id="need-a-german-speaker" className="border-none shadow-none">
       <div className="flex flex-col lg:flex-row items-center lg:items-start flex-grow w-full">
-        {/* Text Section */}
-        <div className="pr-0 lg:pr-16 lg:w-1/2 w-full mb-10 lg:mb-0">
+        { isLoading || !services ? <p>Loading services...</p> : <>
+        
+        
+          <div className="pr-0 lg:pr-16 lg:w-1/2 w-full mb-10 lg:mb-0">
         <Typography variant="h2" className="font-bold mb-4 md:mb-8 whitespace-nowrap">
           {secondService.title}
         </Typography>
@@ -44,7 +42,6 @@ export default function GermanSpeaker() {
         />
       </div>
 
-        {/* Image Section */}
         <div className="lg:w-1/2 w-full">
           {secondService.imageSrc ? (
             <Image
@@ -65,6 +62,9 @@ export default function GermanSpeaker() {
             />
           )}
         </div>
+        </> }
+
+ 
       </div>
     </Container>
   );

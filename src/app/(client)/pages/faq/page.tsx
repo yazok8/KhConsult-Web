@@ -3,32 +3,27 @@
 export const dynamic = "force-dynamic";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useEffect, useState } from "react";
+import { faq } from "@prisma/client";
 import sanitizeHtml from "sanitize-html";
-
-interface Faq {
-  id: string;
-  question: string;
-  answer: string;
-}
+import useSWR from "swr";
 
 export default function FaqQuestion() {
-  const [questions, setQuestions] = useState<Faq[]>([]);
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const res = await fetch("/api/faq");
-        if (!res.ok) {
-          throw new Error("Failed to fetch FAQs.");
-        }
-        const data: Faq[] = await res.json();
-        setQuestions(data);
-      } catch (error) {
-        console.error("Error fetching FAQs:", error);
-      }
-    })();
-  }, []);
+  const fetcher = (url: string) => fetch(url, { cache: "no-store" }).then(r => r.json());
+
+  const { data: faq, error } = useSWR<faq[]>("/api/faq", fetcher,{
+    revalidateOnFocus:true,
+    revalidateOnReconnect: true,
+    refreshInterval: 30_000,
+  });
+
+  if (error) {
+    return <p>Failed to load team data: {error.message}</p>;
+  }
+  if (!faq) {
+    return 
+  }
+
 
   return (
     <div className="mt-20 flex flex-col text-black text-start min-h-screen lg:h-[75vh] md:h-[120vh] pt-20 px-5 max-w-6xl mx-auto" id="faq">
@@ -39,8 +34,8 @@ export default function FaqQuestion() {
         <CardContent>
           {/* Use CSS Grid for layout */}
           <ul className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {questions.length > 0 ? (
-              questions.map((q) => (
+            {faq.length > 0 ? (
+              faq.map((q) => (
                 <article
                   key={q.id}
                   className="flex flex-col bg-slate-300 text-black rounded-lg shadow-lg"

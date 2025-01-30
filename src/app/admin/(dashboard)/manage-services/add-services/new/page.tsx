@@ -24,7 +24,9 @@ export default async function AddService({ params}: AddServiceProps) {
     });
   }
 
-  return (
-    <ServiceForm service={service} />
+  return (<div className="pl-12">
+        <ServiceForm service={service} />
+  </div>
+
   );
 }

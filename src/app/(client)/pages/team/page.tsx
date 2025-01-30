@@ -18,7 +18,7 @@ export default function TeamPage() {
     return <p>Failed to load team data: {error.message}</p>;
   }
   if (!team) {
-    return <p>Loading team data...</p>;
+    return 
   }
 
   return (
@@ -28,7 +28,12 @@ export default function TeamPage() {
           <CardTitle className="pb-2 text-3xl md:text-5xl font-bold text-center">About Our Team</CardTitle>
         </CardHeader>
         <CardContent className="flex p-0">
-          <ul>
+
+          {
+            !team ? <>
+            <p>Loading team data...</p></>
+            :
+            <ul>
             {team.map((member) => (
               <div
                 key={member.id}
@@ -61,6 +66,8 @@ export default function TeamPage() {
               </div>
             ))}
           </ul>
+          }
+
         </CardContent>
       </Card>
     </Container>

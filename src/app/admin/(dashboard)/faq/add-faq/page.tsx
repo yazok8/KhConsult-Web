@@ -3,6 +3,9 @@ import FaqForm from '../_components/FaqForm'
 
 export default function addFaqQuestion() {
   return (
-    <FaqForm />
+    <div className="pl-12">
+        <FaqForm />
+    </div>
+
   )
 }

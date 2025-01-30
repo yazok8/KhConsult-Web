@@ -17,7 +17,9 @@ export default async function editFaqQuestion({ params }: EditFaqProps) {
         return <div>not found</div>;
     }
 
-  return (
-    <FaqForm faq={faq}/>
+  return (<div className='pl-12'>
+        <FaqForm faq={faq}/>
+  </div>
+
   )
 }

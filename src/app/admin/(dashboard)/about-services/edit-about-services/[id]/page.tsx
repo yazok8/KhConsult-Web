@@ -18,5 +18,7 @@ export default async function EditAboutServices({ params }: EditAboutServicesPro
   if(!aboutService) {
     return notFound();
   }
-  return <AboutOurServicesForm aboutServices={aboutService} />;
+  return <div className="pl-12">
+  <AboutOurServicesForm aboutServices={aboutService} />
+  </div>
 }

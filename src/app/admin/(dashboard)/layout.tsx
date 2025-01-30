@@ -26,7 +26,7 @@ console.log(session?.user.role)
   return (  
    <>  
     <AdminHeader session={session} />  
-    <main className='pl-0 md:pl-[250px]'>{children}</main>  
+    <main className='pl-0 md:pl-[180px]'>{children}</main>  
    </>  
   );  
 }

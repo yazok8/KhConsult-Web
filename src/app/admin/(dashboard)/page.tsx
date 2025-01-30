@@ -4,7 +4,7 @@ import React from 'react';
 export default function AdminPage() {  
   return (  
    <div className="admin-dashboard mt-[30%]">  
-    <Card className='border-none'>
+    <Card className='border-none px-8'>
       <CardHeader>
         <CardTitle>Admin Dashboard</CardTitle>
       </CardHeader>
