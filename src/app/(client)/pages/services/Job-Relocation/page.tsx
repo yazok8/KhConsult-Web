@@ -1,6 +1,6 @@
 "use client";
 export const dynamic = "force-dynamic";
-
+import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import React from "react";
 import Image from "next/image";
 import Container from "@/components/Container";
@@ -22,8 +22,12 @@ export default function JobRelocation() {
   const firstService = services[2];
 
   return (
-    <Container id="job-relocation" className="pt-14 md:pt-20 md:items-start">
-      <div className="flex flex-col lg:flex-row items-center lg:items-start flex-grow w-full">
+    <Container id="job-relocation">
+       <Card className='p-0 border-none shadow-none'>
+      <CardHeader className='border-none pl-9'>
+        <CardTitle className="text-3xl md:text-5xl font-bold border-none text-center">Our Services</CardTitle>
+      </CardHeader>
+      <div className="flex flex-col lg:flex-row items-center lg:items-start flex-grow w-full pt-10">
 
         {isLoading || !services ?<p>Loading services...</p> : <>
         
@@ -66,6 +70,7 @@ export default function JobRelocation() {
 
  
       </div>
+      </Card>
     </Container>
   );
 }
