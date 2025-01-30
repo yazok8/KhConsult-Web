@@ -18,7 +18,7 @@ export default function FaqQuestion() {
   });
 
   if (error) {
-    return <p>Failed to load team data: {error.message}</p>;
+    return <p>Failed to load faq page data: {error.message}</p>;
   }
   if (!faq) {
     return 

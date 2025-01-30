@@ -20,6 +20,10 @@ export default function AboutPage() {
     refreshInterval: 30_000,
   });
 
+  if (error) {
+    return <p>Failed to load About page data: {error.message}</p>;
+  }
+
   if(!aboutServices){
     return;
   }
