@@ -16,7 +16,7 @@ const inter = Inter({
 });
 
 export default function ForBusinesses() {
-  const { services, isLoading, error } = useServicesSWR();
+  const { services, error } = useServicesSWR();
 
   if (error) {
     return (

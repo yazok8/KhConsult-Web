@@ -11,12 +11,12 @@ import ServiceCard from "@/components/ServiceCard";
 
 
 export default function GermanSpeaker() {
-  const { services, isLoading, error } = useServicesSWR();
+  const { services, error } = useServicesSWR();
  
    if (error) {
      return <p>Failed to load services: {error.message}</p>;
    }
-   if ( !services) {
+   if (!services) {
      return;
    }
 

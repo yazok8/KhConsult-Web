@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, {useRef, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { BsList } from 'react-icons/bs';

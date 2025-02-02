@@ -6,7 +6,7 @@ import { useServicesSWR } from "../_components/useServiceSWR";
 import ServiceCard from "@/components/ServiceCard";
 
 export default function StudyingInGermany() {
-  const { services, isLoading, error } = useServicesSWR();
+  const { services, error } = useServicesSWR();
 
   if (error) {
     return <p>Failed to load services: {error.message}</p>;

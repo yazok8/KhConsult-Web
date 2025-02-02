@@ -6,7 +6,7 @@ import { LoadingCard } from "@/components/LoadingCard";
 import ServiceCard from "@/components/ServiceCard";
 
 export default function JobRelocation() {
-  const { services, isLoading, error } = useServicesSWR();
+  const { services, error } = useServicesSWR();
 
   if (error) {
     return (
