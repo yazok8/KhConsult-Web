@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef,useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { BsX } from 'react-icons/bs';
@@ -13,31 +13,13 @@ interface BurgerMenuProps {
 }
 
 function BurgerMenu({ isOpen, setIsOpen }: BurgerMenuProps) {
-  const [isServicesOpen, setIsServicesOpen] = useState(false); // Services dropdown state
 
-  const mobileServicesRef = useRef<HTMLLIElement>(null);
+
   const mobileMenuRef = useRef<HTMLDivElement>(null);
 
   const toggleMenu = () => setIsOpen(prev => !prev);
 
-  // Handle clicks outside the "Services" dropdown
-  useEffect(() => {
-    const handleClickOutsideServices = (event: MouseEvent) => {
-      const target = event.target as Node;
-      if (
-        mobileServicesRef.current &&
-        !mobileServicesRef.current.contains(target)
-      ) {
-        setIsServicesOpen(false);
-      }
-    };
 
-    document.addEventListener('mousedown', handleClickOutsideServices);
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutsideServices);
-    };
-  }, []);
 
   // Handle clicks outside the mobile menu
   useEffect(() => {
@@ -47,7 +29,6 @@ function BurgerMenu({ isOpen, setIsOpen }: BurgerMenuProps) {
       const target = event.target as Node;
       if (mobileMenuRef.current && !mobileMenuRef.current.contains(target)) {
         setIsOpen(false);
-        setIsServicesOpen(false); // Close the "Services" dropdown as well
       }
     };
 
