@@ -13,7 +13,7 @@ export default function Container({ children, id, className }: ContainerProps) {
     <section 
       id={id} 
       className={twMerge(
-        'flex justify-center md:items-center md:pt-0 min-h-screen lg:max-w-6xl flex-wrap mx-auto px-5 pt-14',
+        'flex justify-center md:items-center md:pt-10 min-h-screen lg:max-w-6xl flex-wrap mx-auto px-5 pt-14',
         className
       )}
     >

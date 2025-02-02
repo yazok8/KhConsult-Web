@@ -1,5 +1,5 @@
 import React from 'react';
-import ServiceCard from "../../../../ui/forindividual-service/ServiceCard";
+import ServiceCard from "../../../../../components/ServiceCard";
 import service1 from "../../../../../../public/images/service1.svg";
 import service2 from '../../../../../../public/images/service2.jpg';
 import service3 from '../../../../../../public/images/service3.svg';

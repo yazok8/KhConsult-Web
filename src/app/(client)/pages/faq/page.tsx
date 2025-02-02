@@ -1,64 +1,75 @@
 "use client";
 
-export const dynamic = "force-dynamic";
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { faq } from "@prisma/client";
 import sanitizeHtml from "sanitize-html";
 import useSWR from "swr";
+import { motion } from "framer-motion";
+import Container from "@/components/Container";
+
 
 export default function FaqQuestion() {
-
   const fetcher = (url: string) => fetch(url, { cache: "no-store" }).then(r => r.json());
 
-  const { data: faq, error } = useSWR<faq[]>("/api/faq", fetcher,{
-    revalidateOnFocus:true,
+  const { data: faq, error } = useSWR<faq[]>("/api/faq", fetcher, {
+    revalidateOnFocus: true,
     revalidateOnReconnect: true,
     refreshInterval: 30_000,
   });
 
   if (error) {
-    return <p>Failed to load faq page data: {error.message}</p>;
-  }
-  if (!faq) {
-    return 
+    return <p className="text-red-500">Failed to load FAQ data: {error.message}</p>;
   }
 
+  if (!faq) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="w-8 h-8 bg-primary rounded-full animate-pulse" />
+      </div>
+    );
+  }
 
   return (
-    <div className="mt-20 flex flex-col text-black text-start min-h-screen lg:h-[75vh] md:h-[120vh] pt-20 px-5 max-w-6xl mx-auto" id="faq">
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-6xl mb-12 text-start">FAQ</CardTitle>
+    <Container className="mt-20 section-modern" id="faq">
+      <Card className="card-modern">
+        <CardHeader className="space-y-4">
+          <CardTitle className="text-gradient text-4xl md:text-6xl font-bold">
+            Frequently Asked Questions
+          </CardTitle>
         </CardHeader>
         <CardContent>
-          {/* Use CSS Grid for layout */}
-          <ul className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <motion.ul 
+            className="grid-modern"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+          >
             {faq.length > 0 ? (
-              faq.map((q) => (
-                <article
+              faq.map((q, index) => (
+                <motion.article
                   key={q.id}
-                  className="flex flex-col bg-slate-300 text-black rounded-lg shadow-lg"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
                 >
-                    <li className="list-none">
-                      <h2 className="p-6 bg-slate-500 rounded-t-lg text-2xl font-semibold">
-                        {q.question}
-                      </h2>
-                    </li>
-                    <div
-                      className="answer-content p-4"
-                      dangerouslySetInnerHTML={{
-                        __html: sanitizeHtml(q.answer),
-                      }}
-                    />
-                </article>
+                  <h2 className="p-6 bg-[rgb(var(--primary-color))] text-xl font-semibold">
+                    {q.question}
+                  </h2>
+                  <div
+                    className="p-6 prose prose-lg max-w-none"
+                    dangerouslySetInnerHTML={{
+                      __html: sanitizeHtml(q.answer),
+                    }}
+                  />
+                </motion.article>
               ))
             ) : (
-              <p>No FAQs available.</p>
+              <p className="text-center text-gray-500">No FAQs available.</p>
             )}
-          </ul>
+          </motion.ul>
         </CardContent>
       </Card>
-    </div>
+    </Container>
   );
 }

@@ -189,11 +189,7 @@ export default function AboutOurServicesForm({
             currentImageSrc !== "" && (
               <div className="my-4">
                 <Image
-                  src={
-                    currentImageSrc.startsWith("http")
-                      ? currentImageSrc
-                      : `${currentImageSrc}`
-                  }
+                  src={currentImageSrc.startsWith('http') ? currentImageSrc : `https://khconsult.s3.us-east-2.amazonaws.com/${currentImageSrc}`}  
                   height={400}
                   width={400}
                   alt="Service Image"

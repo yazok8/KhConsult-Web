@@ -83,6 +83,51 @@ ul,li{
 
 /* globals.css */
 
+.container-modern {
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+}
+
+/* Modern card styles */
+.card-modern {
+  @apply bg-white rounded-xl shadow-lg transition-transform duration-300 hover:scale-[1.02] hover:shadow-xl;
+}
+
+/* Modern button styles */
+.button-modern {
+  @apply px-6 py-3 rounded-full font-medium transition-all duration-300 
+         hover:shadow-lg active:scale-95 focus:outline-none focus:ring-2 focus:ring-offset-2;
+}
+
+/* Modern image styles */
+.image-modern {
+  @apply rounded-xl object-cover transition-all duration-300 hover:shadow-xl;
+}
+
+/* Modern text gradient */
+.text-gradient {
+  @apply bg-clip-text bg-gradient-to-r from-[rgb(var(--primary-color))] to-[rgb(var(--secondary-color))];
+}
+
+/* Modern section styles */
+.section-modern {
+  @apply py-16 md:py-24 lg:py-32;
+}
+
+/* Modern hover effects */
+.hover-lift {
+  @apply transition-transform duration-300 hover:-translate-y-1;
+}
+
+/* Modern loading skeleton */
+/* .skeleton {
+  @apply animate-pulse bg-gray-200 rounded;
+} */
+
+/* Modern grid layouts */
+.grid-modern {
+  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6;
+}
+
 /* Basic styling for the TipTap editor */
 .ProseMirror {
   min-height: 200px;
@@ -177,4 +222,11 @@ ul,li{
 /* Ensure slide content doesn't overflow */
 .slick-slide {
   box-sizing: border-box;
+}
+
+.btn-primary {
+  @apply bg-primary text-white py-2 px-4 rounded transition-transform duration-200;
+}
+.btn-primary:hover {
+  @apply transform scale-105;
 }

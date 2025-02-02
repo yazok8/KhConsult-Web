@@ -73,7 +73,7 @@ export default function AdminAboutOurServices() {
           {aboutServices.aboutimage && (
             <div className="mt-4">
               <Image
-                src={aboutServices.aboutimage}
+                src={`https://khconsult.s3.us-east-2.amazonaws.com/${aboutServices.aboutimage}`}
                 alt={aboutServices.title}
                 width={400}
                 height={400}

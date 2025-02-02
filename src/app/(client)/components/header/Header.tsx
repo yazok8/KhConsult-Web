@@ -65,30 +65,9 @@ export default function Header() {
 
             {/* Desktop Services Menu */}
             <div className="relative" ref={desktopServicesRef}>
-              <button
-                className="px-5 focus:outline-none"
-                onClick={() => setIsServicesOpen(prev => !prev)}
-                aria-haspopup="true"
-                aria-expanded={isServicesOpen}
-              >
-                Services
-              </button>
-              {isServicesOpen && (
-                <ul className="absolute bg-white text-black mt-4 rounded shadow-lg whitespace-nowrap">
-                  <li className="px-4 py-2 hover:bg-gray-200">
-                    <Link href="/#job-relocation">Job Relocation</Link>
-                  </li>
-                  <li className="px-4 py-2 hover:bg-gray-200">
-                    <Link href="/#need-a-german-speaker">Need A German Speaker</Link>
-                  </li>
-                  <li className="px-4 py-2 hover:bg-gray-200">
-                    <Link href="/#studying-in-germany">Studying In Germany</Link>
-                  </li>
-                  <li className="px-4 py-2 hover:bg-gray-200">
-                    <Link href="/#for-businesses">For Businesses</Link>
-                  </li>
-                </ul>
-              )}
+            <Link className="px-5" href="/#services">
+              Services
+            </Link>
             </div>
 
             <Link className="px-5" href="/#faq">

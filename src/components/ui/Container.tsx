@@ -1,22 +1,20 @@
+import React from 'react';
+
 interface ContainerProps {
-    children: React.ReactNode;
-  }
-  
-  const Container: React.FC<ContainerProps> = ({ children }) => {
-    return (
-      <div
-        className="
-      max-w-[1920px]
-      mx-auto
-      xl:px-20
-      md:px-2
-      px-4
-      "
-      >
-        {children}
-      </div>
-    );
-  };
-  
-  export default Container;
-  
+  children: React.ReactNode;
+  className?: string;
+  id?: string;
+}
+
+const Container: React.FC<ContainerProps> = ({ children, className = '', id }) => {
+  return (
+    <div
+      id={id}
+      className={`container-modern ${className}`}
+    >
+      {children}
+    </div>
+  );
+};
+
+export default Container;

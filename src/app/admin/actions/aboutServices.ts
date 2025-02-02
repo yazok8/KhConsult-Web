@@ -73,6 +73,7 @@ export async function addAboutServices(
  * @param params The route parameters containing the "About Service" ID.
  * @returns The updated "About Service."
  */
+
 export async function editAboutServices(
   req: NextRequest,
   { params }: { params: { id: string } }
@@ -84,7 +85,8 @@ export async function editAboutServices(
 
     const title = formData.get("title") as string | null;
     const description = formData.get("description") as string | null;
-    const imageFile = formData.get("image") as File | null;
+    // Get the file but do not force it to be a File instance.
+    const imageFile = formData.get("image");
     const existingAboutImage = formData.get("imageSrc") as string | null;
 
     // Validate required fields
@@ -92,15 +94,20 @@ export async function editAboutServices(
       throw new Error("Title is required and must be a non-empty string.");
     }
 
-    if (!description || typeof description !== "string" || description.trim() === "") {
+    if (
+      !description ||
+      typeof description !== "string" ||
+      description.trim() === ""
+    ) {
       throw new Error("Description is required and must be a non-empty string.");
     }
 
     let aboutImage = existingAboutImage || null;
 
-    if (imageFile && imageFile instanceof File) {
+    // Check if imageFile is provided and supports the Blob API
+    if (imageFile && typeof imageFile.arrayBuffer === "function") {
       // Validate image size before uploading
-       const imageBuffer = await blobToBuffer(imageFile);
+      const imageBuffer = await blobToBuffer(imageFile);
       const maxImageSize = 10 * 1024 * 1024; // 10 MB
 
       if (imageBuffer.length > maxImageSize) {
@@ -120,8 +127,8 @@ export async function editAboutServices(
       where: { id },
       data: {
         title: title,
-        description: description, // Store as is
-        aboutimage: aboutImage || undefined, // Update if new image is uploaded
+        description: description,
+        aboutimage: aboutImage || undefined, // Update only if new image is uploaded
       },
     });
 
