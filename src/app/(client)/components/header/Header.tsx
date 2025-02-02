@@ -18,24 +18,6 @@ export default function Header() {
   const desktopServicesRef = useRef<HTMLDivElement>(null);
 
 
-
-
-  // Handle clicks outside the "Services" dropdown
-  useEffect(() => {
-    const handleClickOutsideServices = (event: MouseEvent) => {
-      const target = event.target as Node;
-
-      const isClickOutsideDesktop =
-        desktopServicesRef.current && !desktopServicesRef.current.contains(target);
-    };
-
-    document.addEventListener('mousedown', handleClickOutsideServices);
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutsideServices);
-    };
-  }, []);
-
   return (
     <>
       <nav className="w-full fixed h-16 shadow-xl bg-black z-50">
