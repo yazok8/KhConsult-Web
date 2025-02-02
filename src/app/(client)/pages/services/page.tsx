@@ -2,7 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { Card } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Container from "@/components/Container";
 import ForBusinesses from "./ForBusinesses/page";
 import StudyingInGermany from "./studying-in-germany/page";
@@ -36,6 +36,9 @@ export default function Services() {
   return (
     <Container id="services">
       <Card className="w-full bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-gray-800 shadow-xl rounded-2xl overflow-hidden">
+      <CardHeader className='pb-3`'>
+          <CardTitle className="pb-2 text-3xl md:text-5xl font-bold text-center">Our Services</CardTitle>
+        </CardHeader>
         <motion.div
           variants={containerVariants}
           initial="hidden"

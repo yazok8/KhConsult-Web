@@ -99,47 +99,9 @@ function BurgerMenu({ isOpen, setIsOpen }: BurgerMenuProps) {
           {/* Mobile Services Menu */}
           <li
             className="py-4 relative"
-            ref={mobileServicesRef}
+            onClick={() => setIsOpen(false)}
           >
-            <div
-              className="flex justify-between items-center cursor-pointer"
-              onClick={() => setIsServicesOpen(prev => !prev)}
-            >
-              <span>Services</span>
-              {/* Dropdown Indicator Icon */}
-              <svg
-                className={`w-4 h-4 transition-transform ${
-                  isServicesOpen ? 'transform rotate-180' : ''
-                }`}
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M19 9l-7 7-7-7"
-                />
-              </svg>
-            </div>
-            {isServicesOpen && (
-              <ul className="pl-4 mt-2">
-                <li className="py-2 hover:bg-gray-200">
-                  <Link href="/#job-relocation">Job Relocation</Link>
-                </li>
-                <li className="py-2 hover:bg-gray-200">
-                  <Link href="/#need-a-german-speaker">Need A German Speaker</Link>
-                </li>
-                <li className="py-2 hover:bg-gray-200">
-                  <Link href="/#studying-in-germany">Studying In Germany</Link>
-                </li>
-                <li className="py-2 hover:bg-gray-200">
-                  <Link href="/#for-businesses">For Businesses</Link>
-                </li>
-              </ul>
-            )}
+            <Link href="/#services">Services</Link>
           </li>
           <li
             className="py-4 hover:underline hover:decoration-[#f68519]"
