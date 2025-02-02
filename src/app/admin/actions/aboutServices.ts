@@ -65,15 +65,19 @@ export async function addAboutServices(
   }
 }
 
-
+/**
+ * Helper function to convert a Blob to a Buffer.
+ * @param blob The Blob object.
+ * @returns A Promise that resolves to a Buffer.
+ */
+export async function blobToBuffer(blob: Blob): Promise<Buffer> {
+  const arrayBuffer = await blob.arrayBuffer();
+  return Buffer.from(arrayBuffer);
+}
 
 /**
- * Edits an existing "About Service" in the database after handling image updates.
- * @param req The Next.js request object.
- * @param params The route parameters containing the "About Service" ID.
- * @returns The updated "About Service."
+ * Edits an existing "About Service" after handling image updates.
  */
-
 export async function editAboutServices(
   req: NextRequest,
   { params }: { params: { id: string } }
@@ -85,70 +89,48 @@ export async function editAboutServices(
 
     const title = formData.get("title") as string | null;
     const description = formData.get("description") as string | null;
-    // Get the file but do not force it to be a File instance.
-    const imageFile = formData.get("image");
+    const imageFile = formData.get("image"); // type: FormDataEntryValue (string | File)
     const existingAboutImage = formData.get("imageSrc") as string | null;
 
-    // Validate required fields
-    if (!title || typeof title !== "string" || title.trim() === "") {
+    if (!title || title.trim() === "") {
       throw new Error("Title is required and must be a non-empty string.");
     }
-
-    if (
-      !description ||
-      typeof description !== "string" ||
-      description.trim() === ""
-    ) {
+    if (!description || description.trim() === "") {
       throw new Error("Description is required and must be a non-empty string.");
     }
 
     let aboutImage = existingAboutImage || null;
 
-    // Check if imageFile is provided and supports the Blob API
-    if (imageFile && typeof imageFile.arrayBuffer === "function") {
-      // Validate image size before uploading
+    // Narrow the type: if imageFile is not a string, it must be a Blob/File.
+    if (imageFile && typeof imageFile !== "string" && typeof imageFile.arrayBuffer === "function") {
+      // Optionally, validate file size
       const imageBuffer = await blobToBuffer(imageFile);
       const maxImageSize = 10 * 1024 * 1024; // 10 MB
-
       if (imageBuffer.length > maxImageSize) {
         throw new Error("Image size should not exceed 10 MB.");
       }
 
-      // Upload image to S3 under the 'services' folder
+      // Call uploadImageToS3. Because its parameter is now (Blob | File),
+      // you can pass imageFile (a Blob) without error.
       const imgKey = await uploadImageToS3(imageFile, S3Folder.SERVICES);
       aboutImage = imgKey;
-
-      // Optionally, delete the old image from S3 if necessary
-      // await deleteImageFromS3(existingAboutImage);
     }
 
-    // Update the "About Service" in the database
     const updatedService = await prisma.aboutOurServices.update({
       where: { id },
       data: {
-        title: title,
-        description: description,
-        aboutimage: aboutImage || undefined, // Update only if new image is uploaded
+        title,
+        description,
+        aboutimage: aboutImage || undefined,
       },
     });
 
-    // Revalidate relevant paths to update caches
     revalidatePath("/");
     revalidatePath("/about-services");
 
     return updatedService;
   } catch (err: unknown) {
     console.error("Error updating service:", err);
-    throw err; // Let the API route handle the error response
+    throw err;
   }
-}
-
-/**
- * Helper function to convert Blob to Buffer
- * @param blob The Blob object to convert.
- * @returns A Promise that resolves to a Buffer.
- */
-export async function blobToBuffer(blob: Blob): Promise<Buffer> {
-  const arrayBuffer = await blob.arrayBuffer();
-  return Buffer.from(arrayBuffer);
 }
