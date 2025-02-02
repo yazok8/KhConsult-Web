@@ -40,7 +40,7 @@ export default function Homepage() {
             <Typography variant="h1" className="text-gradient mb-6 text-black">
               Relocation Services
             </Typography>
-            <Typography variant="p" className="text-xl mb-6 text-[rgb(var(--neutral-dark))]">
+            <Typography variant="p" className="text-xl mb-6 text-[rgb(var(--neutral-dark))] font-bold">
               If we did it! So can you!
             </Typography>
             <Typography variant="p" className="mb-8 text-[rgb(var(--neutral-dark))] opacity-90">

@@ -11,9 +11,7 @@ import AppointmentBtn from '../AppointmentBtn';
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false); // Mobile menu state
-  const [isServicesOpen, setIsServicesOpen] = useState(false); // Services dropdown state
   
-
   const toggleMenu = () => setIsOpen(prev => !prev);
 
   // Define refs with correct types
@@ -29,10 +27,6 @@ export default function Header() {
 
       const isClickOutsideDesktop =
         desktopServicesRef.current && !desktopServicesRef.current.contains(target);
-
-      if (isClickOutsideDesktop) {
-        setIsServicesOpen(false);
-      }
     };
 
     document.addEventListener('mousedown', handleClickOutsideServices);

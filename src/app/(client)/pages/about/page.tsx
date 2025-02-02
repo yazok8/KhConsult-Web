@@ -65,7 +65,7 @@ export default function AboutPage() {
                   src={`https://khconsult.s3.us-east-2.amazonaws.com/${aboutServices.aboutimage}`}
                   alt={aboutServices.title}
                   fill
-                  className="hover:scale-105 transition-transform duration-500 object-contain pb-6"
+                  className="hover:scale-105 transition-transform duration-500 object-contain md:pb-6"
                 />
               </motion.div>
             )}
