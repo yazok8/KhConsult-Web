@@ -2,7 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import Container from "@/components/Container";
 import ForBusinesses from "./ForBusinesses/page";
 import StudyingInGermany from "./studying-in-germany/page";
