@@ -6,18 +6,20 @@ export const dynamic = "force-dynamic";
 import React from "react";
 import { useServicesSWR } from "../_components/useServiceSWR";
 import ServiceCard from "@/components/ServiceCard";
+import { LoadingCard } from "@/components/LoadingCard";
 
 
 
 
 export default function GermanSpeaker() {
-  const { services, error } = useServicesSWR();
+  const { services, isLoading, error } = useServicesSWR();
  
    if (error) {
      return <p>Failed to load services: {error.message}</p>;
    }
-   if (!services) {
-     return;
+   
+   if (isLoading || !services) {
+     return <LoadingCard />;
    }
 
   // Based on your code, the "firstService" was actually services[1].

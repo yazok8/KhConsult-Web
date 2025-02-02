@@ -6,6 +6,7 @@ import Container from "@/components/Container";
 import { useServicesSWR } from "../_components/useServiceSWR";
 import { Inter } from "next/font/google"; // Add font import
 import ServiceCard from "@/components/ServiceCard";
+import { LoadingCard } from "@/components/LoadingCard";
 
 // Configure the font
 const inter = Inter({
@@ -16,7 +17,7 @@ const inter = Inter({
 });
 
 export default function ForBusinesses() {
-  const { services, error } = useServicesSWR();
+  const { services, isLoading, error } = useServicesSWR();
 
   if (error) {
     return (
@@ -28,8 +29,8 @@ export default function ForBusinesses() {
     );
   }
 
-  if (!services) {
-    return;
+  if (isLoading || !services) {
+    return <LoadingCard />;
   }
 
   const forBusinessService = services[1];
