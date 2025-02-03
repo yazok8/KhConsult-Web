@@ -4,7 +4,6 @@ import Image from "next/image";
 import React from "react";
 import { motion } from "framer-motion";
 import Typography from "@/components/Typography";
-import { Button } from "@/components/ui/button";
 
 export default function Homepage() {
   return (
