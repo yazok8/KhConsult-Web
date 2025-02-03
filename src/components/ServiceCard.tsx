@@ -48,7 +48,7 @@ export default function ServiceCard({
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ delay: 0.4, duration: 0.6 }}
-          className="relative aspect-w-16 aspect-h-9 rounded-2xl overflow-hidden shadow-2xl hover:shadow-3xl transition-shadow duration-300"
+          className="relative aspect-w-16 aspect-h-14 rounded-2xl overflow-hidden shadow-2xl hover:shadow-3xl transition-shadow duration-300"
         >
           <Image
             src={imageSrc}

@@ -77,7 +77,6 @@ function BurgerMenu({ isOpen, setIsOpen }: BurgerMenuProps) {
           >
             <Link href="/#team">Team</Link>
           </li>
-          {/* Mobile Services Menu */}
           <li
             className="py-4 relative"
             onClick={() => setIsOpen(false)}
@@ -85,10 +84,10 @@ function BurgerMenu({ isOpen, setIsOpen }: BurgerMenuProps) {
             <Link href="/#services">Services</Link>
           </li>
           <li
-            className="py-4 hover:underline hover:decoration-[#f68519]"
+            className="py-4"
             onClick={() => setIsOpen(false)}
           >
-            <Link href="/#reviews">Reviews</Link>
+            <Link href="/#faq">Faq</Link>
           </li>
           <li
             className="py-4 hover:underline hover:decoration-[#f68519]"

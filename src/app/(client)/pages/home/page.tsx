@@ -48,23 +48,6 @@ export default function Homepage() {
               dedicated to helping professionals, students, and businesses smoothly 
               transition and thrive in Berlin.
             </Typography>
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <Button 
-                className="button-modern bg-[rgb(var(--primary-color))] text-white hover:bg-[rgb(var(--secondary-color))]"
-                asChild
-              >
-                <a 
-                  href="https://callmi.co/expert/abdallahkhirfan" 
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Book An Appointment
-                </a>
-              </Button>
-            </motion.div>
           </motion.div>
         </div>
       </motion.div>

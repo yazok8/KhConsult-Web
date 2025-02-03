@@ -3,7 +3,6 @@ import ContactPage from "./pages/contact/page";
 import FAQ from "./pages/faq/page";  
 import ServicesPage from "./pages/services/page";  
 import Homepage from "./pages/home/page";  
-import ReviewsPage from "./pages/reviews/page";  
 import TeamPage from "./pages/team/page";
   
 export default function Home() {  
@@ -14,7 +13,7 @@ export default function Home() {
     <TeamPage />  
     <ServicesPage />  
     <FAQ />  
-    <ReviewsPage />  
+    {/* <ReviewsPage />   */}
     <ContactPage />  
    </>  
   );  

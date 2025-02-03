@@ -19,9 +19,11 @@ export default function AboutPage() {
 
   if (error) {
     return (
-      <p className="text-red-500 text-center py-8">
-        Failed to load About page data: {error.message}
-      </p>
+      <Container>
+        <p className="text-red-500 text-center py-8">
+          Failed to load About page data: {error.message}
+        </p>
+      </Container>
     );
   }
 
@@ -39,36 +41,57 @@ export default function AboutPage() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
+        className="py-12 md:py-20"
       >
-        <Card className="card-modern border-none">
-          <CardHeader className="space-y-4">
-            <CardTitle className="text-gradient text-4xl md:text-5xl font-bold">
-              {aboutServices.title}
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-8 flex flex-col-reverse">
+        <Card className="card-modern border-none bg-gradient-to-b from-white to-[rgb(var(--neutral-light))]">
+          <CardHeader className="space-y-4 text-center md:text-left">
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.2 }}
-              className="prose prose-lg max-w-none"
-              dangerouslySetInnerHTML={{ __html: aboutServices.description ?? "" }}
-            />
-            {aboutServices.aboutimage && (
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.2, duration: 0.5 }}
+            >
+              <CardTitle className="text-gradient text-4xl md:text-6xl font-bold leading-tight">
+                {aboutServices.title}
+              </CardTitle>
+            </motion.div>
+          </CardHeader>
+          <CardContent className="space-y-12">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+              {aboutServices.aboutimage && (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.3, duration: 0.6 }}
+                  className="relative aspect-[4/3] lg:sticky lg:top-8"
+                >
+                  <div className="absolute inset-0 rounded-2xl overflow-hidden shadow-2xl">
+                    <Image
+                      src={`https://khconsult.s3.us-east-2.amazonaws.com/${aboutServices.aboutimage}`}
+                      alt={aboutServices.title}
+                      fill
+                      className="object-cover hover:scale-105 transition-all duration-700 ease-out"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      priority
+                    />
+                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent rounded-2xl" />
+                </motion.div>
+              )}
+
               <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.4 }}
-                className="relative h-[400px] md:h-[600px] rounded-xl overflow-hidden"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5, duration: 0.5 }}
+                className="prose prose-lg max-w-none lg:prose-xl"
               >
-                <Image
-                  src={`https://khconsult.s3.us-east-2.amazonaws.com/${aboutServices.aboutimage}`}
-                  alt={aboutServices.title}
-                  fill
-                  className="hover:scale-105 transition-transform duration-500 object-contain md:pb-6"
+                <div 
+                  className="space-y-6 text-[rgb(var(--neutral-dark))]"
+                  dangerouslySetInnerHTML={{ 
+                    __html: aboutServices.description ?? "" 
+                  }}
                 />
               </motion.div>
-            )}
+            </div>
           </CardContent>
         </Card>
       </motion.div>
