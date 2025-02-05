@@ -70,9 +70,9 @@ const AdminNav: React.FC<AdminNavProps> = ({ session }) => {
         openNav && // Show navbar when openNav is true
         <div 
         ref={sidebarRef}
-        className="fixed left-0 top-0 h-full md:h-screen bg-black shadow-xl z-50 flex flex-col text-nowrap w-full md:max-w-[18%] ">   
-          <div className="mx-auto md:px-2 px-1">  
-            <div className="p-6 border-b border-gray-800 flex justify-between items-center">  
+        className="fixed left-0 top-0 h-full md:h-screen bg-black shadow-xl z-50 flex flex-col text-nowrap w-full sm:max-w-[55%] md:max-w-[25%]">   
+          <div className="mr-auto md:px-1 px-1">  
+            <div className="p-6 border-b border-gray-800 flex justify-between items-center max-w-[230px]">  
               <Button className="bg-transparent p-0" onClick={() => setOpenNav(false)}>  
                 <span className="text-white text-xl font-semibold mr-4">Admin Dashboard</span>  
               </Button>
