@@ -1,20 +1,31 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import emailjs from "@emailjs/browser";
+import emailjs from '@emailjs/browser';
 import { Button } from "./ui/button";
 import { Service } from "@prisma/client";
 
 type ContactFormProps = {
-  name: string;
-  email: string;
-  service: string;
+  name: string; 
+  email: string; 
+  service: string; 
   serviceInquiry: string;
-  message: string;
+  message: string; 
 };
 
+interface TemplateParams {
+  [key: string]: unknown;
+  to_name: string;
+  from_name: string;
+  from_email: string;
+  subject: string;
+  message: string;
+  service?: string;
+  service_details?: string;
+}
+
 export const ContactForm = () => {
-  const [subject, setSubject] = useState<string | null>(null); // Initially no subject selected
+  const [subject, setSubject] = useState<string | null>(null);
   const [formData, setFormData] = useState<ContactFormProps>({
     name: "",
     email: "",
@@ -22,30 +33,23 @@ export const ContactForm = () => {
     serviceInquiry: "",
     message: "",
   });
-  const [submissionStatus, setSubmissionStatus] = useState<string | null>(null); // To track submission
-  const [error, setError] = useState<string | null>(null); // To track errors
-  const [isLoading, setIsLoading] = useState<boolean>(false); // To track loading state
-
+  const [submissionStatus, setSubmissionStatus] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [services, setServices] = useState<Service[]>([]);
 
-  const [selectedService, setSelectedService] = useState<string>(
-    formData.service
-  );
-
-  // EmailJS credentials from environment variables
   const EMAILJS_USER_ID = process.env.NEXT_PUBLIC_EMAILJS_USER_ID!;
   const EMAILJS_SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!;
   const EMAILJS_TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!;
 
   useEffect(() => {
-    // Fetch categories from the API
     const fetchServices = async () => {
       try {
-        const response = await fetch("/api/services", {
-          cache: "no-store",
+        const response = await fetch('/api/services', {
+          cache: 'no-store'
         });
         if (!response.ok) {
-          throw new Error("Failed to fetch services");
+          throw new Error('Failed to fetch services');
         }
         const data: Service[] = await response.json();
         setServices(data);
@@ -53,18 +57,14 @@ export const ContactForm = () => {
         console.error(err);
       }
     };
-
     fetchServices();
   }, []);
 
-  // Initialize EmailJS
   useEffect(() => {
     emailjs.init(EMAILJS_USER_ID);
   }, [EMAILJS_USER_ID]);
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { id, value } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -75,7 +75,6 @@ export const ContactForm = () => {
   const handleSubjectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedSubject = e.target.value;
     setSubject(selectedSubject);
-
     setFormData({
       name: "",
       email: "",
@@ -97,52 +96,40 @@ export const ContactForm = () => {
       return;
     }
 
-    const templateParams: { [key: string]: any } = {
+    const templateParams: TemplateParams = {
       to_name: "Abdallah Khirfan",
       from_name: formData.name,
       from_email: formData.email,
       subject: subject,
       message: formData.message,
     };
+
     if (subject === "service related") {
-      const selectedServiceObj = services.find(
-        (s) => s.id === formData.service
-      );
-      templateParams.service = selectedServiceObj
-        ? selectedServiceObj.title
-        : formData.service;
+      const selectedServiceObj = services.find((s) => s.id === formData.service);
+      templateParams.service = selectedServiceObj ? selectedServiceObj.title : formData.service;
       templateParams.service_details = formData.serviceInquiry;
       templateParams.message = formData.serviceInquiry;
     } else if (subject === "other") {
       templateParams.service = formData.service;
     }
 
-    emailjs
-      .send(
-        EMAILJS_SERVICE_ID,
-        EMAILJS_TEMPLATE_ID,
-        templateParams,
-        EMAILJS_USER_ID
-      )
-      .then(
-        (response) => {
-          setSubmissionStatus("success");
-          setError(null);
-          setFormData({
-            name: "",
-            email: "",
-            service: "",
-            serviceInquiry: "",
-            message: "",
-          });
-          setIsLoading(false);
-        },
-        (error) => {
-          setSubmissionStatus("error");
-          setError(error.text);
-          setIsLoading(false);
-        }
-      );
+    emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams, EMAILJS_USER_ID)
+      .then(() => {
+        setSubmissionStatus("success");
+        setError(null);
+        setFormData({
+          name: "",
+          email: "",
+          service: "",
+          serviceInquiry: "",
+          message: "",
+        });
+        setIsLoading(false);
+      }, (error) => {
+        setSubmissionStatus("error");
+        setError(error.text);
+        setIsLoading(false);
+      });
   };
 
   const handleResetFormInputs = () => {
@@ -162,15 +149,9 @@ export const ContactForm = () => {
     <>
       {!subject && (
         <div className="max-w-xl text-nowrap p-4 md:p-0 mx-auto mb-10 md:mx-0">
-          <form
-            onSubmit={(e) => e.preventDefault()} // Prevent form submission
-            className="flex flex-col space-y-4"
-          >
+          <form onSubmit={(e) => e.preventDefault()} className="flex flex-col space-y-4">
             <div>
-              <label
-                htmlFor="subjects"
-                className="block text-sm font-medium text-gray-700"
-              >
+              <label htmlFor="subjects" className="block text-sm font-medium text-gray-700">
                 Select Subject
               </label>
               <select
@@ -203,10 +184,7 @@ export const ContactForm = () => {
           <form className="flex flex-col space-y-6" onSubmit={handleSubmit}>
             {/* Common Fields */}
             <div>
-              <label
-                htmlFor="name"
-                className="block text-sm font-medium text-gray-700"
-              >
+              <label htmlFor="name" className="block text-sm font-medium text-gray-700">
                 Name
               </label>
               <input
@@ -221,10 +199,7 @@ export const ContactForm = () => {
             </div>
 
             <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium text-gray-700"
-              >
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
                 Email
               </label>
               <input
@@ -242,44 +217,32 @@ export const ContactForm = () => {
             {subject === "service related" && (
               <>
                 <div>
-                  <label
-                    htmlFor="service"
-                    className="block text-sm font-medium text-gray-700"
-                  >
+                  <label htmlFor="service" className="block text-sm font-medium text-gray-700">
                     Service Name
                   </label>
                   <select
-                    id="serviceId"
+                    id="service"
                     name="service"
                     value={formData.service}
-                    onChange={(e) => {
-                      const value = e.target.value;
-                      setSelectedService(value);
-                      // Optionally update formData as well to keep them in sync:
+                    onChange={(e) =>
                       setFormData((prev) => ({
                         ...prev,
-                        service: value,
-                      }));
-                    }}
+                        service: e.target.value,
+                      }))
+                    }
                     required
                     className="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                   >
-                    <option value="" className="text-sm">
-                      Select A Service
-                    </option>
-                    {services &&
-                      services.map((service) => (
-                        <option key={service.id} value={service.id}>
-                          {service.title}
-                        </option>
-                      ))}
+                    <option value="">Select A Service</option>
+                    {services.map((service) => (
+                      <option key={service.id} value={service.id}>
+                        {service.title}
+                      </option>
+                    ))}
                   </select>
                 </div>
                 <div>
-                  <label
-                    htmlFor="serviceInquiry"
-                    className="block text-sm font-medium text-gray-700"
-                  >
+                  <label htmlFor="serviceInquiry" className="block text-sm font-medium text-gray-700">
                     Service Inquiry
                   </label>
                   <textarea
@@ -296,36 +259,29 @@ export const ContactForm = () => {
             )}
 
             {subject === "general query" && (
-              <>
-                <div>
-                  <label
-                    htmlFor="message"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Your Message
-                  </label>
-                  <textarea
-                    id="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    required
-                    className="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-gray-600 focus:border-gray-600"
-                    rows={4}
-                    placeholder="Enter your query or message here."
-                  ></textarea>
-                </div>
-              </>
+              <div>
+                <label htmlFor="message" className="block text-sm font-medium text-gray-700">
+                  Your Message
+                </label>
+                <textarea
+                  id="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  required
+                  className="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-gray-600 focus:border-gray-600"
+                  rows={4}
+                  placeholder="Enter your query or message here."
+                ></textarea>
+              </div>
             )}
 
             {/* Submit Button */}
             <div>
               <Button
                 type="submit"
-                disabled={isLoading} // Disable Button while loading
+                disabled={isLoading}
                 className={`w-full py-2 px-4 bg-primary text-white font-semibold rounded-md shadow ${
-                  isLoading
-                    ? "opacity-50 cursor-not-allowed"
-                    : "hover:bg-gray-600"
+                  isLoading ? "opacity-50 cursor-not-allowed" : "hover:bg-gray-600"
                 } focus:outline-none focus:ring-2 focus:ring-foreground`}
               >
                 {isLoading ? "Sending..." : "Submit"}
@@ -335,10 +291,7 @@ export const ContactForm = () => {
 
           {/* Optional: Reset or Change Subject */}
           <div className="mt-4 text-center">
-            <button
-              onClick={handleResetFormInputs}
-              className="text-sm hover:text-gray-600 underline"
-            >
+            <button onClick={handleResetFormInputs} className="text-sm hover:text-gray-600 underline">
               Change Subject
             </button>
           </div>
