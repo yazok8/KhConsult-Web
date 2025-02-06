@@ -2,8 +2,8 @@
 
 import React from "react";
 import { useServicesSWR } from "../_components/useServiceSWR";
-import { LoadingCard } from "@/components/LoadingCard";
 import ServiceCard from "@/components/ServiceCard";
+import { Spinner } from "@/components/ui/spinner";
 
 export default function JobRelocation() {
   const { services, isLoading, error } = useServicesSWR();
@@ -17,7 +17,7 @@ export default function JobRelocation() {
   }
 
   if (isLoading || !services) {
-    return <LoadingCard />;
+    return <Spinner />;
   }
 
   const jobRelocationService = services[2]; // Adjust index based on your data

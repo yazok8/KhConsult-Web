@@ -6,7 +6,7 @@ export const dynamic = "force-dynamic";
 import React from "react";
 import { useServicesSWR } from "../_components/useServiceSWR";
 import ServiceCard from "@/components/ServiceCard";
-import { LoadingCard } from "@/components/LoadingCard";
+import { Spinner } from "@/components/ui/spinner";
 
 
 
@@ -19,7 +19,7 @@ export default function GermanSpeaker() {
    }
    
    if (isLoading || !services) {
-     return <LoadingCard />;
+     return <Spinner />;
    }
 
   // Based on your code, the "firstService" was actually services[1].

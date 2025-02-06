@@ -56,7 +56,7 @@ export default function ServiceCard({
             width={1000}
             height={600}
             className="object-cover"
-            loading="lazy"
+            priority
           />
         </motion.div>
       </div>

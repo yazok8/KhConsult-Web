@@ -6,7 +6,8 @@ import Container from "@/components/Container";
 import { useServicesSWR } from "../_components/useServiceSWR";
 import { Inter } from "next/font/google"; // Add font import
 import ServiceCard from "@/components/ServiceCard";
-import { LoadingCard } from "@/components/LoadingCard";
+import { Spinner } from "@/components/ui/spinner";
+
 
 // Configure the font
 const inter = Inter({
@@ -30,7 +31,7 @@ export default function ForBusinesses() {
   }
 
   if (isLoading || !services) {
-    return <LoadingCard />;
+    return <Spinner />;
   }
 
   const forBusinessService = services[1];
