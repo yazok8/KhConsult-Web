@@ -73,30 +73,28 @@ export default function TeamPage() {
                     viewport={{ once: true }}
                     className="flex flex-col md:flex-row items-center gap-8 bg-white rounded-xl p-8 duration-300"
                   >
-                    <motion.div 
-                      className="md:w-1/3l"
+                                <motion.div 
+                      className="relative w-full md:w-1/3 min-h-[500px] md:min-h-[400px] overflow-hidden rounded-xl"
                       whileHover={{ scale: 1.02 }}
                       transition={{ duration: 0.3 }}
                     >
                       {member.profileImage ? (
-                        <div className="relative overflow-hidden rounded-xl "
-                        >
-                          <Image
-                            src={`https://khconsult.s3.us-east-2.amazonaws.com/${member.profileImage}`}
-                            alt={member.name}
-                            width={400}
-                            height={400}
-                            className="w-full h-auto transform hover:scale-105 transition-transform duration-500"
-                          />
-                        </div>
+                        <Image
+                          src={`https://khconsult.s3.us-east-2.amazonaws.com/${member.profileImage}`}
+                          alt={member.name}
+                          fill
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                          className="object-cover object-center rounded-xl"
+                          loading="lazy"
+                        />
                       ) : (
-                        <div className="w-full aspect-square bg-gradient-to-br from-[rgb(var(--primary-color))] to-[rgb(var(--secondary-color))] rounded-xl flex items-center justify-center">
+                        <div className="w-full h-full bg-gradient-to-br from-[rgb(var(--primary-color))] to-[rgb(var(--secondary-color))] rounded-xl flex items-center justify-center">
                           <span className="text-white text-xl">No Image</span>
                         </div>
                       )}
                     </motion.div>
 
-                    <div className="md:w-2/3 space-y-4">
+                    <div className="md:w-2/3 space-y-4 mb-auto">
                       <h3 className="text-2xl font-bold text-gradient">{member.name}</h3>
                       <h4 className="text-xl font-semibold text-[rgb(var(--primary-color))]">
                         {member.title}

@@ -4,6 +4,10 @@ import { useState, useEffect } from "react";
 import emailjs from '@emailjs/browser';
 import { Button } from "./ui/button";
 import { Service } from "@prisma/client";
+import { Textarea } from '@/components/ui/textarea';
+import {Input} from "@/components/ui/input";
+import {Label} from "@/components/ui/label";
+import { toast } from "react-hot-toast";
 
 type ContactFormProps = {
   name: string; 
@@ -33,7 +37,6 @@ export const ContactForm = () => {
     serviceInquiry: "",
     message: "",
   });
-  const [submissionStatus, setSubmissionStatus] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [services, setServices] = useState<Service[]>([]);
@@ -82,7 +85,6 @@ export const ContactForm = () => {
       serviceInquiry: "",
       message: "",
     });
-    setSubmissionStatus(null);
     setError(null);
   };
 
@@ -115,7 +117,7 @@ export const ContactForm = () => {
 
     emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams, EMAILJS_USER_ID)
       .then(() => {
-        setSubmissionStatus("success");
+        toast.success("Message sent successfully");
         setError(null);
         setFormData({
           name: "",
@@ -126,7 +128,6 @@ export const ContactForm = () => {
         });
         setIsLoading(false);
       }, (error) => {
-        setSubmissionStatus("error");
         setError(error.text);
         setIsLoading(false);
       });
@@ -141,7 +142,6 @@ export const ContactForm = () => {
       serviceInquiry: "",
       message: "",
     });
-    setSubmissionStatus(null);
     setError(null);
   };
 
@@ -151,9 +151,9 @@ export const ContactForm = () => {
         <div className="max-w-xl text-nowrap p-4 md:p-0 mx-auto mb-10 md:mx-0">
           <form onSubmit={(e) => e.preventDefault()} className="flex flex-col space-y-4">
             <div>
-              <label htmlFor="subjects" className="block text-sm font-medium text-gray-700">
+              <Label htmlFor="subjects" className="block text-sm font-medium text-gray-700">
                 Select Subject
-              </label>
+              </Label>
               <select
                 id="subjects"
                 value={subject || ""}
@@ -171,11 +171,11 @@ export const ContactForm = () => {
       )}
       {subject && (
         <div className="w-full md:w-1/2 p-4 md:p-0">
-          {submissionStatus === "success" && (
+          {/* {submissionStatus === "success" && (
             <div className="mb-4 p-4 bg-green-100 text-green-700 rounded">
               Your message has been successfully sent!
             </div>
-          )}
+          )} */}
           {error && (
             <div className="mb-4 p-4 bg-red-100 text-red-700 rounded">
               {error}
@@ -184,10 +184,10 @@ export const ContactForm = () => {
           <form className="flex flex-col space-y-6" onSubmit={handleSubmit}>
             {/* Common Fields */}
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+              <Label htmlFor="name" className="block text-sm font-medium text-gray-700">
                 Name
-              </label>
-              <input
+              </Label>
+              <Input
                 type="text"
                 id="name"
                 value={formData.name}
@@ -199,10 +199,10 @@ export const ContactForm = () => {
             </div>
 
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+              <Label htmlFor="email" className="block text-sm font-medium text-gray-700">
                 Email
-              </label>
-              <input
+              </Label>
+              <Input
                 type="email"
                 id="email"
                 value={formData.email}
@@ -217,9 +217,9 @@ export const ContactForm = () => {
             {subject === "service related" && (
               <>
                 <div>
-                  <label htmlFor="service" className="block text-sm font-medium text-gray-700">
+                  <Label htmlFor="service" className="block text-sm font-medium text-gray-700">
                     Service Name
-                  </label>
+                  </Label>
                   <select
                     id="service"
                     name="service"
@@ -242,10 +242,10 @@ export const ContactForm = () => {
                   </select>
                 </div>
                 <div>
-                  <label htmlFor="serviceInquiry" className="block text-sm font-medium text-gray-700">
+                  <Label htmlFor="serviceInquiry" className="block text-sm font-medium text-gray-700">
                     Service Inquiry
-                  </label>
-                  <textarea
+                  </Label>
+                  <Textarea
                     id="serviceInquiry"
                     value={formData.serviceInquiry}
                     onChange={handleChange}
@@ -253,17 +253,17 @@ export const ContactForm = () => {
                     className="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-gray-600"
                     rows={4}
                     placeholder="Provide detailed information about the service."
-                  ></textarea>
+                  ></Textarea>
                 </div>
               </>
             )}
 
             {subject === "general query" && (
               <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-700">
+                <Label htmlFor="message" className="block text-sm font-medium text-gray-700">
                   Your Message
-                </label>
-                <textarea
+                </Label>
+                <Textarea
                   id="message"
                   value={formData.message}
                   onChange={handleChange}
@@ -271,7 +271,7 @@ export const ContactForm = () => {
                   className="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-gray-600 focus:border-gray-600"
                   rows={4}
                   placeholder="Enter your query or message here."
-                ></textarea>
+                ></Textarea>
               </div>
             )}
 
