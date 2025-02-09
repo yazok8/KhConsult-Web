@@ -7,6 +7,7 @@ import { useServicesSWR } from "../_components/useServiceSWR";
 import { Inter } from "next/font/google"; // Add font import
 import ServiceCard from "@/components/ServiceCard";
 import { Spinner } from "@/components/ui/spinner";
+import { getImageSrc } from '@/lib/imageHelper';
 
 
 // Configure the font
@@ -40,7 +41,7 @@ export default function ForBusinesses() {
     <ServiceCard
     title={forBusinessService.title}
     description={forBusinessService.description}
-    imageSrc={`https://khconsult.s3.us-east-2.amazonaws.com/${forBusinessService.imageSrc}`}
+    imageSrc={getImageSrc(forBusinessService.imageSrc)}
     imageAlt={forBusinessService.title}
     isReversed={false}
   />  

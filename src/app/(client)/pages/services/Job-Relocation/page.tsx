@@ -4,6 +4,7 @@ import React from "react";
 import { useServicesSWR } from "../_components/useServiceSWR";
 import ServiceCard from "@/components/ServiceCard";
 import { Spinner } from "@/components/ui/spinner";
+import { getImageSrc } from '@/lib/imageHelper';
 
 export default function JobRelocation() {
   const { services, isLoading, error } = useServicesSWR();
@@ -26,7 +27,7 @@ export default function JobRelocation() {
     <ServiceCard
       title={jobRelocationService.title}
       description={jobRelocationService.description}
-      imageSrc={`https://khconsult.s3.us-east-2.amazonaws.com/${jobRelocationService.imageSrc}`}
+      imageSrc={getImageSrc(jobRelocationService.imageSrc)}
       imageAlt={jobRelocationService.title}
       isReversed={false}
     />    

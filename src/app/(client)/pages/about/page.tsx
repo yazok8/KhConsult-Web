@@ -5,17 +5,26 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import useSWR from "swr";
 import Image from 'next/image';
 import React from 'react';
-import { AboutOurServices } from '@prisma/client';
+import { AboutOurServices } from '@/types/aboutServices'; // Updated import from the shared type file
 import { motion } from 'framer-motion';
+import { getImageSrc } from '@/lib/imageHelper';
+import { Spinner } from "@/components/ui/spinner";
 
 export default function AboutPage() {
-  const fetcher = (url: string) => fetch(url, { cache: "no-store" }).then(r => r.json());
+  // A simple fetcher that disables cache
+  const fetcher = (url: string) =>
+    fetch(url, { cache: "no-store" }).then((res) => res.json());
 
-  const { data: aboutServices, error } = useSWR<AboutOurServices>("/api/aboutServices", fetcher, {
-    revalidateOnFocus: true,
-    revalidateOnReconnect: true,
-    refreshInterval: 30_000,
-  });
+  // Use SWR with our shared type
+  const { data: aboutServices, error } = useSWR<AboutOurServices>(
+    "/api/aboutServices",
+    fetcher,
+    {
+      revalidateOnFocus: true,
+      revalidateOnReconnect: true,
+      refreshInterval: 30_000,
+    }
+  );
 
   if (error) {
     return (
@@ -29,9 +38,7 @@ export default function AboutPage() {
 
   if (!aboutServices) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="w-8 h-8 bg-primary rounded-full animate-pulse" />
-      </div>
+      <Spinner />
     );
   }
 
@@ -50,7 +57,7 @@ export default function AboutPage() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2, duration: 0.5 }}
             >
-              <CardTitle className="text-gradient text-4xl md:text-6xl font-bold leading-tight">
+              <CardTitle className="text-4xl md:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">
                 {aboutServices.title}
               </CardTitle>
             </motion.div>
@@ -66,7 +73,7 @@ export default function AboutPage() {
                 >
                   <div className="absolute inset-0 rounded-2xl overflow-hidden shadow-2xl">
                     <Image
-                      src={`https://khconsult.s3.us-east-2.amazonaws.com/${aboutServices.aboutimage}`}
+                      src={getImageSrc(aboutServices.aboutimage)}
                       alt={aboutServices.title}
                       fill
                       className="object-cover hover:scale-105 transition-all duration-700 ease-out"
@@ -84,10 +91,10 @@ export default function AboutPage() {
                 transition={{ delay: 0.5, duration: 0.5 }}
                 className="prose prose-lg max-w-none lg:prose-xl"
               >
-                <div 
+                <div
                   className="space-y-6 text-[rgb(var(--neutral-dark))]"
-                  dangerouslySetInnerHTML={{ 
-                    __html: aboutServices.description ?? "" 
+                  dangerouslySetInnerHTML={{
+                    __html: aboutServices.description ?? "",
                   }}
                 />
               </motion.div>

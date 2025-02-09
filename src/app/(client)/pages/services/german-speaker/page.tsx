@@ -7,7 +7,7 @@ import React from "react";
 import { useServicesSWR } from "../_components/useServiceSWR";
 import ServiceCard from "@/components/ServiceCard";
 import { Spinner } from "@/components/ui/spinner";
-
+import { getImageSrc } from '@/lib/imageHelper';
 
 
 
@@ -29,7 +29,7 @@ export default function GermanSpeaker() {
     <ServiceCard
     title={germanSpeakerService.title}
     description={germanSpeakerService.description}
-    imageSrc={`https://khconsult.s3.us-east-2.amazonaws.com/${germanSpeakerService.imageSrc}`}
+    imageSrc={getImageSrc(germanSpeakerService.imageSrc)}
     imageAlt={germanSpeakerService.title}
     isReversed={false}
   />  

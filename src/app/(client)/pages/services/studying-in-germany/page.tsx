@@ -5,6 +5,7 @@ import React from "react";
 import { useServicesSWR } from "../_components/useServiceSWR"; 
 import ServiceCard from "@/components/ServiceCard";
 import { Spinner } from "@/components/ui/spinner";
+import { getImageSrc } from '@/lib/imageHelper';
 
 export default function StudyingInGermany() {
   const { services, isLoading, error } = useServicesSWR();
@@ -26,7 +27,7 @@ export default function StudyingInGermany() {
     <ServiceCard
       title={studyingInGermanyService.title}
       description={studyingInGermanyService.description}
-      imageSrc={`https://khconsult.s3.us-east-2.amazonaws.com/${studyingInGermanyService.imageSrc}`}
+      imageSrc={getImageSrc(studyingInGermanyService.imageSrc)}
       imageAlt={studyingInGermanyService.title}
       isReversed={false}
     />  

@@ -1,7 +1,7 @@
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { faq } from "@prisma/client";
+import { faq } from '@/types/faq';
 import sanitizeHtml from "sanitize-html";
 import useSWR from "swr";
 import { motion } from "framer-motion";
@@ -33,7 +33,7 @@ export default function FaqQuestion() {
     <Container className="mt-20 section-modern" id="faq">
       <Card className="card-modern">
         <CardHeader className="space-y-4">
-          <CardTitle className="text-gradient text-4xl md:text-6xl font-bold">
+          <CardTitle className="text-4xl md:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">
             Frequently Asked Questions
           </CardTitle>
         </CardHeader>
@@ -57,11 +57,12 @@ export default function FaqQuestion() {
                     {q.question}
                   </h2>
                   <div
-                    className="p-6 prose prose-lg max-w-none"
+                    className="p-6 prose prose-lg max-w-none line-clamp-6 mb-5"
                     dangerouslySetInnerHTML={{
                       __html: sanitizeHtml(q.answer),
                     }}
                   />
+                  <a className="float-right p-5">See more</a>
                 </motion.article>
               ))
             ) : (
