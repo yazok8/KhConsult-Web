@@ -1,15 +1,24 @@
 "use client";
 
+import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { faq } from '@/types/faq';
+import { faq } from "@/types/faq";
 import sanitizeHtml from "sanitize-html";
 import useSWR from "swr";
 import { motion } from "framer-motion";
 import Container from "@/components/Container";
-
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 
 export default function FaqQuestion() {
-  const fetcher = (url: string) => fetch(url, { cache: "no-store" }).then(r => r.json());
+  const fetcher = (url: string) =>
+    fetch(url, { cache: "no-store" }).then((r) => r.json());
 
   const { data: faq, error } = useSWR<faq[]>("/api/faq", fetcher, {
     revalidateOnFocus: true,
@@ -17,8 +26,16 @@ export default function FaqQuestion() {
     refreshInterval: 30_000,
   });
 
+  // State to manage which FAQ is selected and if the dialog is open.
+  const [selectedFaq, setSelectedFaq] = useState<faq | null>(null);
+  const [dialogOpen, setDialogOpen] = useState(false);
+
   if (error) {
-    return <p className="text-red-500">Failed to load FAQ data: {error.message}</p>;
+    return (
+      <p className="text-red-500">
+        Failed to load FAQ data: {error.message}
+      </p>
+    );
   }
 
   if (!faq) {
@@ -38,7 +55,7 @@ export default function FaqQuestion() {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <motion.ul 
+          <motion.ul
             className="grid-modern"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -62,7 +79,15 @@ export default function FaqQuestion() {
                       __html: sanitizeHtml(q.answer),
                     }}
                   />
-                  <a className="float-right p-5">See more</a>
+                  <button
+                    className="float-right p-5 text-primary underline"
+                    onClick={() => {
+                      setSelectedFaq(q);
+                      setDialogOpen(true);
+                    }}
+                  >
+                    See more
+                  </button>
                 </motion.article>
               ))
             ) : (
@@ -71,6 +96,30 @@ export default function FaqQuestion() {
           </motion.ul>
         </CardContent>
       </Card>
+
+      {/* Shadcn Dialog Popup */}
+      <Dialog
+        open={dialogOpen}
+        onOpenChange={(open) => {
+          setDialogOpen(open);
+          if (!open) setSelectedFaq(null);
+        }}
+      >
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle>{selectedFaq?.question}</DialogTitle>
+          </DialogHeader>
+          <div
+            className="prose prose-lg"
+            dangerouslySetInnerHTML={{
+              __html: sanitizeHtml(selectedFaq?.answer ?? ""),
+            }}
+          />
+          <DialogFooter>
+            <Button onClick={() => setDialogOpen(false)}>Close</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </Container>
   );
 }

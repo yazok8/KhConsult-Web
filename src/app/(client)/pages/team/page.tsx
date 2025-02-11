@@ -54,7 +54,7 @@ export default function TeamPage() {
         transition={{ duration: 0.5 }}
         className="py-12 md:py-20"
       >
-        <Card className="border-none bg-gradient-to-b from-background to-muted/50">
+        <Card className="border-none bg-gradient-to-b from-background to-muted/50shadow-none">
           <CardHeader className="text-center mb-12">
             <motion.div
               initial={{ opacity: 0, y: -20 }}
@@ -66,7 +66,7 @@ export default function TeamPage() {
               </CardTitle>
             </motion.div>
           </CardHeader>
-          <CardContent>
+          <CardContent className="p-0 border-none">
             <Suspense fallback={<TeamSkeleton />}>
               {isLoading ? (
                 <TeamSkeleton />
