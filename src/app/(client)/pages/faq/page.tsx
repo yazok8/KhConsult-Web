@@ -107,7 +107,7 @@ export default function FaqQuestion() {
       >
         <DialogContent className="max-w-2xl">
           <DialogHeader>
-            <DialogTitle>{selectedFaq?.question}</DialogTitle>
+            <DialogTitle className="leading-6 text-xl">{selectedFaq?.question}</DialogTitle>
           </DialogHeader>
           <div
             className="prose prose-lg"
