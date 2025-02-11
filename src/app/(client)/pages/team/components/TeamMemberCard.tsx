@@ -3,7 +3,6 @@
 import { AboutOurTeam } from "@/types/team";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { getImageSrc } from '@/lib/imageHelper';
 
 interface TeamMemberCardProps {
