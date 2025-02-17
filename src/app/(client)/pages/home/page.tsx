@@ -4,18 +4,19 @@ import Image from "next/image";
 import React from "react";
 import { motion } from "framer-motion";
 import Typography from "@/components/Typography";
+import Container from "@/components/Container";
 
 export default function Homepage() {
   return (
-    <section className="relative min-h-screen flex flex-col justify-center items-center bg-gradient-to-b from-white to-[rgb(var(--neutral-light))]">
+    <Container id="home" className="bg-white rounded-s-full">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
         className="container-modern"
       >
-        <div className="flex flex-wrap flex-col lg:flex-row justify-center items-center gap-8 lg:gap-16">
-          <motion.div 
+        <div className="flex flex-wrap flex-col lg:flex-row justify-center items-center gap-8 lg:gap-16 text-black">
+          <motion.div
             className="relative w-44 h-44 md:w-56 md:h-56 lg:w-72 lg:h-72"
             whileHover={{ scale: 1.05 }}
             transition={{ duration: 0.3 }}
@@ -30,26 +31,32 @@ export default function Homepage() {
             />
           </motion.div>
 
-          <motion.div 
+          <motion.div
             className="text-center lg:text-left flex-1 max-w-2xl"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3 }}
           >
-            <Typography variant="h1" className="text-gradient mb-6 text-black">
+            <Typography variant="h1" className="text-gradient mb-6">
               Relocation Services
             </Typography>
-            <Typography variant="p" className="text-xl mb-6 text-[rgb(var(--neutral-dark))] font-bold">
+            <Typography
+              variant="p"
+              className="text-xl mb-6 text-[rgb(var(--neutral-dark))] font-bold"
+            >
               If we did it! So can you!
             </Typography>
-            <Typography variant="p" className="mb-8 text-[rgb(var(--neutral-dark))] opacity-90">
-              KH Consultation is your partner for comprehensive relocation solutions, 
-              dedicated to helping professionals, students, and businesses smoothly 
-              transition and thrive in Berlin.
+            <Typography
+              variant="p"
+              className="mb-8 text-[rgb(var(--neutral-dark))] opacity-90"
+            >
+              KH Consultation is your partner for comprehensive relocation
+              solutions, dedicated to helping professionals, students, and
+              businesses smoothly transition and thrive in Berlin.
             </Typography>
           </motion.div>
         </div>
       </motion.div>
-    </section>
+    </Container>
   );
 }

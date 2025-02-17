@@ -148,10 +148,10 @@ export const ContactForm = () => {
   return (
     <>
       {!subject && (
-        <div className="max-w-xl text-nowrap p-4 md:p-0 mx-auto mb-10 md:mx-0">
+        <div className="max-w-xl text-nowrap p-4 md:p-0 mx-auto mb-10 md:mx-0 text-black">
           <form onSubmit={(e) => e.preventDefault()} className="flex flex-col space-y-4">
             <div>
-              <Label htmlFor="subjects" className="block text-sm font-medium text-gray-700">
+              <Label htmlFor="subjects" className="block text-sm font-medium text-gray-200">
                 Select Subject
               </Label>
               <select

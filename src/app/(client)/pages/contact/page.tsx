@@ -5,7 +5,7 @@ import React from 'react'
 
 export default function ContactPage() {
   return (
-    <section id="contact" className='text-start text-black min-h-screen pt-20 overflow-x-hidden px-5'>
+    <section id="contact" className='text-start text-white min-h-screen pt-20 overflow-x-hidden px-5'>
       <div className='flex flex-col justify-center mx-auto max-w-6xl'>
         <h1 className=' md:text-5xl text-center lg:text-left max-w-3xl mb-12'>
           Get a quote or set up a consultation.
