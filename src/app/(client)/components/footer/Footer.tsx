@@ -7,9 +7,9 @@ import SocialMedia from "@/components/SocialMedia";
 const Footer = () => {
   return (
     <footer className="bg-black text-slate-200 text-sm mt-16">
-      <div className="max-w-[1920px] mx-auto xl:px-20 md:px-2 px-4
+      <div className="max-w-[1920px] mx-auto xl:px-20 md:px-2
     ">
-        <div className="flex flex-col sm:flex-row justify-between pt-16 pb-8">
+        <div className="flex flex-col sm:flex-row justify-between gap-2 pt-16 pb-8">
           <FooterList>
           <div className=" pb-5">
           <Link href="/#">
@@ -38,7 +38,7 @@ const Footer = () => {
           </FooterList>
 
           <FooterList>
-            <h3 className="text-base font-bold mb-2 px-4">Follow Us</h3>
+            <h3 className="text-base font-bold mb-2">Follow Us</h3>
           <SocialMedia />
           </FooterList>
 

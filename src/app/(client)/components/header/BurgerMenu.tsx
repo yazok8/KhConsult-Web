@@ -42,7 +42,7 @@ function BurgerMenu({ isOpen, setIsOpen }: BurgerMenuProps) {
   return (
     <div
       ref={mobileMenuRef}
-      className="fixed top-0 left-0 w-[75%] md:hidden h-screen bg-[#ecf0f3] p-10 ease-in-out duration-500 z-50"
+      className="fixed top-0 left-0 w-[75%] md:hidden h-screen bg-[#ecf0f3] p-10 ease-in-out duration-500 z-5 text-black"
     >
       <div className="flex w-full items-center justify-end">
         <div
@@ -53,8 +53,8 @@ function BurgerMenu({ isOpen, setIsOpen }: BurgerMenuProps) {
             <Image
               src={khlogo}
               alt="kh consultation logo"
-              width={60}
-              height={50}
+              width={100}
+              height={100}
               className="cursor-pointer"
             />
           </Link>
