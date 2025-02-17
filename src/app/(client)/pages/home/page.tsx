@@ -15,9 +15,9 @@ export default function Homepage() {
         transition={{ duration: 0.8 }}
         className="container-modern"
       >
-        <div className="flex flex-wrap flex-col lg:flex-row justify-center items-center gap-8 lg:gap-16 text-black">
+        <div className="flex flex-wrap flex-col lg:flex-row justify-center items-center gap-2 lg:gap-8 text-black">
           <motion.div
-            className="relative w-44 h-44 md:w-56 md:h-56 lg:w-72 lg:h-72"
+            className="relative w-36 h-36 md:w-56 md:h-56 lg:w-72 lg:h-72"
             whileHover={{ scale: 1.05 }}
             transition={{ duration: 0.3 }}
           >
@@ -37,7 +37,10 @@ export default function Homepage() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3 }}
           >
-            <Typography variant="h1" className="text-gradient mb-6">
+            <Typography
+              variant="h1"
+              className="text-[clamp(1.25rem,3vw+1rem,4rem)] md:text-fluid-5xl text-gradient mb-6"
+            >
               Relocation Services
             </Typography>
             <Typography

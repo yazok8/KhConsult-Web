@@ -10,11 +10,11 @@ export default function AppointmentBtn() {
     setIsTextVisible(false);
   };
   return (
-    <div className="fixed bottom-4 right-4 sm:bottom-10 sm:right-10 z-50">
+    <div className="fixed bottom-4 right-2 md:bottom-10 md:right-10 z-50">
     <Link href="https://callmi.co/expert/abdallahkhirfan" target="_blank" passHref>
     <button
           onClick={handleClick}
-          className="flex flex-col items-center bg-primary-color text-black dark:text-white rounded-full p-4"
+          className="flex flex-col items-center bg-primary-color text-black dark:text-white rounded-full md:p-4"
           aria-label="Book an appointment"
         >
        {/* Conditionally render the text */}

@@ -38,7 +38,7 @@ const Footer = () => {
           </FooterList>
 
           <FooterList>
-            <h3 className="text-base font-bold mb-2">Follow Us</h3>
+            <h3 className="text-base font-bold mb-2 px-4">Follow Us</h3>
           <SocialMedia />
           </FooterList>
 
