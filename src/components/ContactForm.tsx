@@ -151,7 +151,7 @@ export const ContactForm = () => {
         <div className="max-w-xl text-nowrap p-4 md:p-0 mx-auto mb-10 md:mx-0 text-black">
           <form onSubmit={(e) => e.preventDefault()} className="flex flex-col space-y-4">
             <div>
-              <Label htmlFor="subjects" className="block text-sm font-medium text-gray-200">
+              <Label htmlFor="subjects" className="block text-sm font-medium text-gray-600">
                 Select Subject
               </Label>
               <select
@@ -184,7 +184,7 @@ export const ContactForm = () => {
           <form className="flex flex-col space-y-6" onSubmit={handleSubmit}>
             {/* Common Fields */}
             <div>
-              <Label htmlFor="name" className="block text-sm font-medium text-gray-700">
+              <Label htmlFor="name" className="block text-sm font-medium">
                 Name
               </Label>
               <Input
@@ -199,7 +199,7 @@ export const ContactForm = () => {
             </div>
 
             <div>
-              <Label htmlFor="email" className="block text-sm font-medium text-gray-700">
+              <Label htmlFor="email" className="block text-sm font-medium">
                 Email
               </Label>
               <Input
@@ -217,7 +217,7 @@ export const ContactForm = () => {
             {subject === "service related" && (
               <>
                 <div>
-                  <Label htmlFor="service" className="block text-sm font-medium text-gray-700">
+                  <Label htmlFor="service" className="block text-sm font-medium">
                     Service Name
                   </Label>
                   <select
@@ -231,7 +231,7 @@ export const ContactForm = () => {
                       }))
                     }
                     required
-                    className="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                    className="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-gray-600"
                   >
                     <option value="">Select A Service</option>
                     {services.map((service) => (
@@ -242,7 +242,7 @@ export const ContactForm = () => {
                   </select>
                 </div>
                 <div>
-                  <Label htmlFor="serviceInquiry" className="block text-sm font-medium text-gray-700">
+                  <Label htmlFor="serviceInquiry" className="block text-sm font-medium">
                     Service Inquiry
                   </Label>
                   <Textarea
@@ -250,7 +250,7 @@ export const ContactForm = () => {
                     value={formData.serviceInquiry}
                     onChange={handleChange}
                     required
-                    className="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-gray-600"
+                    className="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-gray-600="
                     rows={4}
                     placeholder="Provide detailed information about the service."
                   ></Textarea>
@@ -260,7 +260,7 @@ export const ContactForm = () => {
 
             {subject === "general query" && (
               <div>
-                <Label htmlFor="message" className="block text-sm font-medium text-gray-700">
+                <Label htmlFor="message" className="block text-sm font-medium">
                   Your Message
                 </Label>
                 <Textarea

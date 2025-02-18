@@ -8,7 +8,7 @@ import Container from "@/components/Container";
 
 export default function Homepage() {
   return (
-    <Container id="home" className="bg-white rounded-s-full">
+    <Container id="home" className="relative bg-white min-h-screen flex flex-col justify-center items-center rounded-xl">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}

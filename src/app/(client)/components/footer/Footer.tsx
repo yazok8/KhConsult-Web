@@ -43,8 +43,8 @@ const Footer = () => {
           </FooterList>
 
         </div>
-        <div className="w-full flex items-end justify-center mx-auto sm:w-1/3 md:mb-0">
-            <p>© GSK LTD., 2024. All rights reserved</p>
+        <div className="w-full flex items-end justify-center mx-auto whitespace-nowrap- sm:w-1/3">
+            <p className="mb-2">© Kh Consult, 2024. All rights reserved</p>
           </div>
       </div>
     </footer>

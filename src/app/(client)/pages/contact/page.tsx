@@ -7,7 +7,7 @@ export default function ContactPage() {
   return (
     <section id="contact" className='text-start text-white min-h-screen pt-20 overflow-x-hidden px-5'>
       <div className='flex flex-col justify-center mx-auto max-w-6xl'>
-        <h1 className=' md:text-5xl text-center lg:text-left max-w-3xl mb-12'>
+        <h1 className='md:text-5xl text-center lg:text-left max-w-3xl mb-12'>
           Get a quote or set up a consultation.
         </h1>
         <div className='w-full flex flex-col lg:flex-row justify-between mt-12'>
@@ -17,7 +17,7 @@ export default function ContactPage() {
           <div className='max-w-5xl text-lg md:text-2xl'>
             <div className='pb-8'>
               <h3 className='pb-4 font-bold text-base'>Email</h3>
-              <p className='text-pink-400'>info@khconsult.com</p>
+              <p>info@khconsult.com</p>
             </div>
                       {/* Social Media Icons */}
           <div className='mt-12 lg:mt-0'>
