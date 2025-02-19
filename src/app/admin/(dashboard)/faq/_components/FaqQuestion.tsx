@@ -49,7 +49,7 @@ export default function FaqQuestion() {
               </div>
             </Link>
           </div>
-          <ul className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <ul className="w-full flex flex-col md:grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 overflow-x-hidden">
             {!faqs || faqs.length === 0 ? (
               <p>No FAQs available.</p>
             ) : (
