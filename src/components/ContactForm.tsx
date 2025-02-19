@@ -151,7 +151,7 @@ export const ContactForm = () => {
         <div className="max-w-xl text-nowrap p-4 md:p-0 mx-auto mb-10 md:mx-0 text-black">
           <form onSubmit={(e) => e.preventDefault()} className="flex flex-col space-y-4">
             <div>
-              <Label htmlFor="subjects" className="block text-sm font-medium text-gray-600">
+              <Label htmlFor="subjects" className="block text-lg font-medium text-white">
                 Select Subject
               </Label>
               <select
@@ -184,7 +184,7 @@ export const ContactForm = () => {
           <form className="flex flex-col space-y-6" onSubmit={handleSubmit}>
             {/* Common Fields */}
             <div>
-              <Label htmlFor="name" className="block text-sm font-medium">
+              <Label htmlFor="name" className="block text-lg font-medium">
                 Name
               </Label>
               <Input
@@ -199,7 +199,7 @@ export const ContactForm = () => {
             </div>
 
             <div>
-              <Label htmlFor="email" className="block text-sm font-medium">
+              <Label htmlFor="email" className="block text-lg font-medium">
                 Email
               </Label>
               <Input
@@ -280,7 +280,7 @@ export const ContactForm = () => {
               <Button
                 type="submit"
                 disabled={isLoading}
-                className={`w-full py-2 px-4 bg-primary text-white font-semibold rounded-md shadow ${
+                className={`w-full py-2 px-4 bg-primary text-white font-semibold rounded-md shadow text-lg ${
                   isLoading ? "opacity-50 cursor-not-allowed" : "hover:bg-gray-600"
                 } focus:outline-none focus:ring-2 focus:ring-foreground`}
               >
