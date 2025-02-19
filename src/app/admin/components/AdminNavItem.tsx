@@ -24,7 +24,7 @@ const AdminNavItem: React.FC<AdminNavItemProps> = ({
     <Link href={href}>  
       <div  
         onClick={onClick} // Attach the onClick handler here
-        className={`flex items-center justify-center text-center gap-1 p-2 border-b-2 hover:text-slate-800 transition cursor-pointer text-white ${  
+        className={`flex items-center text-center gap-1 p-2 border-b-2 hover:text-slate-800 transition cursor-pointer text-white ${  
           selected  
             ? "border-b-slate-800 text-slate-800"  
             : "border-transparent text-slate-500"  
