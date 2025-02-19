@@ -36,7 +36,7 @@ export default function FaqQuestion() {
   }
 
   return (
-    <div className="mt-20 flex flex-col text-black text-start min-h-screen lg:h-[75vh] md:h-[120vh] pt-20 px-5 max-w-6xl mx-auto">
+    <div className="mx-auto flex flex-col max-w-6xl px-5">
       <Card>
         <CardHeader>
           <CardTitle className="text-6xl mb-12 text-start">FAQ</CardTitle>

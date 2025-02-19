@@ -132,7 +132,7 @@ const AdminNav: React.FC<AdminNavProps> = ({ session }) => {
             onClick={() => setOpenNav(false)}
             aria-label="Close navigation"
           >
-            <MdClose size={24} className="text-white" />
+            <MdClose size={24} className="text-white ml-2" />
           </button>
         </div>
 

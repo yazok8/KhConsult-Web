@@ -58,7 +58,7 @@ export default function AdminAboutOurServices() {
   }
 
   return (
-    <Container id="about-my-services">
+    <div id="about-my-services" className="mx-auto flex flex-col max-w-6xl px-5">
       <Card>
         <div className="flex justify-end p-5">
           <Link href={`/admin/about-services/edit-about-services/${aboutServices.id}`} className="text-blue-500 underline">
@@ -83,6 +83,6 @@ export default function AdminAboutOurServices() {
           )}
         </CardContent>
       </Card>
-    </Container>
+    </div>
   );
 }

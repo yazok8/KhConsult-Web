@@ -22,7 +22,7 @@ export default async function AdminDashboardLayout({ children }: AdminLayoutProp
   return (
     <>
       <AdminHeader session={session} />
-      <main className="p-4 pt-16 lg:pl-[250px] transition-all duration-300">
+      <main className="p-4 pt-16 lg:pl-[250px] transition-all duration-300 min-h-screen">
         {children}
       </main>
     </>

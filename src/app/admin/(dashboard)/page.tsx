@@ -3,7 +3,7 @@ import React from 'react';
   
 export default function AdminPage() {  
   return (  
-   <div className="admin-dashboard mt-[30%]">  
+   <div className="admin-dashboard mt-[30%] min-h-screen">  
     <Card className='border-none px-8'>
       <CardHeader>
         <CardTitle>Admin Dashboard</CardTitle>
