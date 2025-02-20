@@ -34,7 +34,7 @@ const sectionVariants = {
 
 export default function Services() {
   return (
-    <Container id="services">
+    <Container id="services" className="pt-16">
       <Card className="w-full bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-gray-800 shadow-xl rounded-2xl overflow-hidden">
       <CardHeader className='pb-3`'>
           <CardTitle className="text-4xl md:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent text-center">Our Services</CardTitle>
