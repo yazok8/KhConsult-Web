@@ -15,9 +15,9 @@ const containerVariants = {
     opacity: 1,
     transition: {
       staggerChildren: 0.3,
-      delayChildren: 0.2
-    }
-  }
+      delayChildren: 0.2,
+    },
+  },
 };
 
 const sectionVariants = {
@@ -27,17 +27,24 @@ const sectionVariants = {
     y: 0,
     transition: {
       duration: 0.6,
-      ease: "easeOut"
-    }
-  }
+      ease: "easeOut",
+    },
+  },
 };
 
 export default function Services() {
   return (
     <Container id="services" className="pt-16">
       <Card className="w-full bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-gray-800 shadow-xl rounded-2xl overflow-hidden">
-      <CardHeader className='pb-3`'>
-          <CardTitle className="text-4xl md:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent text-center">Our Services</CardTitle>
+        <CardHeader className="pb-3`">
+          <div className="relative text-center">
+            <CardTitle className="text-4xl md:text-6xl font-bold text-primary relative z-10">
+              Our Services
+            </CardTitle>
+            <span className="absolute -left-1 -top-1 text-4xl md:text-6xl font-bold text-accent opacity-30 z-0">
+              Our Services
+            </span>
+          </div>
         </CardHeader>
         <motion.div
           variants={containerVariants}

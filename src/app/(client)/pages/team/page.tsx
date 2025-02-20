@@ -61,9 +61,14 @@ export default function TeamPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
             >
-              <CardTitle className="text-4xl md:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">
-                Meet Our Team
-              </CardTitle>
+          <div className="relative text-center">
+            <CardTitle className="text-4xl md:text-6xl font-bold text-primary relative z-10">
+              Meet Our Team
+            </CardTitle>
+            <span className="absolute -left-1 -top-1 text-4xl md:text-6xl font-bold text-accent opacity-30 z-0">
+              Meet Our Team
+            </span>
+          </div>
             </motion.div>
           </CardHeader>
           <CardContent className="p-0 border-none">

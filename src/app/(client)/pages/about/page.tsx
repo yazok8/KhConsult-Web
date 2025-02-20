@@ -57,9 +57,14 @@ export default function AboutPage() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2, duration: 0.5 }}
             >
-              <CardTitle className="text-4xl md:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">
-                {aboutServices.title}
-              </CardTitle>
+          <div className="relative text-center">
+            <CardTitle className="text-4xl md:text-6xl font-bold text-primary relative z-10">
+              {aboutServices.title}
+            </CardTitle>
+            <span className="absolute -left-1 -top-1 text-4xl md:text-6xl font-bold text-accent opacity-30 z-0">
+              {aboutServices.title}
+            </span>
+          </div>
             </motion.div>
           </CardHeader>
           <CardContent className="space-y-12">

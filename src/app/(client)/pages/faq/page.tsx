@@ -50,9 +50,14 @@ export default function FaqQuestion() {
     <Container className="mt-20 section-modern" id="faq">
       <Card className="card-modern">
         <CardHeader className="space-y-4">
-          <CardTitle className="text-4xl md:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">
-            Frequently Asked Questions
-          </CardTitle>
+          <div className="relative text-center">
+            <CardTitle className="text-4xl md:text-6xl font-bold text-primary relative z-10">
+              Frequently Asked Questions
+            </CardTitle>
+            <span className="absolute -left-1 -top-1 text-4xl md:text-6xl font-bold text-accent opacity-30 z-0">
+              Frequently Asked Questions
+            </span>
+          </div>
         </CardHeader>
         <CardContent>
           <motion.ul
