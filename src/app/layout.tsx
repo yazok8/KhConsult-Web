@@ -5,6 +5,7 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import { Toaster } from "react-hot-toast";
 import Provider from "@/components/Provider";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -15,31 +16,19 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body
-        className={cn("bg-background font-sans antialiased", inter.variable)}
-      >
+      <body className={cn("bg-background font-sans antialiased", inter.variable)}>
         <Provider>
-          <main className="bg-black text-white">{children} </main>
+          {/* Include Google Analytics tracker */}
+          <GoogleAnalytics />
+          <main className="bg-black text-white">{children}</main>
           <Toaster
-            position="top-right" // Position can be adjusted as needed
+            position="top-right"
             toastOptions={{
-              success: {
-                style: {
-                  background: "#4CAF50",
-                  color: "#fff",
-                },
-              },
-              error: {
-                style: {
-                  background: "#f44336",
-                  color: "#fff",
-                },
-              },
+              success: { style: { background: "#4CAF50", color: "#fff" } },
+              error: { style: { background: "#f44336", color: "#fff" } },
             }}
           />
         </Provider>
