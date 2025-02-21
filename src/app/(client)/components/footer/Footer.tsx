@@ -28,6 +28,21 @@ const Footer = () => {
             <Link className="hover:underline" href="#contact">Contact</Link>
           </FooterList>
           <FooterList>
+            <h3 className="text-xl font-bold mb-4 text-white">Quick Links</h3>
+            <ul className="space-y-2 text-white">
+              <li>
+                <Link href="/privacy-policy" className="hover:text-gray-300">
+                  Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link href="/terms-of-service" className="hover:text-gray-300">
+                  Terms Of Service
+                </Link>
+              </li>
+            </ul>
+          </FooterList>
+          <FooterList>
             <h3 className="text-base font-bold mb-2">Services</h3>
             <Link className="hover:underline" href="/#about-my-services">About My Services</Link>
             <Link className="hover:underline" href="/#relocation-services">Relocation Services</Link>
