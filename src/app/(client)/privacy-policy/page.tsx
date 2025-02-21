@@ -5,28 +5,29 @@ import {
   CardTitle,
   CardContent,
 } from "@/components/ui/card";
+import Container from "@/components/Container";
 
 const PrivacyPolicy: React.FC = () => {
   return (
-    <div className="container mx-auto px-4 py-16">
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-3xl font-bold">Privacy Policy</CardTitle>
-          <p className="text-sm text-muted-foreground">
-            Last updated: February 21, 2025
+    <Container className="py-20">
+    <Card className="w-full max-w-5xl mx-auto">
+      <CardHeader>
+        <CardTitle className="text-3xl font-bold">Privacy Policy</CardTitle>
+        <p className="text-sm text-muted-foreground">
+          Last updated: February 21, 2025
+        </p>
+      </CardHeader>
+      <CardContent className="prose max-w-none">
+        <section>
+          <h2>Interpretation and Definitions</h2>
+          <h3>Interpretation</h3>
+          <p>
+            The words of which the initial letter is capitalized have meanings
+            defined under the following conditions. These definitions shall
+            have the same meaning regardless of whether they appear in
+            singular or plural.
           </p>
-        </CardHeader>
-        <CardContent className="prose">
-          <section>
-            <h2>Interpretation and Definitions</h2>
-            <h3>Interpretation</h3>
-            <p>
-              The words of which the initial letter is capitalized have meanings
-              defined under the following conditions. These definitions shall
-              have the same meaning regardless of whether they appear in
-              singular or plural.
-            </p>
-          </section>
+        </section>
 
           <section>
             <h2>Definitions</h2>
@@ -75,7 +76,7 @@ const PrivacyPolicy: React.FC = () => {
             <h4>Usage Data</h4>
             <p>
               Usage Data is collected automatically when using the Service.
-              This may include your device’s IP address, browser type, pages
+              This may include your device&apos;s IP address, browser type, pages
               visited, and other diagnostic data.
             </p>
           </section>
@@ -159,7 +160,7 @@ const PrivacyPolicy: React.FC = () => {
           </section>
         </CardContent>
       </Card>
-    </div>
+    </Container>
   );
 };
 

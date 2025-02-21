@@ -12,8 +12,8 @@ import Container from '@/components/Container';
 
 const TermsOfService: React.FC = () => {
   return (
-    <Container>
-      <h1 className="text-3xl font-bold mb-6 py-16">
+    <Container className='py-20'>
+      <h1 className="text-3xl font-bold mb-6">
         KH Consultation Terms of Service / Allgemeine Nutzungs- und Geschäftsbedingungen
       </h1>
       <div className="overflow-x-auto bg-white">
@@ -163,7 +163,7 @@ const TermsOfService: React.FC = () => {
                 8.3 Jede Kündigung bedarf der Textform (z. B. E-Mail).
               </TableCell>
               <TableCell className="px-4 py-2">
-                8.1 The duration of the contract is determined by the customer's order. Unless otherwise agreed, the contractual relationship is indefinite and may be terminated by either party with one month’s notice. <br /><br />
+                8.1 The duration of the contract is determined by the customer&apos;s order. Unless otherwise agreed, the contractual relationship is indefinite and may be terminated by either party with one month’s notice. <br /><br />
                 8.2 Immediate termination for good cause is reserved for both parties. Good cause exists, in particular, if the customer fails to meet contractual obligations and a set remedy period expires. <br /><br />
                 8.3 All terminations must be made in text form (e.g., via email).
               </TableCell>
@@ -218,7 +218,7 @@ const TermsOfService: React.FC = () => {
                 11.2 Der Kunde darf die von KH Consultation bereitgestellten Dokumente und Arbeitsunterlagen nur für auftragsbezogene Zwecke verwenden und nicht an Dritte, insbesondere Wettbewerber, weitergeben.
               </TableCell>
               <TableCell className="px-4 py-2">
-                11.1 The customer's personal data is treated confidentially by KH Consultation and is processed solely for the purposes agreed upon in the contract – even after termination of the contractual relationship. <br /><br />
+                11.1 The customer&apos;s personal data is treated confidentially by KH Consultation and is processed solely for the purposes agreed upon in the contract – even after termination of the contractual relationship. <br /><br />
                 11.2 The customer may only use the documents and work materials provided by KH Consultation for order-related purposes and must not share them with third parties, particularly competitors.
               </TableCell>
             </TableRow>
