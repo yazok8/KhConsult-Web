@@ -49,15 +49,10 @@ export default function FaqQuestion() {
   return (
     <Container className="mt-20 section-modern" id="faq">
       <Card className="card-modern">
-        <CardHeader className="space-y-4">
-          <div className="relative text-center">
+        <CardHeader className="space-y-4 text-center">
             <CardTitle className="text-4xl md:text-6xl font-bold text-primary relative z-10">
               Frequently Asked Questions
             </CardTitle>
-            <span className="absolute -left-1 -top-1 text-4xl md:text-6xl font-bold text-accent opacity-30 z-0">
-              Frequently Asked Questions
-            </span>
-          </div>
         </CardHeader>
         <CardContent>
           <motion.ul

@@ -36,15 +36,10 @@ export default function Services() {
   return (
     <Container id="services" className="pt-16">
       <Card className="w-full bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-gray-800 shadow-xl rounded-2xl overflow-hidden">
-        <CardHeader className="pb-3`">
-          <div className="relative text-center">
+        <CardHeader className="pb-3 text-center">
             <CardTitle className="text-4xl md:text-6xl font-bold text-primary relative z-10">
               Our Services
             </CardTitle>
-            <span className="absolute -left-1 -top-1 text-4xl md:text-6xl font-bold text-accent opacity-30 z-0">
-              Our Services
-            </span>
-          </div>
         </CardHeader>
         <motion.div
           variants={containerVariants}
