@@ -12,7 +12,28 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 export const metadata: Metadata = {
   title: "Kh Consultation",
   description: "Relocation Services",
+  openGraph: {
+    title: "Kh Consultation",
+    description: "Relocation Services",
+    url: "https://www.khconsultation.com",
+    siteName: "Kh Consultation",
+    images: [
+      {
+        url: "https://www.khconsultation.com/images/khlogo.png",
+        width: 800,
+        height: 600,
+      },
+    ],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Kh Consultation",
+    description: "Relocation Services",
+    images: ["https://www.khconsultation.com/images/khlogo.png"],
+  },
 };
+
 
 export default function RootLayout({
   children,
