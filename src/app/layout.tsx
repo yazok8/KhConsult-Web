@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
@@ -43,7 +43,9 @@ export default function RootLayout({
       <body className={cn("bg-background font-sans antialiased", inter.variable)}>
         <Provider>
           {/* Include Google Analytics tracker */}
+          <Suspense fallback={<div>Loading...</div>}>
           <GoogleAnalytics />
+          </Suspense>
           <main className="bg-black text-white">{children}</main>
           <Toaster
             position="top-right"
