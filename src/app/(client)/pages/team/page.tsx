@@ -33,7 +33,7 @@ export default function TeamPage() {
     return (
       <Container>
         <div className="min-h-[50vh] flex items-center justify-center">
-          <Card className="w-full max-w-lg">
+          <Card className="w-full max-w-lg border border-destructive/20">
             <CardContent className="p-6">
               <div className="text-center space-y-4">
                 <h2 className="text-xl font-semibold text-destructive">Error Loading Team</h2>
@@ -47,44 +47,60 @@ export default function TeamPage() {
   }
 
   return (
-    <Container id="team">
+    <Container id="team" className="relative overflow-hidden">
+      <div className="absolute inset-0 bg-white dark:bg-slate-900" />
+      
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
-        className="py-12 md:py-20"
+        className="relative py-16 md:py-24 space-y-16"
       >
-        <Card className="border-none bg-gradient-to-b from-background to-muted/50shadow-none">
-          <CardHeader className="text-center mb-12">
-            <motion.div
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-            >
-            <CardTitle className="text-4xl md:text-6xl font-bold text-primary relative z-10">
+        {/* Header Section */}
+        <div className="text-center space-y-4">
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 dark:text-white">
               Meet Our Team
-            </CardTitle>
-        
+            </h1>
+            <div className="mt-4 flex justify-center">
+              <div className="h-1 w-20 bg-slate-200 dark:bg-slate-700 rounded-full" />
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Team Content */}
+        <Suspense fallback={<TeamSkeleton />}>
+          {isLoading ? (
+            <TeamSkeleton />
+          ) : (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className={`
+                ${team?.length === 1 
+                  ? 'max-w-4xl mx-auto w-full' 
+                  : team?.length === 2 
+                  ? 'grid grid-cols-1 md:grid-cols-2 max-w-5xl mx-auto gap-8'
+                  : 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 max-w-7xl mx-auto gap-8'
+                }
+              `}
+            >
+              {team?.map((member, index) => (
+                <TeamMemberCard
+                  key={member.id}
+                  member={member}
+                  index={index}
+                  isAlone={team.length === 1}
+                />
+              ))}
             </motion.div>
-          </CardHeader>
-          <CardContent className="p-0 border-none">
-            <Suspense fallback={<TeamSkeleton />}>
-              {isLoading ? (
-                <TeamSkeleton />
-              ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  {team?.map((member, index) => (
-                    <TeamMemberCard
-                      key={member.id}
-                      member={member}
-                      index={index}
-                    />
-                  ))}
-                </div>
-              )}
-            </Suspense>
-          </CardContent>
-        </Card>
+          )}
+        </Suspense>
       </motion.div>
     </Container>
   );

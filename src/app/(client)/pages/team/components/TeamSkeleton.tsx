@@ -5,8 +5,8 @@ import { Card, CardContent } from "@/components/ui/card";
 
 export function TeamSkeleton() {
   return (
-    <div className="flex gap-8">
-      {[...Array(4)].map((_, i) => (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {[...Array(3)].map((_, i) => (
         <Card key={i} className="overflow-hidden">
           <CardContent className="p-8">
             <motion.div
