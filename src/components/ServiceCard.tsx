@@ -33,7 +33,7 @@ export default function ServiceCard({
           viewport={{ once: true }}
           transition={{ delay: 0.3, duration: 0.6 }}
         >
-          <Typography variant="h2" className="text-3xl md:text-4xl font-bold mb-6 bg-clip-text bg-gradient-to-r from-brand-blue to-brand-teal">
+          <Typography variant="h2" className="text-3xl md:text-4xl font-bold mb-6 text-slate-900">
             {title}
           </Typography>
           <div

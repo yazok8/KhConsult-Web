@@ -57,7 +57,7 @@ export default function AboutPage() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2, duration: 0.5 }}
             >
-            <CardTitle className="text-4xl md:text-6xl font-bold text-primary relative z-10 text-center">
+            <CardTitle className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 dark:text-white text-primary relative z-10 text-center">
               {aboutServices.title}
             </CardTitle>
             <div className="mt-4 flex justify-center">
@@ -92,7 +92,7 @@ export default function AboutPage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5, duration: 0.5 }}
-                className="prose prose-lg max-w-none lg:prose-xl"
+                className="prose prose-lg dark:prose-invert pt-0"
               >
                 <div
                   className="space-y-6 text-[rgb(var(--neutral-dark))]"

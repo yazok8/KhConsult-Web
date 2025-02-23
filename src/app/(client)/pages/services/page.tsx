@@ -37,7 +37,7 @@ export default function Services() {
     <Container id="services" className="pt-16">
       <Card className="w-full bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-gray-800 shadow-xl rounded-2xl overflow-hidden">
         <CardHeader className="pb-3 text-center">
-            <CardTitle className="text-4xl md:text-6xl font-bold text-primary relative z-10">
+            <CardTitle className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 dark:text-white relative z-10">
               Our Services
             </CardTitle>
             <div className="mt-4 flex justify-center">

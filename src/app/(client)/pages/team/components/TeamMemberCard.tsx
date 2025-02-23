@@ -55,7 +55,7 @@ export function TeamMemberCard({ member, index, isAlone }: TeamMemberCardProps) 
 
       {/* Content Container */}
       <div className={`
-        relative z-10 p-6 md:p-8 space-y-4
+        relative z-10 px-6 pb-6 md:p-8 space-y-4
         ${isAlone ? 'flex flex-col justify-center' : ''}
       `}>
         <div>
@@ -69,7 +69,7 @@ export function TeamMemberCard({ member, index, isAlone }: TeamMemberCardProps) 
         
         {member.description && (
           <div
-            className="prose prose-slate dark:prose-invert text-slate-600 dark:text-slate-400"
+            className="prose prose-lg dark:prose-invert"
             dangerouslySetInnerHTML={{
               __html: member.description,
             }}

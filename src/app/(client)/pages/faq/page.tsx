@@ -50,7 +50,7 @@ export default function FaqQuestion() {
     <Container className="mt-20 section-modern" id="faq">
       <Card className="card-modern">
         <CardHeader className="space-y-4 text-center">
-            <CardTitle className="text-4xl md:text-6xl font-bold text-primary relative z-10">
+            <CardTitle className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 dark:text-white relative z-10">
               Frequently Asked Questions
             </CardTitle>
             <div className="mt-4 flex justify-center">
