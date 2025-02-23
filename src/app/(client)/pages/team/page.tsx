@@ -3,7 +3,7 @@
 import { Suspense } from "react";
 import useSWR from "swr";
 import Container from "@/components/Container";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, } from "@/components/ui/card";
 import { AboutOurTeam } from '@/types/team';
 import { motion } from "framer-motion";
 import { TeamMemberCard } from "./components/TeamMemberCard";
