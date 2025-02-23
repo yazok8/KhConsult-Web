@@ -53,6 +53,9 @@ export default function FaqQuestion() {
             <CardTitle className="text-4xl md:text-6xl font-bold text-primary relative z-10">
               Frequently Asked Questions
             </CardTitle>
+            <div className="mt-4 flex justify-center">
+              <div className="h-1 w-20 bg-slate-200 dark:bg-slate-700 rounded-full" />
+            </div>
         </CardHeader>
         <CardContent>
           <motion.ul

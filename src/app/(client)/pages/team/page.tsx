@@ -3,7 +3,7 @@
 import { Suspense } from "react";
 import useSWR from "swr";
 import Container from "@/components/Container";
-import { Card, CardContent, } from "@/components/ui/card";
+import { Card, CardContent, CardTitle, } from "@/components/ui/card";
 import { AboutOurTeam } from '@/types/team';
 import { motion } from "framer-motion";
 import { TeamMemberCard } from "./components/TeamMemberCard";
@@ -63,9 +63,9 @@ export default function TeamPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 dark:text-white">
+            <CardTitle className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 dark:text-white">
               Meet Our Team
-            </h1>
+            </CardTitle>
             <div className="mt-4 flex justify-center">
               <div className="h-1 w-20 bg-slate-200 dark:bg-slate-700 rounded-full" />
             </div>

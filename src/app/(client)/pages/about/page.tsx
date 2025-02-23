@@ -60,6 +60,9 @@ export default function AboutPage() {
             <CardTitle className="text-4xl md:text-6xl font-bold text-primary relative z-10 text-center">
               {aboutServices.title}
             </CardTitle>
+            <div className="mt-4 flex justify-center">
+              <div className="h-1 w-20 bg-slate-200 dark:bg-slate-700 rounded-full" />
+            </div>
             </motion.div>
           </CardHeader>
           <CardContent className="space-y-12">
