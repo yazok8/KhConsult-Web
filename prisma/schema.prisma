@@ -93,7 +93,7 @@ model AboutOurServices {
 model AboutOurTeam {
   id           String   @id @default(auto()) @map("_id") @db.ObjectId
   name         String   @unique
-  title        String   @unique
+  title        String?   @unique
   description  String
   profileImage String
   published    Boolean  @default(true)

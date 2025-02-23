@@ -25,7 +25,7 @@ export const fileSchema = z
 // Zod schema for adding a service
 export const addSchema = z.object({
   name:z.string().min(1, { message: "Name is required." }),
-  title: z.string().min(1, { message: "Title is required." }),
+  title: z.string().min(1, { message: "Title is required." }).optional(),
   description: z.string().min(1, { message: "Description is required." }),
   image: fileSchema, // This field is now optional
 });

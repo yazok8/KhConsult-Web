@@ -92,7 +92,7 @@ export async function blobToBuffer(blob: Blob): Promise<Buffer> {
       const existingProfileImgSrc = formData.get("imageSrc") as string | null;
   
       // Validate required fields
-      if (!title || !description || !name) {
+      if (!description || !name) {
         throw new Error("Name, Title, and description are required.");
       }
   
