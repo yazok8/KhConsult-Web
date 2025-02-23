@@ -55,7 +55,7 @@ export function TeamMemberCard({ member, index, isAlone }: TeamMemberCardProps) 
 
       {/* Content Container */}
       <div className={`
-        relative z-10 px-6 pb-6 md:p-8 space-y-4 pt-0
+        relative z-10 px-6 pb-6 md:p-8 space-y-4 md:pt-0
         ${isAlone ? 'flex flex-col justify-center' : ''}
       `}>
         <div>
