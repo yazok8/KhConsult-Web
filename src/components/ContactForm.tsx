@@ -5,9 +5,10 @@ import emailjs from '@emailjs/browser';
 import { Button } from "./ui/button";
 import { Service } from "@prisma/client";
 import { Textarea } from '@/components/ui/textarea';
-import {Input} from "@/components/ui/input";
-import {Label} from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { toast } from "react-hot-toast";
+import { Card, CardContent } from "@/components/ui/card";
 
 type ContactFormProps = {
   name: string; 
@@ -146,157 +147,159 @@ export const ContactForm = () => {
   };
 
   return (
-    <>
-      {!subject && (
-        <div className="max-w-xl text-nowrap p-4 md:p-0 mx-auto mb-10 md:mx-0 text-black">
-          <form onSubmit={(e) => e.preventDefault()} className="flex flex-col space-y-4">
-            <div>
-              <Label htmlFor="subjects" className="block text-lg font-medium text-white">
-                Select Subject
-              </Label>
-              <select
-                id="subjects"
-                value={subject || ""}
-                onChange={handleSubjectChange}
-                className="mt-1 block p-2 px-3 max-w-1/2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-gray-600 focus:border-gray-600"
-                required
-              >
-                <option value="">-- Select a subject --</option>
-                <option value="service related">Service Related</option>
-                <option value="general query">General Query</option>
-              </select>
-            </div>
-          </form>
-        </div>
-      )}
-      {subject && (
-        <div className="w-full lg:w-1/2 p-4 md:p-0">
-          {/* {submissionStatus === "success" && (
-            <div className="mb-4 p-4 bg-green-100 text-green-700 rounded">
-              Your message has been successfully sent!
-            </div>
-          )} */}
-          {error && (
-            <div className="mb-4 p-4 bg-red-100 text-red-700 rounded">
-              {error}
-            </div>
-          )}
-          <form className="flex flex-col space-y-6" onSubmit={handleSubmit}>
-            {/* Common Fields */}
-            <div>
-              <Label htmlFor="name" className="block text-lg font-medium">
-                Name
-              </Label>
-              <Input
-                type="text"
-                id="name"
-                value={formData.name}
-                onChange={handleChange}
-                required
-                className="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-gray-600 focus:border-gray-600"
-                placeholder="Your Full Name"
-              />
-            </div>
-
-            <div>
-              <Label htmlFor="email" className="block text-lg font-medium">
-                Email
-              </Label>
-              <Input
-                type="email"
-                id="email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-                className="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-gray-600 focus:border-gray-600"
-                placeholder="you@example.com"
-              />
-            </div>
-
-            {/* Conditional Fields */}
-            {subject === "service related" && (
-              <>
-                <div>
-                  <Label htmlFor="service" className="block text-sm font-medium">
-                    Service Name
-                  </Label>
-                  <select
-                    id="service"
-                    name="service"
-                    value={formData.service}
-                    onChange={(e) =>
-                      setFormData((prev) => ({
-                        ...prev,
-                        service: e.target.value,
-                      }))
-                    }
-                    required
-                    className="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-gray-600"
-                  >
-                    <option value="">Select A Service</option>
-                    {services.map((service) => (
-                      <option key={service.id} value={service.id}>
-                        {service.title}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div>
-                  <Label htmlFor="serviceInquiry" className="block text-sm font-medium">
-                    Service Inquiry
-                  </Label>
-                  <Textarea
-                    id="serviceInquiry"
-                    value={formData.serviceInquiry}
-                    onChange={handleChange}
-                    required
-                    className="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-gray-600="
-                    rows={4}
-                    placeholder="Provide detailed information about the service."
-                  ></Textarea>
-                </div>
-              </>
-            )}
-
-            {subject === "general query" && (
-              <div>
-                <Label htmlFor="message" className="block text-sm font-medium">
-                  Your Message
+    <div className="w-full lg:w-1/2 space-y-8">
+      {!subject ? (
+        <Card className="bg-gradient-to-b from-white/10 to-white/5 backdrop-blur-sm border border-white/20 rounded-xl overflow-hidden">
+          <CardContent className="pt-6">
+            <form onSubmit={(e) => e.preventDefault()} className="flex flex-col space-y-6">
+              <div className="space-y-2">
+                <Label htmlFor="subjects" className="text-lg font-medium">
+                  What can we help you with?
                 </Label>
-                <Textarea
-                  id="message"
-                  value={formData.message}
-                  onChange={handleChange}
+                <select
+                  id="subjects"
+                  value={subject || ""}
+                  onChange={handleSubjectChange}
+                  className="w-full p-3 text-base rounded-lg bg-white/5 border border-white/20 backdrop-blur-sm transition-all focus:border-primary/50 focus:outline-none focus:ring-1 focus:ring-primary/50"
                   required
-                  className="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-gray-600 focus:border-gray-600"
-                  rows={4}
-                  placeholder="Enter your query or message here."
-                ></Textarea>
+                >
+                  <option value="">-- Select a subject --</option>
+                  <option value="service related">Service Related</option>
+                  <option value="general query">General Query</option>
+                </select>
+              </div>
+            </form>
+          </CardContent>
+        </Card>
+      ) : (
+        <Card className="bg-gradient-to-b from-white/10 to-white/5 backdrop-blur-sm border border-white/20 rounded-xl overflow-hidden">
+          <div className="h-1 w-full bg-gradient-to-r from-primary/50 via-primary to-primary/50"></div>
+          <CardContent className="pt-6">
+            {error && (
+              <div className="mb-6 p-4 bg-red-500/10 border-l-4 border-red-500 text-red-700 rounded">
+                {error}
               </div>
             )}
+            
+            <form className="flex flex-col space-y-6" onSubmit={handleSubmit}>
+              <div className="space-y-2">
+                <Label htmlFor="name" className="text-base font-medium inline-flex items-center">
+                  Name <span className="text-red-500 ml-1">*</span>
+                </Label>
+                <Input
+                  type="text"
+                  id="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  required
+                  className="w-full p-3 rounded-lg bg-white/5 border border-white/20 backdrop-blur-sm transition-all focus:border-primary/50 focus:outline-none focus:ring-1 focus:ring-primary/50"
+                  placeholder="Your Full Name"
+                />
+              </div>
 
-            {/* Submit Button */}
-            <div>
-              <Button
-                type="submit"
-                disabled={isLoading}
-                className={`w-full py-2 px-4 bg-primary text-white font-semibold rounded-md shadow text-lg ${
-                  isLoading ? "opacity-50 cursor-not-allowed" : "hover:bg-gray-600"
-                } focus:outline-none focus:ring-2 focus:ring-foreground`}
-              >
-                {isLoading ? "Sending..." : "Submit"}
-              </Button>
-            </div>
-          </form>
+              <div className="space-y-2">
+                <Label htmlFor="email" className="text-base font-medium inline-flex items-center">
+                  Email <span className="text-red-500 ml-1">*</span>
+                </Label>
+                <Input
+                  type="email"
+                  id="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                  className="w-full p-3 rounded-lg bg-white/5 border border-white/20 backdrop-blur-sm transition-all focus:border-primary/50 focus:outline-none focus:ring-1 focus:ring-primary/50"
+                  placeholder="you@example.com"
+                />
+              </div>
 
-          {/* Optional: Reset or Change Subject */}
-          <div className="mt-4 text-center">
-            <button onClick={handleResetFormInputs} className="text-sm hover:text-gray-600 underline">
-              Change Subject
-            </button>
-          </div>
-        </div>
+              {subject === "service related" && (
+                <>
+                  <div className="space-y-2">
+                    <Label htmlFor="service" className="text-base font-medium inline-flex items-center">
+                      Service <span className="text-red-500 ml-1">*</span>
+                    </Label>
+                    <select
+                      id="service"
+                      name="service"
+                      value={formData.service}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          service: e.target.value,
+                        }))
+                      }
+                      required
+                      className="w-full p-3 text-base rounded-lg bg-white/5 border border-white/20 backdrop-blur-sm transition-all focus:border-primary/50 focus:outline-none focus:ring-1 focus:ring-primary/50"
+                    >
+                      <option value="">Select A Service</option>
+                      {services.map((service) => (
+                        <option key={service.id} value={service.id}>
+                          {service.title}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="serviceInquiry" className="text-base font-medium inline-flex items-center">
+                      Service Details <span className="text-red-500 ml-1">*</span>
+                    </Label>
+                    <Textarea
+                      id="serviceInquiry"
+                      value={formData.serviceInquiry}
+                      onChange={handleChange}
+                      required
+                      className="w-full p-3 min-h-32 rounded-lg bg-white/5 border border-white/20 backdrop-blur-sm transition-all focus:border-primary/50 focus:outline-none focus:ring-1 focus:ring-primary/50 resize-y"
+                      placeholder="Please provide details about your service needs..."
+                    />
+                  </div>
+                </>
+              )}
+
+              {subject === "general query" && (
+                <div className="space-y-2">
+                  <Label htmlFor="message" className="text-base font-medium inline-flex items-center">
+                    Your Message <span className="text-red-500 ml-1">*</span>
+                  </Label>
+                  <Textarea
+                    id="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    required
+                    className="w-full p-3 min-h-32 rounded-lg bg-white/5 border border-white/20 backdrop-blur-sm transition-all focus:border-primary/50 focus:outline-none focus:ring-1 focus:ring-primary/50 resize-y"
+                    placeholder="What would you like to discuss with us?"
+                  />
+                </div>
+              )}
+
+              <div className="pt-2 flex flex-col sm:flex-row gap-4 items-center">
+                <Button
+                  type="submit"
+                  disabled={isLoading}
+                  className="w-full sm:w-auto py-3 px-6 bg-gradient-to-r from-primary/90 to-primary text-white font-medium rounded-lg transition-all hover:from-primary hover:to-primary/90 focus:outline-none focus:ring-1 focus:ring-primary/50"
+                >
+                  {isLoading ? (
+                    <span className="inline-flex items-center">
+                      <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                      Sending...
+                    </span>
+                  ) : "Submit Message"}
+                </Button>
+                
+                <button 
+                  onClick={handleResetFormInputs}
+                  type="button" 
+                  className="text-sm text-gray-400 hover:text-primary underline transition-colors"
+                >
+                  Change Subject
+                </button>
+              </div>
+            </form>
+          </CardContent>
+        </Card>
       )}
-    </>
+    </div>
   );
 };

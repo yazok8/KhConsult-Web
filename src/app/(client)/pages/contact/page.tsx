@@ -12,7 +12,7 @@ export default function ContactPage() {
         <CardHeader className='md:text-5xl text-center lg:text-left max-w-3xl'>
           <CardTitle>Get a quote or set up a consultation.</CardTitle>
         </CardHeader>
-        <CardContent className='w-full flex flex-col lg:flex-row justify-between mt-12'>
+        <CardContent className='w-full flex flex-col lg:flex-row justify-between'>
         
           {/* Contact Information */}
           <ContactForm />
