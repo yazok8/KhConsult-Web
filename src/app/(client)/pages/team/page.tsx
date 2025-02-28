@@ -47,14 +47,14 @@ export default function TeamPage() {
   }
 
   return (
-    <Container id="team" className="relative overflow-hidden">
-      <div className="absolute inset-0 bg-white dark:bg-slate-900" />
+    <Container id="team" className="relative overflow-hidden pt-16">
+      <Card className="w-full bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-gray-800 shadow-xl rounded-2xl overflow-hidden">
       
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
-        className="relative py-16 md:py-24 space-y-16"
+        className="relative py-20 md:pt-6 md:pb-9 space-y-16"  
       >
         {/* Header Section */}
         <div className="text-center space-y-4">
@@ -64,7 +64,7 @@ export default function TeamPage() {
             transition={{ duration: 0.5 }}
           >
             <CardTitle className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 dark:text-white relative z-10">
-              Meet Our Team
+              My Story 
             </CardTitle>
             <div className="mt-4 flex justify-center">
               <div className="h-1 w-20 bg-slate-200 dark:bg-slate-700 rounded-full" />
@@ -85,8 +85,8 @@ export default function TeamPage() {
                 ${team?.length === 1 
                   ? 'max-w-4xl mx-auto w-full' 
                   : team?.length === 2 
-                  ? 'grid grid-cols-1 md:grid-cols-2 max-w-5xl mx-auto gap-8'
-                  : 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 max-w-7xl mx-auto gap-8'
+                  ? 'grid grid-cols-1 md:grid-cols-2 max-[1005px]:grid-cols-none max-[1005px]:flex max-[1005px]:flex-col max-w-5xl mx-auto gap-8'
+                  : 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 max-[1005px]:grid-cols-none max-[1005px]:flex max-[1005px]:flex-col max-w-7xl mx-auto gap-8'
                 }
               `}
             >
@@ -102,6 +102,7 @@ export default function TeamPage() {
           )}
         </Suspense>
       </motion.div>
+      </Card>
     </Container>
   );
 }

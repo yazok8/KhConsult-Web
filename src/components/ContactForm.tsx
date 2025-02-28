@@ -170,7 +170,7 @@ export const ContactForm = () => {
         </div>
       )}
       {subject && (
-        <div className="w-full md:w-1/2 p-4 md:p-0">
+        <div className="w-full lg:w-1/2 p-4 md:p-0">
           {/* {submissionStatus === "success" && (
             <div className="mb-4 p-4 bg-green-100 text-green-700 rounded">
               Your message has been successfully sent!

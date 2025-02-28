@@ -6,7 +6,7 @@ export default function SocialMedia() {
   return (
     <>
           {/* Social Media Links */}
-          <div className="flex flex-row text-start items-center gap-7 md:gap-12 flex-wrap">
+          <div className="flex flex-row text-start items-start justify-start gap-7 md:gap-12 flex-wrap">
         <Link href="https://www.linkedin.com/company/kh-consultation/">
           <BsLinkedin
             size={30}

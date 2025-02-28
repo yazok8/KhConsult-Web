@@ -23,8 +23,8 @@ const config: Config = {
 		},
 		screens: {
 			'sm': '320px',
-			'md': '600px',     // Changed from default 768px to 500px
-			'lg': '1024px',
+			'md': '600px',
+			'lg': '1005px',
 			'xl': '1280px',
 			'2xl': '1536px',
 		  },

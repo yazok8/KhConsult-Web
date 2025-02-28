@@ -1,10 +1,8 @@
-"use client";
-
-import React, { useRef,useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { BsX } from 'react-icons/bs';
-import khlogo from '../../../../../public/images/khlogo.svg'; // Adjust the path as necessary
+import khlogo from '../../../../../public/images/khlogo.svg';
 import SocialMedia from '../../../../components/SocialMedia';
 
 interface BurgerMenuProps {
@@ -13,17 +11,13 @@ interface BurgerMenuProps {
 }
 
 function BurgerMenu({ isOpen, setIsOpen }: BurgerMenuProps) {
-
-
   const mobileMenuRef = useRef<HTMLDivElement>(null);
 
   const toggleMenu = () => setIsOpen(prev => !prev);
 
-
-
   // Handle clicks outside the mobile menu
   useEffect(() => {
-    if (!isOpen) return; // Only add listener if the mobile menu is open
+    if (!isOpen) return;
 
     const handleClickOutsideMobileMenu = (event: MouseEvent) => {
       const target = event.target as Node;
@@ -32,72 +26,78 @@ function BurgerMenu({ isOpen, setIsOpen }: BurgerMenuProps) {
       }
     };
 
+    // Prevent scrolling on body when menu is open
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    }
+
     document.addEventListener('mousedown', handleClickOutsideMobileMenu);
 
     return () => {
       document.removeEventListener('mousedown', handleClickOutsideMobileMenu);
+      document.body.style.overflow = 'unset';
     };
   }, [isOpen, setIsOpen]);
 
   return (
     <div
       ref={mobileMenuRef}
-      className="fixed top-0 left-0 w-[75%] md:hidden h-screen bg-[#ecf0f3] p-10 ease-in-out duration-500 z-5 text-black"
+      className={`fixed top-0 left-0 w-[75%] sm:w-[60%] h-screen bg-[#ecf0f3] p-6 sm:p-10 
+                 ease-in-out duration-300 z-50 text-black transform ${
+                   isOpen ? 'translate-x-0' : '-translate-x-full'
+                 } overflow-y-auto`}
     >
-      <div className="flex w-full items-center justify-end">
-        <div
-          className="flex justify-end mr-auto cursor-pointer"
-          onClick={() => setIsOpen(false)}
-        >
-          <Link href="/#">
-            <Image
-              src={khlogo}
-              alt="kh consultation logo"
-              width={100}
-              height={100}
-              className="cursor-pointer"
-            />
-          </Link>
-        </div>
+      <div className="flex w-full items-center justify-between mb-8">
+        <Link href="/#" onClick={() => setIsOpen(false)}>
+          <Image
+            src={khlogo}
+            alt="kh consultation logo"
+            width={80}
+            height={80}
+            className="cursor-pointer w-auto h-auto"
+          />
+        </Link>
         <div className="cursor-pointer" onClick={toggleMenu}>
-          <BsX className="h-8 w-8 text-black" />
+          <BsX className="h-8 w-8 text-black hover:text-[#f68519] transition-colors" />
         </div>
       </div>
       <div className="flex-col py-4">
-        <ul>
+        <ul className="space-y-2">
           <li
-            className="py-4"
+            className="py-3 text-lg font-medium hover:text-[#f68519] transition-colors"
             onClick={() => setIsOpen(false)}
           >
-            <Link href="/#about">About</Link>
+            <Link href="/#about">About Our Services</Link>
           </li>
           <li
-            className="py-4"
+            className="py-3 text-lg font-medium hover:text-[#f68519] transition-colors"
             onClick={() => setIsOpen(false)}
           >
-            <Link href="/#team">Team</Link>
+            <Link href="/#team">My Story</Link>
           </li>
           <li
-            className="py-4 relative"
+            className="py-3 text-lg font-medium hover:text-[#f68519] transition-colors"
             onClick={() => setIsOpen(false)}
           >
             <Link href="/#services">Services</Link>
           </li>
           <li
-            className="py-4"
+            className="py-3 text-lg font-medium hover:text-[#f68519] transition-colors"
             onClick={() => setIsOpen(false)}
           >
-            <Link href="/#faq">Faq</Link>
+            <Link href="/#faq">FAQ</Link>
           </li>
           <li
-            className="py-4 hover:underline hover:decoration-[#f68519]"
+            className="py-3 text-lg font-medium hover:text-[#f68519] transition-colors"
             onClick={() => setIsOpen(false)}
           >
             <Link href="/#contact">Contact</Link>
           </li>
         </ul>
       </div>
-    <SocialMedia/>
+      <div className="mt-10">
+        <SocialMedia />
+      </div>
     </div>
   );
 }

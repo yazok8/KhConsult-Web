@@ -37,12 +37,12 @@ export default function ServiceCard({
             {title}
           </Typography>
           <div
-            className="prose prose-lg dark:prose-invert"
+            className="prose prose-lg dark:prose-invert min-w-[500px]"
             dangerouslySetInnerHTML={{ __html: description }}
           />
         </motion.div>
       </div>
-      <div className="w-full md:w-1/2">
+      <div className="w-full">
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}

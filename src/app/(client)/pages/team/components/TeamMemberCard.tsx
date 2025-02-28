@@ -19,9 +19,9 @@ export function TeamMemberCard({ member, index, isAlone }: TeamMemberCardProps) 
       transition={{ delay: index * 0.2, duration: 0.5 }}
       viewport={{ once: true }}
       className={`
-        group relative overflow-hidden
+        group relative overflow-hidden px-6 lg:px-6 md:pr-6 lg:pl-0 gap-8
         ${isAlone 
-          ? 'grid md:grid-cols-2 gap-0 bg-white dark:bg-slate-900 rounded-2xl border border-accent/10 shadow-xl hover:shadow-2xl transition-all duration-300'
+          ? 'grid lg:grid-cols-2 max-lg:flex max-lg:flex-col gap-0 bg-white dark:bg-slate-900 rounded-2xl border border-accent/10 shadow-xl hover:shadow-2xl transition-all duration-300'
           : 'flex flex-col bg-white dark:bg-slate-900 rounded-xl border border-accent/10 shadow-lg hover:shadow-xl transition-all duration-300'
         }
       `}
@@ -29,23 +29,25 @@ export function TeamMemberCard({ member, index, isAlone }: TeamMemberCardProps) 
       {/* Image Container */}
       <div className={`
         relative overflow-hidden
-        ${isAlone ? 'h-[400px] md:h-full' : 'h-[300px]'}
+        ${isAlone 
+          ? 'h-[700px] max-lg:h-[600px] max-md:h-[450px] aspect-auto' 
+          : 'h-[300px]'
+        }
       `}>
         {member.profileImage ? (
-          <>
+          <div className="w-full h-full relative">
             <Image
               src={getImageSrc(member.profileImage)}
               alt={member.name}
               fill
               className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
               sizes={isAlone 
-                ? "(max-width: 768px) 100vw, 50vw"
-                : "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                ? "(max-width: 600px) 100vw, (max-width: 1005px) 100vw, 50vw"
+                : "(max-width: 600px) 100vw, (max-width: 1005px) 50vw, 33vw"
               }
               priority={index < 2}
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
-          </>
+          </div>
         ) : (
           <div className="w-full h-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center">
             <span className="text-slate-600 dark:text-slate-400 text-xl">No Image</span>
@@ -55,7 +57,7 @@ export function TeamMemberCard({ member, index, isAlone }: TeamMemberCardProps) 
 
       {/* Content Container */}
       <div className={`
-        relative z-10 px-6 pb-6 md:p-8 space-y-4 md:pt-0
+        relative z-10 space-y-4
         ${isAlone ? 'flex flex-col justify-center' : ''}
       `}>
         <div>
