@@ -85,7 +85,7 @@ export default function AdminSignIn() {
   }
 
   return (
-    <div className="flex items-center justify-center min-h-[85vh] overflow-hidden p-5">
+    <div className="flex items-center justify-center overflow-hidden p-5">
       <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full">
         <Card className="border-none shadow-none">
           <CardHeader className="pl-0">

@@ -46,7 +46,7 @@ export default function RootLayout({
           <Suspense fallback={<div>Loading...</div>}>
           <GoogleAnalytics />
           </Suspense>
-          <main className="bg-black text-white overflow-hidden">{children}</main>
+          <main className="bg-black text-white overflow-hidden min-h-screen">{children}</main>
           <Toaster
             position="top-right"
             toastOptions={{

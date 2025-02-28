@@ -93,7 +93,7 @@ export default function UserSignUp() {
     
   
     return (
-      <div className="flex items-center justify-center min-h-screen p-5">
+      <div className="flex items-center justify-center p-5">
         <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full">
           <Card className="border-none shadow-none">
           <CardHeader className="pl-0">
