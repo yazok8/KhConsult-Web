@@ -1,9 +1,5 @@
 import React, { useRef, useEffect } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
-import { BsX } from 'react-icons/bs';
-import khlogo from '../../../../../public/images/khlogo.svg';
-import SocialMedia from '../../../../components/SocialMedia';
 
 interface BurgerMenuProps {
   isOpen: boolean;
@@ -13,7 +9,6 @@ interface BurgerMenuProps {
 function BurgerMenu({ isOpen, setIsOpen }: BurgerMenuProps) {
   const mobileMenuRef = useRef<HTMLDivElement>(null);
 
-  const toggleMenu = () => setIsOpen(prev => !prev);
 
   // Handle clicks outside the mobile menu
   useEffect(() => {
