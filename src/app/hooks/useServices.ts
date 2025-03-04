@@ -1,4 +1,5 @@
-import { Service } from "@prisma/client";
+
+import { Service } from "@/types/services";
 import { useSWRWithConfig } from "./useSWRWithConfig";
 
 export function useServices() {

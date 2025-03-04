@@ -1,5 +1,6 @@
 
-import { faq } from "@prisma/client";
+
+import { faq } from "@/types/faq";
 import { useSWRWithConfig } from "./useSWRWithConfig";
 
 export function useFAQ() {

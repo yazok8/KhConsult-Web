@@ -54,7 +54,7 @@ export default function TeamPage() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
-        className="relative py-20 md:pt-6 md:pb-9 space-y-8"  
+        className="relative py-20 md:pt-6 md:pb-9 space-y-16"  
       >
         {/* Header Section */}
         <div className="text-center space-y-4">
@@ -83,7 +83,7 @@ export default function TeamPage() {
               transition={{ duration: 0.6 }}
               className={`
                 ${team?.length === 1 
-                  ? 'max-w-5xl mx-auto w-full' 
+                  ? 'max-w-4xl mx-auto w-full' 
                   : team?.length === 2 
                   ? 'grid grid-cols-1 md:grid-cols-2 max-[1005px]:grid-cols-none max-[1005px]:flex max-[1005px]:flex-col max-w-5xl mx-auto gap-8'
                   : 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 max-[1005px]:grid-cols-none max-[1005px]:flex max-[1005px]:flex-col max-w-7xl mx-auto gap-8'

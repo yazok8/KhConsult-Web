@@ -1,5 +1,4 @@
-
-import { AboutOurTeam } from "@prisma/client";
+import { AboutOurTeam } from "@/types/team";
 import { useSWRWithConfig } from "./useSWRWithConfig";
 
 export function useTeam() {

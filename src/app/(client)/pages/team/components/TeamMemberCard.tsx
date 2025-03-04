@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import { getImageSrc } from '@/lib/imageHelper';
 
 interface TeamMemberCardProps {
-  member: AboutOurTeam;
+  member: AboutOurTeam & { title: string | null };
   index: number;
   isAlone?: boolean;
 }

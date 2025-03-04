@@ -1,9 +1,10 @@
-export interface AboutOurTeam{
+export interface AboutOurTeam {
     id: string;
-    name:string
-    title: string;
+    name: string;
+    title: string | null;  // Allow null values
     description: string;
-    profileImage?: string; // URL or identifier for the image
-    createdAt: string; // or Date (if you convert it)
-    updatedAt: string;
-}
+    profileImage: string;
+    published: boolean;
+    createdAt: Date;
+    updatedAt: Date;
+  }
