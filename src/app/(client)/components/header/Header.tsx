@@ -3,7 +3,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { BsList } from 'react-icons/bs';
+import { BsList, BsX } from 'react-icons/bs';
 import khlogo from '../../../../../public/images/khlogo.svg';
 import BurgerMenu from './BurgerMenu';
 import AppointmentBtn from '../AppointmentBtn';
@@ -103,7 +103,11 @@ export default function Header() {
               onClick={toggleMenu}
               aria-label="Toggle menu"
             >
-              <BsList className="h-8 w-8" />
+              {isOpen ? (
+                <BsX className="h-8 w-8 hover:text-[#f68519] transition-colors" />
+              ) : (
+                <BsList className="h-8 w-8 hover:text-[#f68519] transition-colors" />
+              )}
             </div>
           </div>
         </div>

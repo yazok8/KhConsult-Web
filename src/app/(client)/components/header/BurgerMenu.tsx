@@ -42,27 +42,16 @@ function BurgerMenu({ isOpen, setIsOpen }: BurgerMenuProps) {
   return (
     <div
       ref={mobileMenuRef}
-      className={`fixed top-0 left-0 w-[75%] sm:w-[60%] h-screen bg-[#ecf0f3] p-6 sm:p-10 
-                 ease-in-out duration-300 z-50 text-black transform ${
+      className={`fixed top-0 left-0 w-[75%] sm:w-[60%] h-screen bg-[#ecf0f3] sm:px-10 
+                 ease-in-out duration-300 z-50 text-black transform mt-[80px] ${
                    isOpen ? 'translate-x-0' : '-translate-x-full'
                  } overflow-y-auto`}
     >
-      <div className="flex w-full items-center justify-between mb-8">
-        <Link href="/#" onClick={() => setIsOpen(false)}>
-          <Image
-            src={khlogo}
-            alt="kh consultation logo"
-            width={80}
-            height={80}
-            className="cursor-pointer w-auto h-auto"
-          />
-        </Link>
-        <div className="cursor-pointer" onClick={toggleMenu}>
+      <div className="flex justify-end items-end flex-col py-4">
+      {/* <div className="cursor-pointer" onClick={toggleMenu}>
           <BsX className="h-8 w-8 text-black hover:text-[#f68519] transition-colors" />
-        </div>
-      </div>
-      <div className="flex-col py-4">
-        <ul className="space-y-2">
+        </div> */}
+        <ul className="space-y-2 whitespace-nowrap">
           <li
             className="py-3 text-lg font-medium hover:text-[#f68519] transition-colors"
             onClick={() => setIsOpen(false)}
@@ -94,9 +83,6 @@ function BurgerMenu({ isOpen, setIsOpen }: BurgerMenuProps) {
             <Link href="/#contact">Contact</Link>
           </li>
         </ul>
-      </div>
-      <div className="mt-10">
-        <SocialMedia />
       </div>
     </div>
   );
