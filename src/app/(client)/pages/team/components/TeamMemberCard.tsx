@@ -21,8 +21,8 @@ export function TeamMemberCard({ member, index, isAlone }: TeamMemberCardProps) 
       className={`
         group relative overflow-hidden px-6 lg:px-6 md:pr-6 lg:pl-0 gap-8
         ${isAlone 
-          ? 'grid lg:grid-cols-2 max-lg:flex max-lg:flex-col gap-0 bg-white dark:bg-slate-900 rounded-2xl border border-accent/10 shadow-xl hover:shadow-2xl transition-all duration-300'
-          : 'flex flex-col bg-white dark:bg-slate-900 rounded-xl border border-accent/10 shadow-lg hover:shadow-xl transition-all duration-300'
+          ? 'grid lg:grid-cols-2 max-lg:flex max-lg:flex-col gap-0 bg-white dark:bg-slate-900 rounded-2xl border border-accent/10 lg:shadow-xl lg:hover:shadow-2xl transition-all duration-300'
+          : 'flex flex-col bg-white dark:bg-slate-900 rounded-xl border border-accent/10 lg:shadow-lg lg:hover:shadow-xl transition-all duration-300'
         }
       `}
     >
