@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { IoMdAdd } from 'react-icons/io';
 import { useEffect } from 'react';
 import { useFAQ } from '@/app/hooks/useFaq';
+import { motion } from "framer-motion";
 
 export default function FaqQuestion() {
   const { faqs, error, isLoading, mutate } = useFAQ();
@@ -37,9 +38,14 @@ export default function FaqQuestion() {
 
   return (
     <div className="mx-auto flex flex-col max-w-6xl px-5">
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-6xl mb-12 text-start">FAQ</CardTitle>
+      <Card className='card-modern'>
+      <CardHeader className="space-y-4 text-center">
+            <CardTitle className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 dark:text-white relative z-10">
+              Frequently Asked Questions
+            </CardTitle>
+            <div className="mt-4 flex justify-center">
+              <div className="h-1 w-20 bg-slate-200 dark:bg-slate-700 rounded-full" />
+            </div>
         </CardHeader>
         <CardContent>
           <div className="py-5 mr-auto">
@@ -49,29 +55,34 @@ export default function FaqQuestion() {
               </div>
             </Link>
           </div>
-          <ul className="w-full flex flex-col md:grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 overflow-x-hidden">
+          <motion.ul
+            className="grid-modern"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+          >
             {!faqs || faqs.length === 0 ? (
               <p>No FAQs available.</p>
             ) : (
               faqs.map((q) => (
-                <article
+                <motion.article
                   key={q.id}
-                  className="flex flex-col bg-slate-300 text-black rounded-lg shadow-lg"
+                   className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
                 >
                   <Link href={`/admin/faq/edit-faq/${q.id}`}>
                     <li className="list-none">
-                      <h2 className="p-6 bg-slate-500 rounded-t-lg text-2xl font-semibold">
+                    <h2 className="p-6 bg-[rgb(var(--primary-color))] text-xl font-semibold">
                         {q.question}
                       </h2>
                     </li>
-                    <div className="p-6 flex-grow">
+                    <div className="p-6 prose prose-lg max-w-none mb-5">
                       <p>{q.answer}</p>
                     </div>
                   </Link>
-                </article>
+                </motion.article>
               ))
             )}
-          </ul>
+          </motion.ul>
         </CardContent>
       </Card>
     </div>
