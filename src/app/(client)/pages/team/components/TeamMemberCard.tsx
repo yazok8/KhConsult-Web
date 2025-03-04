@@ -30,7 +30,7 @@ export function TeamMemberCard({ member, index, isAlone }: TeamMemberCardProps) 
       <div className={`
         relative overflow-hidden
         ${isAlone 
-          ? 'h-[700px] max-lg:h-[600px] max-md:h-[450px] aspect-auto' 
+          ? 'h-[580px] max-lg:h-[700px] max-md:h-[450px] aspect-auto' 
           : 'h-[300px]'
         }
       `}>
@@ -57,8 +57,8 @@ export function TeamMemberCard({ member, index, isAlone }: TeamMemberCardProps) 
 
       {/* Content Container */}
       <div className={`
-        relative z-10 space-y-4
-        ${isAlone ? 'flex flex-col justify-center' : ''}
+        relative z-10
+        ${isAlone ? 'flex flex-col' : ''}
       `}>
         <div>
           <h3 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white">
