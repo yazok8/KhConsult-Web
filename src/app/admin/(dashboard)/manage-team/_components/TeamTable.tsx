@@ -81,6 +81,7 @@ function TeamTable() {
                         `}
                 >
                   {team?.map((member, index) => (
+                    <div key={index}>
                     <Link href={`/admin/manage-team/edit-team/${member.id}`}>
                       <TeamMemberCard
                         key={member.id}
@@ -89,6 +90,7 @@ function TeamTable() {
                         isAlone={team.length === 1}
                       />
                     </Link>
+                    </div>
                   ))}
                 </motion.div>
               )}

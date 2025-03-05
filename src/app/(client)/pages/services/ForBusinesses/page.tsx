@@ -1,7 +1,6 @@
 "use client";
 export const dynamic = "force-dynamic";
 
-import React from "react";
 import Container from "@/components/Container";
 import { Inter } from "next/font/google"; // Add font import
 import ServiceCard from "@/components/ServiceCard";

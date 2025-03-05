@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import ServiceCard from "@/components/ServiceCard";
 import { Spinner } from "@/components/ui/spinner";
 import { getImageSrc } from '@/lib/imageHelper';
