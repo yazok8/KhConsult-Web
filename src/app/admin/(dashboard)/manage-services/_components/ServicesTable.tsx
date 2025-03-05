@@ -48,7 +48,7 @@ function ServicesTable() {
           <div className="flex justify-end mb-5">
             <Link
               href="/admin/manage-services/add-services/new"
-              className="flex items-center space-x-2 text-blue-600 hover:text-blue-800"
+              className="flex space-x-2 text-blue-600 hover:text-blue-800"
             >
               <IoMdAdd size={24} />
               <span>Add New Service</span>
@@ -66,9 +66,9 @@ function ServicesTable() {
                 >
                   <Link
                     href={`/admin/manage-services/edit-service/${service.id}`}
-                    className="flex flex-col-reverse lg:flex-row-reverse items-center space-x-4"
+                    className="flex flex-col-reverse lg:flex-row-reverse space-x-4"
                   >
-                    <div className="flex-shrink-0 my-4 px-5">
+                    <div className="flex-shrink-0 my-4 md:my-0 px-5">
                       <Image
                         src={`https://khconsult.s3.us-east-2.amazonaws.com/${service.imageSrc}`}
                         alt={service.title}

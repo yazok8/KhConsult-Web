@@ -2,29 +2,41 @@
 
 import Container from '@/components/Container';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import useSWR from "swr";
 import Image from 'next/image';
-import React from 'react';
-import { AboutOurServices } from '@/types/aboutServices'; // Updated import from the shared type file
+import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { getImageSrc } from '@/lib/imageHelper';
 import { Spinner } from "@/components/ui/spinner";
+import { useAboutServices } from '@/app/hooks/useAboutServices';
+import { Loader } from 'lucide-react';
 
 export default function AboutPage() {
-  // A simple fetcher that disables cache
-  const fetcher = (url: string) =>
-    fetch(url, { cache: "no-store" }).then((res) => res.json());
 
   // Use SWR with our shared type
-  const { data: aboutServices, error } = useSWR<AboutOurServices>(
-    "/api/aboutServices",
-    fetcher,
-    {
-      revalidateOnFocus: true,
-      revalidateOnReconnect: true,
-      refreshInterval: 30_000,
-    }
-  );
+
+    const { aboutServices, error, isLoading, mutate } = useAboutServices();
+
+      // Refresh data when component mounts and periodically
+      useEffect(() => {
+        mutate();
+    
+        const interval = setInterval(() => {
+          mutate();
+        }, 5000);
+    
+        return () => clearInterval(interval);
+      }, [mutate]);
+    
+
+      if (isLoading) {
+        return (
+          <div className="flex justify-center items-center h-screen">
+            <Loader />
+          </div>
+        );
+      }
+
+
 
   if (error) {
     return (

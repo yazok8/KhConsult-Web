@@ -1,10 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { faq } from "@/types/faq";
 import sanitizeHtml from "sanitize-html";
-import useSWR from "swr";
 import { motion } from "framer-motion";
 import Container from "@/components/Container";
 import {
@@ -15,20 +14,36 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { useFAQ } from "@/app/hooks/useFaq";
+import { Loader } from "lucide-react";
 
 export default function FaqQuestion() {
-  const fetcher = (url: string) =>
-    fetch(url, { cache: "no-store" }).then((r) => r.json());
-
-  const { data: faq, error } = useSWR<faq[]>("/api/faq", fetcher, {
-    revalidateOnFocus: true,
-    revalidateOnReconnect: true,
-    refreshInterval: 30_000,
-  });
+  const { faqs, error, isLoading, mutate } = useFAQ();
 
   // State to manage which FAQ is selected and if the dialog is open.
   const [selectedFaq, setSelectedFaq] = useState<faq | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
+
+      // Refresh data when component mounts and periodically
+        useEffect(() => {
+          mutate();
+      
+          const interval = setInterval(() => {
+            mutate();
+          }, 5000);
+      
+          return () => clearInterval(interval);
+        }, [mutate]);
+      
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Loader />
+      </div>
+    );
+  }
+
 
   if (error) {
     return (
@@ -38,7 +53,7 @@ export default function FaqQuestion() {
     );
   }
 
-  if (!faq) {
+  if (!faqs) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="w-8 h-8 bg-primary rounded-full animate-pulse" />
@@ -64,8 +79,8 @@ export default function FaqQuestion() {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
           >
-            {faq.length > 0 ? (
-              faq.map((q, index) => (
+            {faqs.length > 0 ? (
+              faqs.map((q, index) => (
                 <motion.article
                   key={q.id}
                   initial={{ opacity: 0, y: 20 }}

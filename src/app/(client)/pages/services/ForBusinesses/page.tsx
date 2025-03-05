@@ -3,11 +3,11 @@ export const dynamic = "force-dynamic";
 
 import React from "react";
 import Container from "@/components/Container";
-import { useServicesSWR } from "../_components/useServiceSWR";
 import { Inter } from "next/font/google"; // Add font import
 import ServiceCard from "@/components/ServiceCard";
 import { Spinner } from "@/components/ui/spinner";
 import { getImageSrc } from '@/lib/imageHelper';
+import { useServices } from "@/app/hooks/useServices";
 
 
 // Configure the font
@@ -19,7 +19,7 @@ const inter = Inter({
 });
 
 export default function ForBusinesses() {
-  const { services, isLoading, error } = useServicesSWR();
+  const { services, isLoading, error } = useServices();
 
   if (error) {
     return (

@@ -1,13 +1,13 @@
 "use client";
 
 import React from "react";
-import { useServicesSWR } from "../_components/useServiceSWR";
 import ServiceCard from "@/components/ServiceCard";
 import { Spinner } from "@/components/ui/spinner";
 import { getImageSrc } from '@/lib/imageHelper';
+import { useServices } from "@/app/hooks/useServices";
 
 export default function JobRelocation() {
-  const { services, isLoading, error } = useServicesSWR();
+  const { services, isLoading, error } = useServices();
 
   if (error) {
     return (
