@@ -1,42 +1,25 @@
 "use client";
 
-import Container from '@/components/Container';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import Image from 'next/image';
-import React, { useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { getImageSrc } from '@/lib/imageHelper';
+import Container from "@/components/Container";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import Image from "next/image";
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import { getImageSrc } from "@/lib/imageHelper";
 import { Spinner } from "@/components/ui/spinner";
-import { useAboutServices } from '@/app/hooks/useAboutServices';
-import { Loader } from 'lucide-react';
+import { useAboutServices } from "@/app/hooks/useAboutServices";
 
 export default function AboutPage() {
+  const { aboutServices, error, isLoading } = useAboutServices();
+  const [isBookOpen, setIsBookOpen] = useState(false);
 
-  // Use SWR with our shared type
-
-    const { aboutServices, error, isLoading, mutate } = useAboutServices();
-
-      // Refresh data when component mounts and periodically
-      useEffect(() => {
-        mutate();
-    
-        const interval = setInterval(() => {
-          mutate();
-        }, 5000);
-    
-        return () => clearInterval(interval);
-      }, [mutate]);
-    
-
-      if (isLoading) {
-        return (
-          <div className="flex justify-center items-center h-screen">
-            <Loader />
-          </div>
-        );
-      }
-
-
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Spinner />
+      </div>
+    );
+  }
 
   if (error) {
     return (
@@ -49,74 +32,74 @@ export default function AboutPage() {
   }
 
   if (!aboutServices) {
-    return (
-      <Spinner />
-    );
+    return <Spinner />;
   }
 
   return (
-    <Container id="about">
+    <div className="max-w-[1152px] mx-auto px-5">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
         className="py-12 md:py-20"
       >
-        <Card className="card-modern border-none bg-gradient-to-b from-white to-[rgb(var(--neutral-light))]">
+        <Card className="border-none bg-transparent">
           <CardHeader className="space-y-4 text-center md:text-left">
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2, duration: 0.5 }}
             >
-            <CardTitle className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 dark:text-white text-primary relative z-10 text-center">
-              {aboutServices.title}
-            </CardTitle>
-            <div className="mt-4 flex justify-center">
-              <div className="h-1 w-20 bg-slate-200 dark:bg-slate-700 rounded-full" />
-            </div>
+              <CardTitle className="text-4xl text-white md:text-5xl lg:text-6xl font-bold dark:text-white relative z-10 text-center">
+                {aboutServices.title}
+              </CardTitle>
+              <div className="mt-4 flex justify-center">
+                <div className="h-1 w-20 bg-slate-200 dark:bg-slate-700 rounded-full" />
+              </div>
             </motion.div>
           </CardHeader>
-          <CardContent className="space-y-12">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-              {aboutServices.aboutimage && (
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.3, duration: 0.6 }}
-                  className="relative aspect-[4/3] lg:sticky lg:top-8"
-                >
-                  <div className="absolute inset-0 rounded-2xl overflow-hidden shadow-2xl">
-                    <Image
-                      src={getImageSrc(aboutServices.aboutimage)}
-                      alt={aboutServices.title}
-                      fill
-                      className="object-cover hover:scale-105 transition-all duration-700 ease-out"
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      priority
-                    />
-                  </div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent rounded-2xl" />
-                </motion.div>
-              )}
 
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5, duration: 0.5 }}
-                className="prose prose-lg dark:prose-invert pt-0"
+          <CardContent className="space-y-12 w-full pt-20">
+            <div className="book-container">
+              <div 
+                className={`book ${isBookOpen ? "open" : ""}`}
               >
                 <div
-                  className="space-y-6 text-[rgb(var(--neutral-dark))]"
-                  dangerouslySetInnerHTML={{
-                    __html: aboutServices.description ?? "",
-                  }}
+                  className="book-spine"
+                  onClick={() => setIsBookOpen(!isBookOpen)}
                 />
-              </motion.div>
+
+                <div className="book-cover">
+                  {aboutServices.aboutimage && (
+                    <div className="book-cover-image">
+                      <Image
+                        src={getImageSrc(aboutServices.aboutimage)}
+                        alt={aboutServices.title}
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 768px) 100vw, 50vw"
+                        priority
+                      />
+                    </div>
+                  )}
+                  <div className="book-spine-shadow" />
+                </div>
+
+                <div className="book-page">
+                  <div className="book-content">
+                    <div
+                      className="space-y-6 text-[rgb(var(--neutral-dark))]"
+                      dangerouslySetInnerHTML={{
+                        __html: aboutServices.description ?? "",
+                      }}
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
           </CardContent>
         </Card>
       </motion.div>
-    </Container>
+    </div>
   );
 }
