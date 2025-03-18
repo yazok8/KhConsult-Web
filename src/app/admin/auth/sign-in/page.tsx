@@ -21,7 +21,6 @@ export default function AdminSignIn() {
     handleSubmit,
     formState: { errors },
     register,
-    setError, 
   } = useForm<SignInFormValues>({
     resolver: zodResolver(signInSchema),
     defaultValues: {
@@ -46,22 +45,13 @@ export default function AdminSignIn() {
       if (signinCreds?.error) {
         switch (signinCreds.error) {
           case "UserNotFound":
-            setError("identifier", {
-              type: "manual",
-              message: "User does not exist.",
-            });
+            toast.error("User does not exist.");
             break;
           case "InvalidPassword":
-            setError("password", {
-              type: "manual",
-              message: "Incorrect password.",
-            });
+            toast.error("Incorrect password.");
             break;
           case "NotAdmin":
-            setError("identifier", {
-              type: "manual",
-              message: "You do not have admin access.",
-            });
+            toast.error("You do not have admin access.");
             break;
           case "MissingCredentials":
             toast.error("Please provide both email/username and password.");

@@ -37,7 +37,7 @@ export default function Header() {
           scrolled ? 'bg-opacity-95' : 'bg-opacity-100'
         }`}
       >
-        <div className="px-4 sm:px-6 md:px-10 flex justify-between h-full max-w-7xl mx-auto items-center">
+        <div className="px-4 md:px-0 flex justify-between h-full max-w-6xl mx-auto items-center">
           <Link href="/#">
             <Image
               src={khlogo}

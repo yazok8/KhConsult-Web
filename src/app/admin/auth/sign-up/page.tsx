@@ -22,7 +22,6 @@ export default function UserSignUp() {
       handleSubmit,
       formState: { errors },
       register,
-      setError
     } = useForm<SignUpValues>({
       resolver: zodResolver(signUpSchema),
       defaultValues: {
@@ -58,16 +57,10 @@ export default function UserSignUp() {
         if (data.error) {  
           if (typeof data.error === "object") {  
            if (data.error.email) {  
-            setError("email", {  
-              type: "manual",  
-              message: data.error.email,  
-            });  
+            toast.error(data.error.email);
            }  
            if (data.error.username) {  
-            setError("username", {  
-              type: "manual",  
-              message: data.error.username,  
-            });  
+            toast.error(data.error.username);
            }  
           } else {  
            switch (data.error) {  
