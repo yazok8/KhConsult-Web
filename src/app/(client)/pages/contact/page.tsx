@@ -20,7 +20,7 @@ export default function ContactPage() {
           <div className='text-lg md:text-2xl'>
             <div className='pb-8'>
               <h3 className='pb-4 font-bold text-base'>Email</h3>
-              <p>info@khconsult.com</p>
+              <p>info@khconsultation.com</p>
             </div>
                       {/* Social Media Icons */}
           <div className='mt-12 lg:mt-0'>
