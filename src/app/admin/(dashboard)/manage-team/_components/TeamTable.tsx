@@ -5,8 +5,8 @@ import { Card, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
 import { useEffect, Suspense } from "react";
 import { motion } from "framer-motion";
-import { TeamSkeleton } from "@/app/(client)/pages/team/components/TeamSkeleton";
 import { TeamMemberCard } from "@/app/(client)/pages/team/components/TeamMemberCard";
+import { TeamSkeleton } from "@/app/(client)/pages/story/components/TeamSkeleton";
 
 function TeamTable() {
   const { team, error, isLoading, mutate } = useTeam();
