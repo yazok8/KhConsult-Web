@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import Typography from '@/components/Typography';
 
 interface ServiceCardProps {
+  id:string
   title: string;
   description: string;
   imageSrc: string;
@@ -12,6 +13,7 @@ interface ServiceCardProps {
 }
 
 export default function ServiceCard({
+  id,
   title,
   description,
   imageSrc,
@@ -20,6 +22,7 @@ export default function ServiceCard({
 }: ServiceCardProps) {
   return (
     <motion.div
+      id={id}
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}

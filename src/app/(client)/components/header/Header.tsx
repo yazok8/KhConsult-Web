@@ -32,11 +32,11 @@ export default function Header() {
             />
           </Link>
           <div className="text-white hidden md:flex text-xl">
-            <Link className="px-5" href="/#about">
+            <Link className="px-5" href="#about">
               About
             </Link>
-            <Link className="px-5" href="/#team">
-              Team
+            <Link className="px-5" href="/#story">
+              My Story
             </Link>
 
             {/* Desktop Services Menu */}

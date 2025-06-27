@@ -22,19 +22,12 @@ const Footer = () => {
             
           </Link>
           </div>
-            <Link className="hover:underline" href="#about">About</Link>
-            <Link className="hover:underline" href="#about-my-services">Services</Link>
-            <Link className="hover:underline" href="#reviews">Reviews</Link>
+            <Link className="hover:underline" href="/#about">About</Link>
+            <Link className="hover:underline" href="/#services">Services</Link>
+            <Link className="hover:underline" href="#my-story">
+              My Story
+            </Link>
             <Link className="hover:underline" href="#contact">Contact</Link>
-          </FooterList>
-          <FooterList>
-            <h3 className="text-base font-bold mb-2">Services</h3>
-            <Link className="hover:underline" href="/#about-my-services">About My Services</Link>
-            <Link className="hover:underline" href="/#relocation-services">Relocation Services</Link>
-            <Link className="hover:underline" href="/#immigration-support">Immigration Support</Link>
-            <Link className="hover:underline" href="/#job-coaching">Job Coaching</Link>
-            <Link className="hover:underline" href="/#need-a-german-speaker">Need A German Speaker</Link>
-            <Link className="hover:underline" href="/#for-businesses">For Businesses</Link>
           </FooterList>
 
           <FooterList>
