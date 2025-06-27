@@ -42,7 +42,7 @@ export async function addToTeam(formData: FormData): Promise<AboutOurTeam> {
       const newTeamProfile = await prisma.aboutOurTeam.create({
         data: {
           name: data.name,
-          title: data.title,
+          title: data.title || null,
           description: data.description,
           profileImage: imgKey, // Ensure this matches your Prisma schema
         },
