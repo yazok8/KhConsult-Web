@@ -27,7 +27,6 @@ export default function GermanSpeaker() {
 
   return (
     <ServiceCard
-    id="german-speaker"
     title={germanSpeakerService.title}
     description={germanSpeakerService.description}
     imageSrc={getImageSrc(germanSpeakerService.imageSrc)}

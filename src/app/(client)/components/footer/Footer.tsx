@@ -36,8 +36,8 @@ const Footer = () => {
           </FooterList>
 
         </div>
-        <div className="w-full flex items-end justify-center mx-auto sm:w-1/3 md:mb-0">
-            <p>© GSK LTD., 2024. All rights reserved</p>
+        <div className="w-full flex items-end justify-center mx-auto sm:w-1/3 md:mb-0 whitespace-nowrap">
+            <p className="mb-6">© GSK LTD., 2024. All rights reserved</p>
           </div>
       </div>
     </footer>
