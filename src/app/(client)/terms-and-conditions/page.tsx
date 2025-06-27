@@ -1,7 +1,6 @@
 // src/app/(client)/terms-and-conditions/page.tsx
 import React from 'react';
 import Typography from '@/components/Typography';
-import Link from 'next/link'; // Make sure Link is imported if used for external links
 
 export const metadata = {
   title: 'Terms & Conditions - Kh. Consultation',
@@ -18,7 +17,7 @@ export default function TermsAndConditionsPage() {
         Terms and Conditions
       </Typography>
         <p className="mb-4">
-          Welcome to Kh. Consultation! These Terms and Conditions ("Terms") govern your use of our website at <a href="https://www.khconsultation.com" target="_blank" rel="noopener noreferrer" className="text-brand-blue hover:underline">www.khconsultation.com</a> and the services provided by Kh. Consultation (referred to as "we", "us", or "our"). By accessing or using our website and services, you agree to be bound by these Terms. If you disagree with any part of the terms, then you may not access the website or use our services.
+          Welcome to Kh. Consultation! These Terms and Conditions (&quot;Terms&quot;) govern your use of our website at <a href="https://www.khconsultation.com" target="_blank" rel="noopener noreferrer" className="text-brand-blue hover:underline">www.khconsultation.com</a> and the services provided by Kh. Consultation (referred to as &quot;we&quot;, &quot;us&quot;, or &quot;our&quot;). By accessing or using our website and services, you agree to be bound by these Terms. If you disagree with any part of the terms, then you may not access the website or use our services.
         </p>
 
         <h2 className="text-2xl md:text-3xl font-semibold mb-4 mt-8">1. Services Provided</h2>
@@ -42,7 +41,7 @@ export default function TermsAndConditionsPage() {
         <p>Any dispute arising out of or in connection with these Terms, including disputes regarding their validity, breach, or termination, shall be subject to the exclusive jurisdiction of the courts of Berlin, Germany.</p>
 
         <h2 className="text-2xl md:text-3xl font-semibold mb-4 mt-8">6. Changes to These Terms</h2>
-        <p>We reserve the right, at our sole discretion, to modify or replace these Terms at any time. If a revision is material, we will provide at least 30 days' notice prior to any new terms taking effect. What constitutes a material change will be determined at our sole discretion.</p>
+        <p>We reserve the right, at our sole discretion, to modify or replace these Terms at any time. If a revision is material, we will provide at least 30 days notice prior to any new terms taking effect. What constitutes a material change will be determined at our sole discretion.</p>
         <p>By continuing to access or use our Service after any revisions become effective, you agree to be bound by the revised terms. If you do not agree to the new terms, you are no longer authorized to use the Service.</p>
 
         <h2 className="text-2xl md:text-3xl font-semibold mb-4 mt-8">7. Contact Us</h2>

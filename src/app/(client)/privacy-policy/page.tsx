@@ -1,7 +1,6 @@
 // src/app/(client)/privacy-policy/page.tsx
 import React from 'react';
 import Typography from '@/components/Typography';
-import Link from 'next/link';
 
 export const metadata = {
   title: 'Privacy Policy - Kh. Consultation',
@@ -20,7 +19,7 @@ export default function PrivacyPolicyPage() {
       </Typography>
 
         <p className="mb-4">
-          This Privacy Policy explains how Kh. Consultation (referred to as "we", "us", or "our") collects, uses, discloses, and protects your personal data when you use our website <a href="https://www.khconsultation.com" target="_blank" rel="noopener noreferrer" className="text-brand-blue hover:underline">www.khconsultation.com</a> and our services. We are committed to protecting your privacy and complying with the General Data Protection Regulation (GDPR) and other applicable German data protection laws.
+          This Privacy Policy explains how Kh. Consultation (referred to as &quot;we&quot;, &quot;us&quot;, or &quot;our&quot;) collects, uses, discloses, and protects your personal data when you use our website <a href="https://www.khconsultation.com" target="_blank" rel="noopener noreferrer" className="text-brand-blue hover:underline">www.khconsultation.com</a> and our services. We are committed to protecting your privacy and complying with the General Data Protection Regulation (GDPR) and other applicable German data protection laws.
         </p>
 
         <h2 className="text-2xl md:text-3xl font-semibold mb-4 mt-8">1. Data Controller</h2>
