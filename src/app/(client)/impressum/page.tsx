@@ -1,7 +1,6 @@
 // src/app/(client)/impressum/page.tsx
 import React from 'react';
 import Typography from '@/components/Typography';
-import Link from 'next/link'; // Make sure Link is imported if used for external link
 
 export const metadata = {
   title: 'Impressum - Kh. Consultation',
