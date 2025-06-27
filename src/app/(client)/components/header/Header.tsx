@@ -48,19 +48,11 @@ export default function Header() {
               priority
             />
           </Link>
-          
-          {/* Desktop Navigation */}
-          <div className="text-white hidden md:flex text-sm lg:text-base xl:text-lg items-center space-x-1 lg:space-x-3 ml-auto">
-            <Link 
-              className="px-2 lg:px-4 py-2 whitespace-nowrap hover:text-[#f68519] transition-colors" 
-              href="/#about"
-            >
-              About Our Services
+          <div className="text-white hidden md:flex text-xl">
+            <Link className="px-5" href="#about">
+              About
             </Link>
-            <Link 
-              className="px-2 lg:px-4 py-2 whitespace-nowrap hover:text-[#f68519] transition-colors" 
-              href="/#team"
-            >
+            <Link className="px-5" href="/#story">
               My Story
             </Link>
             

@@ -3,14 +3,14 @@ import ContactPage from "./pages/contact/page";
 import FAQ from "./pages/faq/page";  
 import ServicesPage from "./pages/services/page";  
 import Homepage from "./pages/home/page";  
-import TeamPage from "./pages/team/page";
+import StoryPage from "./pages/story/page";
   
 export default function Home() {  
   return (  
    <>  
     <Homepage />  
     <AboutPage />
-    <TeamPage />  
+    <StoryPage />  
     <ServicesPage />  
     <FAQ />  
     {/* <ReviewsPage />   */}
