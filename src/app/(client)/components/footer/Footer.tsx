@@ -35,13 +35,13 @@ const Footer = () => {
             <SocialMedia />
           </FooterList>
 
-
-          <div className="sm:justify-self-start lg:justify-self-center">
+         
+          <div className="sm:justify-self-start lg:justify-self-center"> 
             <h3 className="text-base font-bold mb-2">Follow Us</h3>
             <SocialMedia />
           </div>
         </div>
-        
+
         <div className="w-full flex items-center justify-center pb-6">
           <p className="text-center text-sm">© Kh Consult, 2024. All rights reserved</p>
         </div>
