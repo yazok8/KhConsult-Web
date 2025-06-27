@@ -1,7 +1,5 @@
 import type { Config } from "tailwindcss";
 import { fontFamily } from "tailwindcss/defaultTheme";
-// Correct imports for plugins - we'll use require() in the plugins array
-// even if we import for type hinting.
 import typographyPlugin from "@tailwindcss/typography";
 import animatePlugin from "tailwindcss-animate";
 import aspectRatioPlugin from "@tailwindcss/aspect-ratio";
@@ -121,9 +119,19 @@ const config: Config = {
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)'
       },
+      animation: {
+        jump: 'bounce 1s infinite',
+        'accordion-down': 'accordion-down 0.2s ease-out',
+        'accordion-up': 'accordion-up 0.2s ease-out',
+        float: 'float 3s ease-in-out infinite',
+        pulse: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'fade-up': 'fadeUp 0.5s ease-out',
+        'fade-in': 'fadeIn 0.3s ease-out',
+        'slide-in': 'slideIn 0.5s ease-out'
+      },
 
       // IMPORTANT: TYPOGRAPHY CUSTOMIZATION FOR DARK MODE
-      typography: ({ theme }) => ({
+      typography: (theme: (path: string) => string) => ({
         DEFAULT: { // These are the styles for prose when 'dark' class is NOT present
           css: {
             color: theme('colors.gray.700'), // Example: adjust to your desired default light mode text color
@@ -188,19 +196,8 @@ const config: Config = {
             },
           },
         },
-      }), // This closing parenthesis and brace closes the typography config and theme.extend
-    }, // This closing brace closes the theme.extend object. This was misplaced.
-  }, // This closing brace closes the theme object. This was also misplaced.
-  // The 'animation' property should be a direct child of 'theme', not 'theme.extend'
-  animation: {
-    jump: 'bounce 1s infinite', // If 'bounce' keyframe is defined elsewhere, this needs to point to it
-    'accordion-down': 'accordion-down 0.2s ease-out',
-    'accordion-up': 'accordion-up 0.2s ease-out',
-    float: 'float 3s ease-in-out infinite',
-    pulse: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-    'fade-up': 'fadeUp 0.5s ease-out',
-    'fade-in': 'fadeIn 0.3s ease-out',
-    'slide-in': 'slideIn 0.5s ease-out'
+      }),
+    },
   },
   variants: {
     extend: {
@@ -208,9 +205,9 @@ const config: Config = {
     },
   },
   plugins: [
-    typographyPlugin, // Use the imported value directly if it's an object/function
-    animatePlugin, // Should be `animatePlugin()` if it's a function
-    aspectRatioPlugin, // Should be `aspectRatioPlugin()` if it's a function
+    typographyPlugin,
+    animatePlugin,
+    aspectRatioPlugin,
   ],
 } satisfies Config;
 
